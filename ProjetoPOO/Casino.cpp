@@ -117,6 +117,7 @@ list<Maquina*>* Casino::GerarMaquinas(int numMaquinas)
 		int randomx = 0 + (rand() % 50);
 		int randomy = 0 + (rand() % 50);
 
+
 	}
 	return lista;
 }

@@ -23,6 +23,16 @@ int Maquina::getID()
 	return id;
 }
 
+int Maquina::getX()
+{
+	return x;
+}
+
+int Maquina::getY()
+{
+	return y;
+}
+
 void Maquina::MostrarMaquina()
 {
 	cout << "Maquina ID=" << id << endl;
