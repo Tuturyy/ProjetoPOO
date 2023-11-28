@@ -16,12 +16,16 @@ class Maquina
 	int id;
 	int temperat;
 	int tipo;
+	int x, y;
 	ESTADO_MAQUINA estado;
 public:
 	Maquina(int _id, int _tipo);
 	virtual ~Maquina();
 	int getID();
+	int getX();
+	int getY();
 	ESTADO_MAQUINA getEstado();
 	void MostrarMaquina();
 	void DesligarMaquina();
+
 };

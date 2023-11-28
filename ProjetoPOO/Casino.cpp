@@ -1,14 +1,24 @@
 #include"Casino.h"
+#define PESSOASFORA = 0
 
 
-Casino::Casino(string nome)
+Casino::Casino(string nome, int numMaquinas)
 {
 	nomeC = nome;
+	//LM = *GerarMaquinas(numMaquinas);
 }
 
 Casino::~Casino()
 {
+	for (auto& maqPtr : LM) {
+		delete maqPtr;
+	}
+	LM.clear();
 
+	for (auto& pessoaPtr : LP) {
+		delete pessoaPtr;
+	}
+	LP.clear();
 }
 
 void Casino::LerFicheiro()
@@ -52,7 +62,36 @@ void Casino::LerFicheiro()
 		}
 		Pessoa* pessoa = new Pessoa(ID, Nome, Localidade, Idade);
 		LPT.push_back(pessoa);
-		pessoa->MostrarPessoa();
+
 	}
 	file.close();
 }
+
+void Casino::MostrarPessoasFora(){
+	for (list<Pessoa*>::iterator it = LPT.begin(); it != LPT.end(); it++) {
+		(*it)->MostrarPessoa();
+	}
+}
+
+void Casino::MostrarPessoasCasino()
+{
+	for (list<Pessoa*>::iterator it = LP.begin(); it != LP.end(); it++) {
+		(*it)->MostrarPessoa();
+	}
+}
+
+void Casino::AddPessoa() {
+
+	srand(time(NULL));
+	int index = rand() % LPT.size();
+
+	auto it = LPT.begin();
+	std::advance(it, index);
+
+	Pessoa* novaPessoa = *it;
+	novaPessoa->adicionaSaldo(rand() % 500);
+	LP.push_back(*it);
+	LPT.erase(it);
+
+}
+

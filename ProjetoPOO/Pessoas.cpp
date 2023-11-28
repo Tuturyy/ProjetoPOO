@@ -11,7 +11,7 @@ Pessoa::Pessoa(int _ID, std::string _Nome, std::string _Localidade, int _Idade)
 	Nome = _Nome;
 	Localidade = _Localidade;
 	Idade = _Idade;
-	Ptr_Casino = nullptr;
+	Saldo = 0;
 }
 
 Pessoa::~Pessoa()
@@ -35,10 +35,19 @@ int Pessoa::getIdade() {
 	return Idade;
 }
 
+int Pessoa::getSaldo(){
+	return Saldo;
+}
+
+void Pessoa::adicionaSaldo(int novoSaldo) {
+	Saldo = novoSaldo;
+}
+
 void Pessoa::MostrarPessoa()
 {
 	cout << "\tNome: " << Nome << endl;
 	cout << "\tID: " << ID << endl;
 	cout << "\tLocal: " << Localidade << endl;
 	cout << "\tIdade: " << Idade << endl;
+	cout << "\tSaldo:" << Saldo << endl;
 }
