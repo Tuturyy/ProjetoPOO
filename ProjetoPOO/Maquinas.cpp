@@ -1,9 +1,5 @@
 #include"Maquinas.h"
 
-ESTADO_MAQUINA Maquina::getEstado()
-{
-	return estado;
-}
 
 Maquina::Maquina(int _id, int _tipo)
 {
@@ -11,6 +7,21 @@ Maquina::Maquina(int _id, int _tipo)
 	tipo = _tipo;
 	estado = ESTADO_MAQUINA::ON;
 	temperat = 0;
+}
+
+ESTADO_MAQUINA Maquina::getEstado()
+{
+	return estado;
+}
+
+int Maquina::getX()
+{
+	return x;
+}
+
+int Maquina::getY()
+{
+	return y;
 }
 
 Maquina::~Maquina()
@@ -23,15 +34,6 @@ int Maquina::getID()
 	return id;
 }
 
-int Maquina::getX()
-{
-	return x;
-}
-
-int Maquina::getY()
-{
-	return y;
-}
 
 void Maquina::MostrarMaquina()
 {

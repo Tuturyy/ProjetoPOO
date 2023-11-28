@@ -27,4 +27,5 @@ public:
 	ESTADO_MAQUINA getEstado();
 	void MostrarMaquina();
 	void DesligarMaquina();
+
 };

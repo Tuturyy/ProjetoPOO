@@ -4,6 +4,7 @@
 #include <list>
 #include <fstream>
 #include <sstream>
+
 using namespace std;
 
 #include "Maquinas.h"
@@ -19,7 +20,9 @@ public:
 	Casino(string nome, int numMaquinas);
 	virtual ~Casino();
 	void LerFicheiro();
-	bool AddPessoa(Pessoa* pessoa);
+	void MostrarPessoasFora();
+	void MostrarPessoasCasino();
+	void AddPessoa();
 	bool AddMaquina(Maquina* m);
 	Maquina* PesquisarMaquinaID(int id_maq);
 	void MostrarMaquinas();
@@ -27,7 +30,7 @@ public:
 	void Desligar(int id_maq);
 	ESTADO_MAQUINA Get_Estado(int id_maq);
 	int Memoria_Total();
-	list<Maquina*>* GerarMaquinas(int numMaquinas);
+	//list<Maquina*>* GerarMaquinas(int numMaquinas);
 	list<Maquina*>* Listar_Tipo(string Tipo, ostream& f = std::cout);
 	list<string>* Ranking_Dos_Fracos();
 	list<Maquina*>* Ranking_Das_Mais_Trabalhadores();

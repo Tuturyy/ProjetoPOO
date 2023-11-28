@@ -1,15 +1,24 @@
 #include"Casino.h"
+#define PESSOASFORA = 0
 
 
 Casino::Casino(string nome, int numMaquinas)
 {
 	nomeC = nome;
-	LM = *GerarMaquinas(numMaquinas);
+	//LM = *GerarMaquinas(numMaquinas);
 }
 
 Casino::~Casino()
 {
+	for (auto& maqPtr : LM) {
+		delete maqPtr;
+	}
+	LM.clear();
 
+	for (auto& pessoaPtr : LP) {
+		delete pessoaPtr;
+	}
+	LP.clear();
 }
 
 void Casino::LerFicheiro()
@@ -53,76 +62,39 @@ void Casino::LerFicheiro()
 		}
 		Pessoa* pessoa = new Pessoa(ID, Nome, Localidade, Idade);
 		LPT.push_back(pessoa);
-		pessoa->MostrarPessoa();
+
 	}
 	file.close();
 }
 
-
-bool Casino::AddMaquina(Maquina* m)
-{
-	LM.push_back(m);
-	return true;
-}
-
-Maquina* Casino::PesquisarMaquinaID(int id_maq)
-{
-	for (list<Maquina*>::iterator it = LM.begin(); it != LM.end(); ++it)
-	{
-		if ((*it)->getID() == id_maq)
-		{
-			return *it;
-		}
-	}
-	return nullptr;
-}
-
-void Casino::MostrarMaquinas()
-{
-	for (list<Maquina*>::iterator it = LM.begin(); it != LM.end(); ++it)
-	{
-		(*it)->MostrarMaquina();
+void Casino::MostrarPessoasFora(){
+	for (list<Pessoa*>::iterator it = LPT.begin(); it != LPT.end(); it++) {
+		(*it)->MostrarPessoa();
 	}
 }
 
-void Casino::Desligar(int id_maq)
+void Casino::MostrarPessoasCasino()
 {
-	Maquina* maq = PesquisarMaquinaID(id_maq);
-	if (maq)
-		maq->DesligarMaquina();
-	else
-		cout << "Erro ao desligar maquina. Nao existe uma maquina com ID=" << id_maq << endl << "\n";
-}
-
-ESTADO_MAQUINA Casino::Get_Estado(int id_maq)
-{
-	Maquina* M = PesquisarMaquinaID(id_maq);
-	if (M)
-	{
-		return M->getEstado();
+	for (list<Pessoa*>::iterator it = LP.begin(); it != LP.end(); it++) {
+		(*it)->MostrarPessoa();
 	}
 }
 
-list<Maquina*>* Casino::GerarMaquinas(int numMaquinas)
-{
-	list<Maquina*>* lista = new list<Maquina*>();
-	for (int i = 0; i < numMaquinas; i++)
-	{
-		int random = 1 + (rand() % 4);
-		Maquina* maq = new Maquina(i + 1, random);
-		lista->push_back(maq);
-	}
-	for (list<Maquina*>::iterator it = lista->begin(); it != lista->end(); ++it)
-	{
-		int randomx = 0 + (rand() % 50);
-		int randomy = 0 + (rand() % 50);
+void Casino::AddPessoa() {
+
+	srand(time(NULL));
+	int index = rand() % LPT.size();
+
+	auto it = LPT.begin();
+	std::advance(it, index);
+
+	Pessoa* novaPessoa = *it;
+	novaPessoa->adicionaSaldo(rand() % 500);
+	LP.push_back(*it);
+	LPT.erase(it);
 
 
 	}
 	return lista;
 }
 
-bool Casino::AddPessoa(Pessoa* pessoa) {
-	LP.push_back(pessoa);
-	return true;
-}
