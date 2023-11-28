@@ -6,7 +6,8 @@ using namespace std;
 
 int main()
 {
-    Casino casino = Casino("solverde");
-    casino.LerFicheiro();
+    Casino casino = Casino("solverde",4);
+    casino.MostrarMaquinas();
+    //casino.LerFicheiro();
     return 0;
 }
