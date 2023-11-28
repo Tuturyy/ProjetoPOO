@@ -1,12 +1,14 @@
 #include"Maquinas.h"
 
 
-Maquina::Maquina(int _id, int _tipo)
+Maquina::Maquina(int _id, int _tipo, int _x, int _y)
 {
 	id = _id;
 	tipo = _tipo;
 	estado = ESTADO_MAQUINA::ON;
 	temperat = 0;
+	x = _x;
+	y = _y;
 }
 
 ESTADO_MAQUINA Maquina::getEstado()
@@ -34,7 +36,6 @@ int Maquina::getID()
 	return id;
 }
 
-
 void Maquina::MostrarMaquina()
 {
 	cout << "Maquina ID=" << id << endl;
@@ -44,7 +45,8 @@ void Maquina::MostrarMaquina()
 	{
 		cout << "Estado - Desligada" << endl;
 	}
-	cout << "Tipo:" << tipo << endl << endl;
+	cout << "Tipo:" << tipo << endl;
+	cout << "Posicao: X=" << x << " Y=" << y << endl << endl;
 }
 
 void Maquina::DesligarMaquina()

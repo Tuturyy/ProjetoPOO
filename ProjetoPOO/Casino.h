@@ -10,6 +10,9 @@ using namespace std;
 #include "Maquinas.h"
 #include "Pessoas.h"
 
+#define X_MAX_CASINO 50
+#define Y_MAX_CASINO 50
+
 class Casino
 {
 	string nomeC;
@@ -30,7 +33,7 @@ public:
 	void Desligar(int id_maq);
 	ESTADO_MAQUINA Get_Estado(int id_maq);
 	int Memoria_Total();
-	//list<Maquina*>* GerarMaquinas(int numMaquinas);
+	list<Maquina*>* GerarMaquinas(int numMaquinas);
 	list<Maquina*>* Listar_Tipo(string Tipo, ostream& f = std::cout);
 	list<string>* Ranking_Dos_Fracos();
 	list<Maquina*>* Ranking_Das_Mais_Trabalhadores();

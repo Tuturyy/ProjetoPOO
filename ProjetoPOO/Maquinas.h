@@ -19,7 +19,7 @@ class Maquina
 	int x, y;
 	ESTADO_MAQUINA estado;
 public:
-	Maquina(int _id, int _tipo);
+	Maquina(int _id, int _tipo, int _x, int _y);
 	virtual ~Maquina();
 	int getID();
 	int getX();
