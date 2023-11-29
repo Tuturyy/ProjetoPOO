@@ -4,11 +4,12 @@
 #include<string>
 #include<list>
 #include"Pessoas.h"
+
 using namespace std;
 
 #define WIN_PORC_POKER 10.0
 #define WIN_PORC_BLACKJACK 20.0
-#define WIN_PORC_ROLETA 15.0
+#define WIN_PORC_ROLETA 48.0
 #define WIN_PORC_SLOT 8.0
 
 class Casino;
@@ -40,4 +41,5 @@ public:
 	void MostrarMaquina();
 	void DesligarMaquina();
 	void AddJogadorMaquina(Pessoa* player);
+	bool JogadorJoga(int bet);
 };
