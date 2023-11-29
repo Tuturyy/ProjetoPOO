@@ -102,23 +102,53 @@ void Maquina::AddJogadorMaquina(Pessoa* player)
 	estado = ESTADO_MAQUINA::ON;
 }
 
-void Maquina::JogadorJoga()
+bool Maquina::JogadorJoga(int bet)
 {
+	double resultado = Util::RandNumDouble(0, 1); //numero random entre 0 e 1
 	if (tipo == TIPO_MAQUINA::Roleta)
 	{
-		
+		if (resultado <= ((WIN_PORC_ROLETA) / 100.0))
+		{
+			double probabilidade = Util::RandNumDouble(0, 1);
+			if (probabilidade<=(1.0/19))
+			{
+				jogador->Saldo += bet * 14;//roleta acaba verde a aposta é multiplicada por 14
+				cout << "Incrivel verde na roleta. O jogador " << jogador->getNome() << " ganhou " << (bet * 14) << "EUR.\n";
+				return true;
+			}
+			else
+			{
+				jogador->Saldo += bet * 2;// roleta acaba ver/pret a aposta é duplicada
+				cout << "O jogador " << jogador->getNome() << " ganhou " << (bet * 2) << "EUR na roleta.\n";
+				return true;
+			}
+		}
+		cout << "O jogador " << jogador->getNome() << " perdeu " << bet << "EUR na roleta.\n";
+		return false;
 	}
+
 	if (tipo == TIPO_MAQUINA::Poker)
 	{
+		if (resultado <= ((WIN_PORC_POKER) / 100.0))
+		{
 
+		}
 	}
+
 	if (tipo == TIPO_MAQUINA::ClassicSlots)
 	{
+		if (resultado <= ((WIN_PORC_SLOT) / 100.0))
+		{
 
+		}
 	}
+
 	if (tipo == TIPO_MAQUINA::BlackJack)
 	{
+		if (resultado <= ((WIN_PORC_BLACKJACK) / 100.0))
+		{
 
+		}
 	}
 
 }

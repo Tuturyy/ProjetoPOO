@@ -3,6 +3,7 @@
 #include<fstream>
 #include<string>
 #include<list>
+#include"Uteis.h"
 
 class Casino;
 

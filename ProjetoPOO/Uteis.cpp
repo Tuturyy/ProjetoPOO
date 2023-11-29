@@ -9,7 +9,7 @@ int Util::RandNumInt(int LimInf, int LimSup)
 	return dis(gen);
 }
 
-int Util::RandNumDouble(int LimInf, int LimSup)
+double Util::RandNumDouble(int LimInf, int LimSup)
 {
 	std::random_device rd;
 	std::mt19937 gen(rd());
