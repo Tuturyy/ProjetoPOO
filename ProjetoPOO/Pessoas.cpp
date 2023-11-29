@@ -3,7 +3,7 @@
 #include<string>
 #include<list>
 #include "Pessoas.h"
-#include"Casino.h"
+#include "Casino.h"
 
 Pessoa::Pessoa(int _ID, std::string _Nome, std::string _Localidade, int _Idade)
 {
