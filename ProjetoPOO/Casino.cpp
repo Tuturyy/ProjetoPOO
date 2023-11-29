@@ -151,7 +151,7 @@ list<Maquina*>* Casino::GerarMaquinas(int numMaquinas)
 	list<Maquina*>* lista = new list<Maquina*>();
 	for (int i = 0; i < numMaquinas; i++)
 	{
-		int randomTipo = 1 + (rand() % 4);
+		TIPO_MAQUINA randomTipo = static_cast<TIPO_MAQUINA>(1 + (rand() % 4));//tipo de jogo na maquina aleatorio
 		int randomx, randomy;
 			bool posicaoOcupada;
 			do
@@ -169,7 +169,7 @@ list<Maquina*>* Casino::GerarMaquinas(int numMaquinas)
 				}
 			} while (posicaoOcupada);
 
-		Maquina* maq = new Maquina(i + 1, randomTipo,randomx,randomy);
+			Maquina* maq = new Maquina(i + 1, randomTipo, randomx, randomy);
 		lista->push_back(maq);
 	}
 	return lista;

@@ -12,7 +12,6 @@ class Pessoa {
 	std::string Localidade;
 	int Idade;
 	int Saldo;
-
 public:
 	Pessoa(int _ID, std::string _Nome, std::string _Localidade, int _Idade);
 	virtual ~Pessoa();
