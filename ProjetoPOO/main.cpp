@@ -12,6 +12,9 @@ int main()
     Casino casino = Casino("solverde",4);
     casino.LerFicheiro();
     casino.AddPessoa();
+    casino.AddPessoa();
+    casino.AddPessoa();
+    casino.AddPessoa();
     casino.MostrarPessoasCasino();
 
     return 0;

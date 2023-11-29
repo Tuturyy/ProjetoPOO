@@ -50,4 +50,5 @@ void Pessoa::MostrarPessoa()
 	cout << "\tLocal: " << Localidade << endl;
 	cout << "\tIdade: " << Idade << endl;
 	cout << "\tSaldo:" << Saldo << endl;
+	cout << "\n";
 }

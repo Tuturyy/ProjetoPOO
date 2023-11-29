@@ -1,4 +1,5 @@
 #include"Casino.h"
+#include <random>
 #define PESSOASFORA = 0
 
 
@@ -82,15 +83,22 @@ void Casino::MostrarPessoasCasino()
 
 void Casino::AddPessoa() {
 
-	srand(time(NULL));
+	//srand(time(NULL));
+
+	std::random_device rd;
+	std::mt19937 gen(rd());
+	std::uniform_int_distribution<> dis(100, 500);
+
 	int index = rand() % LPT.size();
 
 	auto it = LPT.begin();
 	std::advance(it, index);
 
-	Pessoa* novaPessoa = *it;
-	novaPessoa->adicionaSaldo(rand() % 500);
-	LP.push_back(*it);
+	Pessoa* pessoaSelecionada = *it;
+
+	Pessoa* novaPessoa = new Pessoa(pessoaSelecionada->getID(), pessoaSelecionada->getNome(), pessoaSelecionada->getLocalidade() , pessoaSelecionada->getIdade());
+	novaPessoa->adicionaSaldo(dis(gen));
+	LP.push_back(novaPessoa);
 	LPT.erase(it);
 
 }
