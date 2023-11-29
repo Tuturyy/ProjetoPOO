@@ -23,6 +23,4 @@ public:
 	int getSaldo();
 	void adicionaSaldo(int novoSaldo);
 	void MostrarPessoa();
-	
-
 };

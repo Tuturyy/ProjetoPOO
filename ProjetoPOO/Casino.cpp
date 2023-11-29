@@ -6,7 +6,7 @@
 Casino::Casino(string nome, int numMaquinas)
 {
 	nomeC = nome;
-	//LM = *GerarMaquinas(numMaquinas);
+	LM = *GerarMaquinas(numMaquinas);
 }
 
 Casino::~Casino()
@@ -100,6 +100,77 @@ void Casino::AddPessoa() {
 	novaPessoa->adicionaSaldo(dis(gen));
 	LP.push_back(novaPessoa);
 	LPT.erase(it);
+	}
 
+bool Casino::AddMaquina(Maquina* m)
+{
+	LM.push_back(m);
+	return true;
 }
 
+Maquina* Casino::PesquisarMaquinaID(int id_maq)
+{
+	for (list<Maquina*>::iterator it = LM.begin(); it != LM.end(); ++it)
+	{
+		if ((*it)->getID() == id_maq)
+		{
+			return *it;
+		}
+	}
+	return nullptr;
+}
+
+void Casino::MostrarMaquinas()
+{
+	for (list<Maquina*>::iterator it = LM.begin(); it != LM.end(); ++it)
+	{
+		(*it)->MostrarMaquina();
+	}
+}
+
+void Casino::Desligar(int id_maq)
+{
+	Maquina* maq = PesquisarMaquinaID(id_maq);
+	if (maq)
+		maq->DesligarMaquina();
+	else
+		cout << "Erro ao desligar maquina. Nao existe uma maquina com ID=" << id_maq << endl << "\n";
+}
+
+ESTADO_MAQUINA Casino::Get_Estado(int id_maq)
+{
+	Maquina* M = PesquisarMaquinaID(id_maq);
+	if (M)
+	{
+		return M->getEstado();
+	}
+}
+
+list<Maquina*>* Casino::GerarMaquinas(int numMaquinas)
+{
+	list<Maquina*>* lista = new list<Maquina*>();
+	for (int i = 0; i < numMaquinas; i++)
+	{
+		int randomTipo = 1 + (rand() % 4);
+		int randomx, randomy;
+			bool posicaoOcupada;
+			do
+			{
+				posicaoOcupada = false;
+				randomx = 0 + (rand() % (X_MAX_CASINO+1));
+				randomy = 0 + (rand() % (Y_MAX_CASINO + 1));
+				for (list<Maquina*>::iterator it = lista->begin(); it != lista->end(); ++it)
+				{
+					if (((*it)->getX() == randomx) && ((*it)->getY() == randomy))//se a posicao ja estiver ocupada
+					{
+						posicaoOcupada = true;
+						break;
+					}
+				}
+			} while (posicaoOcupada);
+
+		Maquina* maq = new Maquina(i + 1, randomTipo,randomx,randomy);
+		lista->push_back(maq);
+	}
+	return lista;
+}

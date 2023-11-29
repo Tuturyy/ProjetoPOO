@@ -8,14 +8,12 @@ using namespace std;
 
 int main()
 {
-    int i = 0;
+    srand(time(NULL));
     Casino casino = Casino("solverde",4);
-    casino.LerFicheiro();
-    casino.AddPessoa();
-    casino.AddPessoa();
-    casino.AddPessoa();
-    casino.AddPessoa();
-    casino.MostrarPessoasCasino();
+    //casino.LerFicheiro();
+    //casino.AddPessoa();
+    //casino.MostrarPessoasCasino();
+    casino.MostrarMaquinas();
 
     return 0;
 }
