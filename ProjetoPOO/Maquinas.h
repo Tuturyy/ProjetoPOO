@@ -21,6 +21,7 @@ class Maquina
 	int x, y;
 	ESTADO_MAQUINA estado;
 public:
+	float porcentWin;
 	Maquina(int _id, int _tipo, int _x, int _y);
 	virtual ~Maquina();
 	int getID();
