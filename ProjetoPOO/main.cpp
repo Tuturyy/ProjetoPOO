@@ -5,7 +5,6 @@ using namespace std;
 #include "Pessoas.h"
 
 
-
 int main()
 {
     srand(time(NULL));
@@ -16,6 +15,7 @@ int main()
     casino.AddPessoa(pessoa);
     casino.MostrarPessoasCasino();
     casino.MostrarMaquinas();
+    
 
-    return 0;
+    return 7;//CR7 GOAT
 }

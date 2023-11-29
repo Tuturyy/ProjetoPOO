@@ -101,3 +101,24 @@ void Maquina::AddJogadorMaquina(Pessoa* player)
 	jogador = player;
 	estado = ESTADO_MAQUINA::ON;
 }
+
+void Maquina::JogadorJoga()
+{
+	if (tipo == TIPO_MAQUINA::Roleta)
+	{
+		
+	}
+	if (tipo == TIPO_MAQUINA::Poker)
+	{
+
+	}
+	if (tipo == TIPO_MAQUINA::ClassicSlots)
+	{
+
+	}
+	if (tipo == TIPO_MAQUINA::BlackJack)
+	{
+
+	}
+
+}

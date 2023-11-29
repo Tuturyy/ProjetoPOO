@@ -11,10 +11,10 @@ class Pessoa {
 	std::string Nome;
 	std::string Localidade;
 	int Idade;
-	int Saldo;
 	Casino* Ptr_Casino;
 
 public:
+	int Saldo;
 	Pessoa(int _ID, std::string _Nome, std::string _Localidade, int _Idade);
 	virtual ~Pessoa();
 	int getID();

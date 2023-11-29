@@ -40,4 +40,5 @@ public:
 	void MostrarMaquina();
 	void DesligarMaquina();
 	void AddJogadorMaquina(Pessoa* player);
+	void JogadorJoga();
 };
