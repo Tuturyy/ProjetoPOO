@@ -3,6 +3,7 @@
 #include<fstream>
 #include<string>
 #include<list>
+#include"Pessoas.h"
 using namespace std;
 
 class Casino;
@@ -13,6 +14,7 @@ enum class ESTADO_MAQUINA {
 
 class Maquina
 {
+	Pessoa* jogador;
 	int id;
 	int temperat;
 	int tipo;
@@ -27,5 +29,5 @@ public:
 	ESTADO_MAQUINA getEstado();
 	void MostrarMaquina();
 	void DesligarMaquina();
-
+	void AddJogadorMaquina(Pessoa* player);
 };
