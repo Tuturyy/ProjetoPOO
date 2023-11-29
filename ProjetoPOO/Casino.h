@@ -20,13 +20,18 @@ class Casino
 	list<Pessoa*> LP;
 	list<Pessoa*> LPT;
 public:
+	//Construtor e destrutor
 	Casino(string nome, int numMaquinas);
 	virtual ~Casino();
+
+	//Funções de Pessoas
 	void LerFicheiro();
 	void MostrarPessoasFora();
 	void MostrarPessoasCasino();
 	Pessoa* GetPessoa();
 	void AddPessoa(Pessoa *pessoa);
+
+	//Funções de Maquinas
 	bool AddMaquina(Maquina* m);
 	Maquina* PesquisarMaquinaID(int id_maq);
 	void MostrarMaquinas();
