@@ -9,7 +9,7 @@ using namespace std;
 
 int main()
 {
-    menuGeral();
+    //menuGeral();
     srand(time(NULL));
     Casino casino = Casino("solverde",4);
     casino.LerFicheiro();
