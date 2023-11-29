@@ -1,6 +1,5 @@
-#include"Casino.h"
-#include <random>
-#define PESSOASFORA = 0
+#include "Casino.h"
+#include "Uteis.h"
 
 
 Casino::Casino(string nome, int numMaquinas)
@@ -81,26 +80,21 @@ void Casino::MostrarPessoasCasino()
 	}
 }
 
-void Casino::AddPessoa() {
+Pessoa* Casino::GetPessoa() {
 
-	//srand(time(NULL));
-
-	std::random_device rd;
-	std::mt19937 gen(rd());
-	std::uniform_int_distribution<> dis(100, 500);
-
-	int index = rand() % LPT.size();
+	int index = Util::RandNumInt(0, LPT.size());
 
 	auto it = LPT.begin();
 	std::advance(it, index);
 
-	Pessoa* pessoaSelecionada = *it;
+	return *it;
+}
 
-	Pessoa* novaPessoa = new Pessoa(pessoaSelecionada->getID(), pessoaSelecionada->getNome(), pessoaSelecionada->getLocalidade() , pessoaSelecionada->getIdade());
-	novaPessoa->adicionaSaldo(dis(gen));
-	LP.push_back(novaPessoa);
-	LPT.erase(it);
-	}
+
+void Casino::AddPessoa(Pessoa *pessoa) {
+	pessoa->PessoaParaCasino(this);
+	LP.push_back(pessoa);
+}
 
 bool Casino::AddMaquina(Maquina* m)
 {

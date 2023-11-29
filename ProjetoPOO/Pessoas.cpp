@@ -45,10 +45,10 @@ void Pessoa::adicionaSaldo(int novoSaldo) {
 
 void Pessoa::MostrarPessoa()
 {
-	cout << "\tNome: " << Nome << endl;
-	cout << "\tID: " << ID << endl;
-	cout << "\tLocal: " << Localidade << endl;
-	cout << "\tIdade: " << Idade << endl;
-	cout << "\tSaldo:" << Saldo << endl;
+	cout << "ID: " << ID << endl;
+	cout << "Nome: " << Nome << endl;
+	cout << "Local: " << Localidade << endl;
+	cout << "Idade: " << Idade << endl;
+	cout << "Saldo:" << Saldo << endl;
 	cout << "\n";
 }

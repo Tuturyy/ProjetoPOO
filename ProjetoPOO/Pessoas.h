@@ -12,6 +12,7 @@ class Pessoa {
 	std::string Localidade;
 	int Idade;
 	int Saldo;
+	Casino* Ptr_Casino;
 
 public:
 	Pessoa(int _ID, std::string _Nome, std::string _Localidade, int _Idade);
@@ -23,4 +24,5 @@ public:
 	int getSaldo();
 	void adicionaSaldo(int novoSaldo);
 	void MostrarPessoa();
+	void PessoaParaCasino(Casino* Pc) {Ptr_Casino = Pc;}
 };

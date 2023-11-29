@@ -27,6 +27,9 @@
     <ClCompile Include="Casino.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Uteis.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Pessoas.h">
@@ -36,6 +39,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Casino.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Uteis.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

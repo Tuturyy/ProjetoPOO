@@ -25,7 +25,8 @@ public:
 	void LerFicheiro();
 	void MostrarPessoasFora();
 	void MostrarPessoasCasino();
-	void AddPessoa();
+	Pessoa* GetPessoa();
+	void AddPessoa(Pessoa *pessoa);
 	bool AddMaquina(Maquina* m);
 	Maquina* PesquisarMaquinaID(int id_maq);
 	void MostrarMaquinas();
