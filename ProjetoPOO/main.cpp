@@ -4,6 +4,7 @@ using namespace std;
 #include "Casino.h"
 #include "Pessoas.h"
 #include "menu.h"
+#include "Uteis.h"
 
 
 int main()
