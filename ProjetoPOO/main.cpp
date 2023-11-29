@@ -21,10 +21,17 @@ int main()
 
     Maquina maq = Maquina::Maquina(77, TIPO_MAQUINA::Roleta, 9, 9);
     maq.AddJogadorMaquina(pessoa);
-    for (int i=0;i<300;i++)
+    int lucro=0;
+    cout << "saldo inic=" << pessoa->Saldo << "\n";
+    for (int i=0;i<3;i++)
     {
-        maq.JogadorJoga(5);
+        if(pessoa->Saldo > 0)
+        {
+            int randombet = Util::RandNumInt(1, pessoa->Saldo);
+            lucro += maq.JogadorJoga(randombet);
+        }
     }
+    cout << "Lucro =" << lucro << endl << "Saldo=" << pessoa->Saldo;
 
     return 7;//CR7 GOAT
 }
