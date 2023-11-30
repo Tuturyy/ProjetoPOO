@@ -1,14 +1,11 @@
 #include"Maquinas.h"
+#include"Casino.h"
 
 
 Maquina::Maquina(int _id, TIPO_MAQUINA _tipo, int _x, int _y)
 {
 	id = _id;
 	tipo = _tipo;
-	if (tipo == TIPO_MAQUINA::Roleta)
-	{
-		//porcentWin = WIN_PORC_ROLETA;
-	}
 	if (tipo == TIPO_MAQUINA::Poker)
 	{
 		porcentWin = WIN_PORC_POKER;
@@ -102,70 +99,123 @@ void Maquina::AddJogadorMaquina(Pessoa* player)
 	estado = ESTADO_MAQUINA::ON;
 }
 
-int Maquina::JogadorJoga(int bet)
+bool Maquina::Roulette(int bet, Casino* casino)
+{
+	double resultado = Util::RandNumDouble(0, 1);
+	double jogadorJogaOnde = Util::RandNumDouble(0, 1);
+	if (jogadorJogaOnde <= 0.95)//95% de chance de o jogador apostar no vermelho/preto
+	{
+		if (resultado <= (18.0 / 37))//18 de 37 chances de ganhar
+		{
+			jogador->Saldo += (bet * 2) - bet;//roleta acaba no ver/pret. 2x Aposta
+			casino->DinheiroPerdido += bet;
+			cout << "O jogador " << jogador->getNome() << " ganhou " << (bet * 2) << "EUR.\n";
+			return true;
+		}
+		else
+		{
+			jogador->Saldo -= bet;
+			casino->DinheiroRecebido += bet;
+			cout << "O jogador " << jogador->getNome() << " perdeu " << bet << "EUR na roleta.\n";
+			return false;
+		}
+	}
+	else //o jogador aposta no verde
+	{
+		if (resultado <= (1.0 / 37))
+		{
+			jogador->Saldo += (bet * 14) - bet;//roleta acaba no verde. 14x Aposta
+			casino->DinheiroPerdido += (bet * 14) - bet;
+			cout << "Incrivel verde na roleta. O jogador " << jogador->getNome() << " ganhou " << (bet * 14) << "EUR.\n";
+			return true;
+		}
+		else
+		{
+			jogador->Saldo -= bet;
+			casino->DinheiroRecebido += bet;
+			cout << "O jogador " << jogador->getNome() << " perdeu " << bet << "EUR na roleta.\n";
+			return false;
+		}
+	}
+}
+
+bool Maquina::Slot(int bet, Casino* casino)
+{
+	double resultado = Util::RandNumDouble(0, 1);
+	if (resultado <= 0.000001)// 0.0001%! :O
+	{
+		int multiplicador = Util::RandNumInt(10000, 1000000);
+		jogador->Saldo += (bet * multiplicador) - bet;
+		casino->DinheiroPerdido += (bet * multiplicador) - bet;
+		cout << "MEGA JACKPOT!! O JOGADOR " << jogador->getNome() << " GANHOU " << bet * multiplicador << "EUR (x" <<multiplicador<<") NA SLOT.\n";
+		return true;
+	}
+	if (resultado <= 0.001)//0.1%
+	{
+		jogador->Saldo += (bet * 1000) - bet;
+		casino->DinheiroPerdido += (bet * 1000) - bet;
+		cout << "FENOMENAL! O jogador " << jogador->getNome() << " ganhou " << bet * 1000 << "EUR (x1000) na slot.\n";
+		return true;
+	}
+	if (resultado <= 0.01)//1%
+	{
+		jogador->Saldo += (bet * 100) - bet;
+		casino->DinheiroPerdido += (bet * 100) - bet;
+		cout << "Vitoria epica! O jogador " << jogador->getNome() << " ganhou " << bet * 100 << "EUR (x100) na slot.\n";
+		return true;
+	}
+	if (resultado <= 0.10)//10%
+	{
+		jogador->Saldo += (bet * 3) - bet;
+		casino->DinheiroPerdido += (bet * 3) - bet;
+		cout << "O jogador " << jogador->getNome() << " triplicou a sua aposta e ganhou " << bet * 3 << "EUR na slot.\n";
+		return true;
+	}
+	if (resultado <= 0.40)//40%
+	{
+		jogador->Saldo += (bet * 2) - bet;
+		casino->DinheiroPerdido += (bet * 2) - bet;
+		cout << "O jogador " << jogador->getNome() << " ganhou " << bet * 2 << "EUR na slot.\n";
+		return true;
+	}
+	else//60%
+	{
+		jogador->Saldo -= bet;
+		casino->DinheiroRecebido += bet;
+		cout << "O jogador " << jogador->getNome() << " perdeu " << bet  << "EUR na slot.\n";
+		return false;
+	}
+}
+
+bool Maquina::JogadorJoga(int bet, Casino* casino)
 {
 	if (jogador->Saldo >0)
 	{
-		double resultado = Util::RandNumDouble(0, 1); //numero random entre 0 e 1
 		if (tipo == TIPO_MAQUINA::Roleta)
 		{
-			double jogadorJogaOnde = Util::RandNumDouble(0, 1);
-			if (jogadorJogaOnde <= 0.95)//95% de chance de o jogador apostar no vermelho/preto
-			{
-				if (resultado <= (18.0 / 37))//18 de 37 chances de ganhar
-				{
-					jogador->Saldo += (bet * 2)-bet;//roleta acaba no ver/pret. 2x Aposta
-					cout << "O jogador " << jogador->getNome() << " ganhou " << (bet * 2) << "EUR.\n";
-					return ((-bet * 2) + bet);
-				}
-				else
-				{
-					jogador->Saldo -= bet;
-					cout << "O jogador " << jogador->getNome() << " perdeu " << bet << "EUR na roleta.\n";
-					return bet;
-				}
-			}
-			else //o jogador aposta no verde
-			{
-				if (resultado <= (1.0 / 37))
-				{
-					jogador->Saldo += (bet * 14)-bet;//roleta acaba no verde. 14x Aposta
-					cout << "Incrivel verde na roleta. O jogador " << jogador->getNome() << " ganhou " << (bet * 14) << "EUR.\n";
-					return ((-bet * 14) + bet);
-				}
-				else
-				{
-					jogador->Saldo -= bet;
-					cout << "O jogador " << jogador->getNome() << " perdeu no verde " << bet << "EUR na roleta.\n";
-					return bet;
-				}
-			}
+			Roulette(bet, casino);
+			return 0;
 		}
 
 		if (tipo == TIPO_MAQUINA::Poker)
 		{
-			if (resultado <= ((WIN_PORC_POKER) / 100.0))
-			{
 
-			}
 		}
 
 		if (tipo == TIPO_MAQUINA::ClassicSlots)
 		{
-			if (resultado <= ((WIN_PORC_SLOT) / 100.0))
-			{
-
-			}
+			Slot(bet, casino);
+			return 0;
 		}
 
 		if (tipo == TIPO_MAQUINA::BlackJack)
 		{
-			if (resultado <= ((WIN_PORC_BLACKJACK) / 100.0))
-			{
 
-			}
 		}
 	}
-	cout << "Saldo Insuficiente\n";
-	return 0;
+	else
+	{
+		cout << "Saldo Insuficiente\n";
+		return 0;
+	}
 }

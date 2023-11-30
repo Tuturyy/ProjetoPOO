@@ -9,30 +9,32 @@ using namespace std;
 
 int main()
 {
+   
+
     //menuGeral();
     srand(time(NULL));
-    Casino casino = Casino("solverde",4);
-    casino.LerFicheiro();
-    Pessoa* pessoa = casino.GetPessoa();
-    casino.AddPessoa(pessoa);
+    Casino* solverde = new Casino("solverde", 4);
+    solverde->LerFicheiro();
+    Pessoa* pessoa = solverde->GetPessoa();
+    solverde->AddPessoa(pessoa);
     
     //casino.MostrarMaquinas();
     //casino.MostrarPessoasCasino();
     //casino.MostrarMaquinas();
 
-    Maquina maq = Maquina::Maquina(77, TIPO_MAQUINA::Roleta, 9, 9);
+    Maquina maq = Maquina::Maquina(77, TIPO_MAQUINA::ClassicSlots, 9, 9);
     maq.AddJogadorMaquina(pessoa);
-    int lucro=0;
+
     cout << "saldo inic=" << pessoa->Saldo << "\n";
-    for (int i=0;i<3;i++)
+    for (int i=0;i<50;i++)
     {
         if(pessoa->Saldo > 0)
         {
             int randombet = Util::RandNumInt(1, pessoa->Saldo);
-            lucro += maq.JogadorJoga(randombet);
+            maq.JogadorJoga(randombet,solverde);
         }
     }
-    cout << "Lucro =" << lucro << endl << "Saldo=" << pessoa->Saldo;
+    cout << "Recebido = " << solverde->DinheiroRecebido << endl<<"Perdido = "<< solverde->DinheiroPerdido <<endl << "Saldo=" << pessoa->Saldo;
 
     return 7;//CR7 GOAT
 }

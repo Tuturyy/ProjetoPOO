@@ -31,15 +31,29 @@ class Maquina
 	int x, y;
 	ESTADO_MAQUINA estado;
 public:
+
+	//Variaveis
 	float porcentWin;
+
+	//Construtor e destrutor
 	Maquina(int _id, TIPO_MAQUINA _tipo, int _x, int _y);
 	virtual ~Maquina();
+
+	//Obter informacao
 	int getID();
 	int getX();
 	int getY();
 	ESTADO_MAQUINA getEstado();
+
+	//Importantes
 	void MostrarMaquina();
 	void DesligarMaquina();
 	void AddJogadorMaquina(Pessoa* player);
-	int JogadorJoga(int bet);
+	
+
+	//Jogos
+	bool Roulette(int bet, Casino* casino);
+	bool Slot(int bet, Casino* casino);
+
+	bool JogadorJoga(int bet, Casino* casino);
 };

@@ -20,6 +20,11 @@ class Casino
 	list<Pessoa*> LP;
 	list<Pessoa*> LPT;
 public:
+
+	//Variaveis
+	int DinheiroRecebido;
+	int DinheiroPerdido;
+
 	//Construtor e destrutor
 	Casino(string nome, int numMaquinas);
 	virtual ~Casino();

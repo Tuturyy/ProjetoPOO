@@ -6,11 +6,13 @@ Casino::Casino(string nome, int numMaquinas)
 {
 	nomeC = nome;
 	LM = *GerarMaquinas(numMaquinas);
+	DinheiroPerdido = 0;
+	DinheiroRecebido = 0;
 }
 
 Casino::~Casino()
 {
-	for (auto& maqPtr : LM) {
+	/*for (auto& maqPtr : LM) {
 		delete maqPtr;
 	}
 	LM.clear();
@@ -18,7 +20,7 @@ Casino::~Casino()
 	for (auto& pessoaPtr : LP) {
 		delete pessoaPtr;
 	}
-	LP.clear();
+	LP.clear();*/
 }
 
 void Casino::LerFicheiro()
