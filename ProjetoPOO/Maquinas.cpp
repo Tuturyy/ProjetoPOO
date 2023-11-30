@@ -99,6 +99,43 @@ void Maquina::AddJogadorMaquina(Pessoa* player)
 	estado = ESTADO_MAQUINA::ON;
 }
 
+int Maquina::CalcularBet()
+{
+	if (jogador->Saldo > 0)
+	{
+		if (tipo == TIPO_MAQUINA::Roleta)
+		{
+			
+		}
+
+		if (tipo == TIPO_MAQUINA::Poker)
+		{
+
+		}
+
+		if (tipo == TIPO_MAQUINA::ClassicSlots)//Valores min 0 , max 10
+		{
+			int apostaSlot = 0;
+			if(jogador->Saldo >=10)
+			{
+				apostaSlot = Util::RandNumInt(1, 10);
+				return apostaSlot;
+			}
+			else
+			{
+				apostaSlot = Util::RandNumInt(1, jogador->Saldo);
+				return apostaSlot;
+			}
+		}
+
+		if (tipo == TIPO_MAQUINA::BlackJack)
+		{
+
+		}
+	}
+	else return 0;
+}
+
 bool Maquina::Roulette(int bet, Casino* casino)
 {
 	double resultado = Util::RandNumDouble(0, 1);
@@ -152,19 +189,20 @@ bool Maquina::Slot(int bet, Casino* casino)
 	}
 	if (resultado <= 0.001)//0.1%
 	{
-		jogador->Saldo += (bet * 1000) - bet;
-		casino->DinheiroPerdido += (bet * 1000) - bet;
-		cout << "FENOMENAL! O jogador " << jogador->getNome() << " ganhou " << bet * 1000 << "EUR (x1000) na slot.\n";
+		int multiplicador2 = Util::RandNumInt(1000, 5000);
+		jogador->Saldo += (bet * multiplicador2) - bet;
+		casino->DinheiroPerdido += (bet * multiplicador2) - bet;
+		cout << "FENOMENAL! O jogador " << jogador->getNome() << " ganhou " << bet * multiplicador2 << "EUR (x" << multiplicador2 << ") na slot.\n";
 		return true;
 	}
-	if (resultado <= 0.01)//1%
+	if (resultado <= 0.005)//0.5%
 	{
 		jogador->Saldo += (bet * 100) - bet;
 		casino->DinheiroPerdido += (bet * 100) - bet;
 		cout << "Vitoria epica! O jogador " << jogador->getNome() << " ganhou " << bet * 100 << "EUR (x100) na slot.\n";
 		return true;
 	}
-	if (resultado <= 0.10)//10%
+	if (resultado <= 0.05)//5%
 	{
 		jogador->Saldo += (bet * 3) - bet;
 		casino->DinheiroPerdido += (bet * 3) - bet;

@@ -8,8 +8,7 @@ using namespace std;
 
 
 int main()
-{
-   
+{  
 
     //menuGeral();
     srand(time(NULL));
@@ -26,12 +25,12 @@ int main()
     maq.AddJogadorMaquina(pessoa);
 
     cout << "saldo inic=" << pessoa->Saldo << "\n";
-    for (int i=0;i<50;i++)
+    for (int i=0;i<100;i++)
     {
         if(pessoa->Saldo > 0)
         {
-            int randombet = Util::RandNumInt(1, pessoa->Saldo);
-            maq.JogadorJoga(randombet,solverde);
+            
+            maq.JogadorJoga(maq.CalcularBet(), solverde);
         }
     }
     cout << "Recebido = " << solverde->DinheiroRecebido << endl<<"Perdido = "<< solverde->DinheiroPerdido <<endl << "Saldo=" << pessoa->Saldo;

@@ -52,6 +52,7 @@ public:
 	
 
 	//Jogos
+	int CalcularBet();
 	bool Roulette(int bet, Casino* casino);
 	bool Slot(int bet, Casino* casino);
 
