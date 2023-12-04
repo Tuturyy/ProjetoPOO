@@ -312,16 +312,13 @@ bool Maquina::JogadorJoga(int bet, Casino* casino)
 
 		if (tipo == TIPO_MAQUINA::ClassicSlots)
 		{
-			Slot(bet, casino);
-			return 0;
+			return Slot(bet, casino);
 		}
 
 		if (tipo == TIPO_MAQUINA::BlackJack)
 		{
-			if (BlackJack(bet, casino))
-				return true;
-			else
-				return false;
+			return BlackJack(bet, casino);
+
 		}
 	}
 	else

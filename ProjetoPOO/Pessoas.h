@@ -13,6 +13,7 @@ class Pessoa {
 	std::string Localidade;
 	int Idade;
 	Casino* Ptr_Casino;
+	int SaldoInicial;
 public:
 	std::list<std::string> historico;
 	int Saldo;

@@ -11,11 +11,12 @@ int main()
 {  
     //menuGeral();
     srand(time(NULL));
-    Casino* solverde = new Casino("solverde", 4);
+    Casino* solverde = new Casino("solverde",4);
     solverde->LerFicheiro();
     Pessoa* pessoa = solverde->GetPessoa();
     solverde->AddPessoa(pessoa);
-    
+
+
     //casino.MostrarMaquinas();
     //casino.MostrarPessoasCasino();
     //casino.MostrarMaquinas();
