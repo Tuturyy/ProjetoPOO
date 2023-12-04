@@ -14,8 +14,7 @@ int main()
     Casino* solverde = new Casino("solverde", 4);
     solverde->LerFicheiro();
     Pessoa* pessoa = solverde->GetPessoa();
-    solverde->AddPessoa(pessoa);
-    solverde->RmvPessoa(pessoa);
+    solverde->AddPessoa(pessoa); 
     
     //casino.MostrarMaquinas();
     //casino.MostrarPessoasCasino();
@@ -26,7 +25,7 @@ int main()
 
     cout << "saldo inic=" << pessoa->Saldo << "\n";
     for (int i=0;i<5;i++)
-    {
+    { 
         if(pessoa->Saldo > 0)
         {
             

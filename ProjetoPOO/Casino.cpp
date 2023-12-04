@@ -69,6 +69,12 @@ void Casino::LerFicheiro()
 	file.close();
 }
 
+void Casino::MostrarListaPessoas(list<Pessoa*> lista) {
+	for (list<Pessoa*>::iterator it = lista.begin(); it != lista.end(); it++) {
+		(*it)->MostrarPessoa();
+	}
+}
+ 
 void Casino::MostrarPessoasFora(){
 	for (list<Pessoa*>::iterator it = LPT.begin(); it != LPT.end(); it++) {
 		(*it)->MostrarPessoa();

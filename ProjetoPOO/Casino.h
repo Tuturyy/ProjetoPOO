@@ -34,6 +34,7 @@ public:
 
 	//Funções de Pessoas
 	void LerFicheiro();
+	void MostrarListaPessoas(list<Pessoa*> lista);
 	void MostrarPessoasFora();
 	void MostrarPessoasCasino();
 	Pessoa* GetPessoa();
