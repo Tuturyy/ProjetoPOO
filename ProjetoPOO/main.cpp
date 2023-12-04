@@ -9,7 +9,6 @@ using namespace std;
 
 int main()
 {  
-
     //menuGeral();
     srand(time(NULL));
     Casino* solverde = new Casino("solverde", 4);
@@ -21,19 +20,28 @@ int main()
     //casino.MostrarPessoasCasino();
     //casino.MostrarMaquinas();
 
-    Maquina maq = Maquina::Maquina(77, TIPO_MAQUINA::ClassicSlots, 9, 9);
+    Maquina maq = Maquina::Maquina(77, TIPO_MAQUINA::BlackJack, 9, 9);
     maq.AddJogadorMaquina(pessoa);
 
     cout << "saldo inic=" << pessoa->Saldo << "\n";
-    for (int i=0;i<100;i++)
+    for (int i=0;i<5;i++)
     {
         if(pessoa->Saldo > 0)
         {
             
-            maq.JogadorJoga(maq.CalcularBet(), solverde);
+            if (maq.JogadorJoga(maq.CalcularBet(), solverde))
+                maq.getJogador()->VitoriasConsecutivas++;
+            else
+                maq.getJogador()->VitoriasConsecutivas = 0;
         }
     }
     cout << "Recebido = " << solverde->DinheiroRecebido << endl<<"Perdido = "<< solverde->DinheiroPerdido <<endl << "Saldo=" << pessoa->Saldo;
+    cout << "\n\n Vitorias consec: " << maq.getJogador()->VitoriasConsecutivas;
+    cout << "\n\nHistorico:\n";
+    for (const auto& str : maq.getJogador()->historico)
+    {
+        cout << str;
+    }
 
     return 7;//CR7 GOAT
 }

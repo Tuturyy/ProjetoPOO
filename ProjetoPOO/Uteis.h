@@ -5,5 +5,5 @@
 class Util {
 	public:
 		static int RandNumInt(int LimInf, int LimSup);
-		static double RandNumDouble(int LimInf, int LimSup);
+		static double RandNumDouble(double LimInf, double LimSup);
 };

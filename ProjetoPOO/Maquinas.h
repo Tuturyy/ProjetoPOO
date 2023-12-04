@@ -44,6 +44,7 @@ public:
 	int getX();
 	int getY();
 	ESTADO_MAQUINA getEstado();
+	Pessoa* getJogador();
 
 	//Importantes
 	void MostrarMaquina();
@@ -55,6 +56,7 @@ public:
 	int CalcularBet();
 	bool Roulette(int bet, Casino* casino);
 	bool Slot(int bet, Casino* casino);
+	bool BlackJack(int bet, Casino* casino);
 
 	bool JogadorJoga(int bet, Casino* casino);
 };

@@ -30,6 +30,11 @@ ESTADO_MAQUINA Maquina::getEstado()
 	return estado;
 }
 
+Pessoa* Maquina::getJogador()
+{
+	return jogador;
+}
+
 int Maquina::getX()
 {
 	return x;
@@ -105,7 +110,26 @@ int Maquina::CalcularBet()
 	{
 		if (tipo == TIPO_MAQUINA::Roleta)
 		{
-			
+			int apostaRoleta = 0;
+			double porcentagemSaldo = 0;
+			double probabilidade = Util::RandNumDouble(0, 1);
+			if (probabilidade<=0.90)// 90% de chances de o jogador apostar 1 a 5% do seu saldo
+			{
+				porcentagemSaldo = Util::RandNumDouble(0.01, 0.05);
+				apostaRoleta = jogador->Saldo * porcentagemSaldo;
+				if (apostaRoleta < 1) {
+					apostaRoleta = 1; // valor minimo da aposta e 1
+				}
+				return apostaRoleta;
+			}
+			else{
+				porcentagemSaldo = Util::RandNumDouble(0.7, 1);// 10% de apostar 70 a 100% do saldo
+				apostaRoleta = jogador->Saldo * porcentagemSaldo;
+				if (apostaRoleta < 1) {
+					apostaRoleta = 1; // valor minimo da aposta e 1
+				}
+				return apostaRoleta;
+			}
 		}
 
 		if (tipo == TIPO_MAQUINA::Poker)
@@ -130,7 +154,26 @@ int Maquina::CalcularBet()
 
 		if (tipo == TIPO_MAQUINA::BlackJack)
 		{
-
+			int apostaRoleta = 0;
+			double porcentagemSaldo = 0;
+			double probabilidade = Util::RandNumDouble(0, 1);
+			if (probabilidade <= 0.90)// 90% de chances de o jogador apostar 1 a 5% do seu saldo
+			{
+				porcentagemSaldo = Util::RandNumDouble(0.01, 0.05);
+				apostaRoleta = jogador->Saldo * porcentagemSaldo;
+				if (apostaRoleta < 1) {
+					apostaRoleta = 1; // valor minimo da aposta e 1
+				}
+				return apostaRoleta;
+			}
+			else {
+				porcentagemSaldo = Util::RandNumDouble(0.7, 1);// 10% de apostar 70 a 100% do saldo
+				apostaRoleta = jogador->Saldo * porcentagemSaldo;
+				if (apostaRoleta < 1) {
+					apostaRoleta = 1; // valor minimo da aposta e 1
+				}
+				return apostaRoleta;
+			}
 		}
 	}
 	else return 0;
@@ -187,7 +230,7 @@ bool Maquina::Slot(int bet, Casino* casino)
 		cout << "MEGA JACKPOT!! O JOGADOR " << jogador->getNome() << " GANHOU " << bet * multiplicador << "EUR (x" <<multiplicador<<") NA SLOT.\n";
 		return true;
 	}
-	if (resultado <= 0.001)//0.1%
+	if (resultado <= 0.0002)//0.02%
 	{
 		int multiplicador2 = Util::RandNumInt(1000, 5000);
 		jogador->Saldo += (bet * multiplicador2) - bet;
@@ -195,7 +238,7 @@ bool Maquina::Slot(int bet, Casino* casino)
 		cout << "FENOMENAL! O jogador " << jogador->getNome() << " ganhou " << bet * multiplicador2 << "EUR (x" << multiplicador2 << ") na slot.\n";
 		return true;
 	}
-	if (resultado <= 0.005)//0.5%
+	if (resultado <= 0.001)//0.1%
 	{
 		jogador->Saldo += (bet * 100) - bet;
 		casino->DinheiroPerdido += (bet * 100) - bet;
@@ -209,18 +252,46 @@ bool Maquina::Slot(int bet, Casino* casino)
 		cout << "O jogador " << jogador->getNome() << " triplicou a sua aposta e ganhou " << bet * 3 << "EUR na slot.\n";
 		return true;
 	}
-	if (resultado <= 0.40)//40%
+	if (resultado <= 0.35)//35%
 	{
 		jogador->Saldo += (bet * 2) - bet;
 		casino->DinheiroPerdido += (bet * 2) - bet;
 		cout << "O jogador " << jogador->getNome() << " ganhou " << bet * 2 << "EUR na slot.\n";
 		return true;
 	}
-	else//60%
+	else//65%
 	{
 		jogador->Saldo -= bet;
 		casino->DinheiroRecebido += bet;
 		cout << "O jogador " << jogador->getNome() << " perdeu " << bet  << "EUR na slot.\n";
+		return false;
+	}
+}
+
+bool Maquina::BlackJack(int bet, Casino* casino)
+{
+	double probabilidade = Util::RandNumDouble(0, 1);
+	if (probabilidade<=0.0475)// 4% de chance de blackjack 2.5x aposta
+	{
+		jogador->Saldo += (bet*2.5)-bet;
+		casino->DinheiroPerdido += bet;
+		cout << "BlackJack! O jogador " << jogador->getNome() << " ganhou " << bet * 2.5 << "EUR no blackjack.\n";
+		return true;
+	}
+	if (probabilidade <= 0.4222)// 42% chance de o jogar 2x aposta
+	{
+		jogador->Saldo += bet;
+		casino->DinheiroPerdido += bet;
+		cout << "O jogador " << jogador->getNome() << " ganhou " << bet * 2 << "EUR no blackjack.\n";
+		return true;
+	}
+	else //o jogador perde
+	{
+		jogador->Saldo -= bet;
+		casino->DinheiroRecebido += bet;
+		cout << "O jogador " << jogador->getNome() << " perdeu " << bet << "EUR no blackjack.\n";
+		string msg = "O jogador perdeu " + to_string(bet) + "EUR no blackjack.\n";
+		jogador->historico.push_back(msg);
 		return false;
 	}
 }
@@ -231,13 +302,12 @@ bool Maquina::JogadorJoga(int bet, Casino* casino)
 	{
 		if (tipo == TIPO_MAQUINA::Roleta)
 		{
-			Roulette(bet, casino);
-			return 0;
+			return (Roulette(bet, casino));
 		}
 
 		if (tipo == TIPO_MAQUINA::Poker)
 		{
-
+			//pa fazer
 		}
 
 		if (tipo == TIPO_MAQUINA::ClassicSlots)
@@ -248,7 +318,10 @@ bool Maquina::JogadorJoga(int bet, Casino* casino)
 
 		if (tipo == TIPO_MAQUINA::BlackJack)
 		{
-
+			if (BlackJack(bet, casino))
+				return true;
+			else
+				return false;
 		}
 	}
 	else

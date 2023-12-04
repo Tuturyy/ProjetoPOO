@@ -141,6 +141,8 @@ ESTADO_MAQUINA Casino::Get_Estado(int id_maq)
 	{
 		return M->getEstado();
 	}
+	else
+		cout << "Erro ao procurar maquina. Nao existe uma maquina com ID=" << id_maq << endl << "\n";
 }
 
 list<Maquina*>* Casino::GerarMaquinas(int numMaquinas)

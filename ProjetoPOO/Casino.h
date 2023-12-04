@@ -18,6 +18,7 @@ class Casino
 	string nomeC;
 	list<Maquina*> LM;
 	list<Pessoa*> LP;
+
 	list<Pessoa*> LPT;
 public:
 

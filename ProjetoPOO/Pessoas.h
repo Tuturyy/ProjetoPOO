@@ -13,9 +13,10 @@ class Pessoa {
 	std::string Localidade;
 	int Idade;
 	Casino* Ptr_Casino;
-
 public:
+	std::list<std::string> historico;
 	int Saldo;
+	int VitoriasConsecutivas;
 	Pessoa(int _ID, std::string _Nome, std::string _Localidade, int _Idade);
 	virtual ~Pessoa();
 	int getID();
