@@ -26,7 +26,7 @@ int main()
 
     cout << "saldo inic=" << pessoa->Saldo << "\n";
     for (int i=0;i<5;i++)
-    {
+    { 
         if(pessoa->Saldo > 0)
         {
             
