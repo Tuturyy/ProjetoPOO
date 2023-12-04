@@ -36,7 +36,7 @@ int main()
                 maq.getJogador()->VitoriasConsecutivas = 0;
         }
     }
-    cout << "Recebido = " << solverde->DinheiroRecebido << endl<<"Perdido = "<< solverde->DinheiroPerdido <<endl << "Saldo=" << pessoa->Saldo;
+    cout << "Recebido = " << solverde->DinheiroRecebido << endl<<"Perdido = "<< solverde->DinheiroPerdido << endl << "Lucro Casino = " << solverde->DinheiroRecebido - solverde->DinheiroPerdido << endl << "Saldo Final = " << pessoa->Saldo;
     cout << "\n\n Vitorias consec: " << maq.getJogador()->VitoriasConsecutivas;
     cout << "\n\nHistorico:\n";
     for (const auto& str : maq.getJogador()->historico)

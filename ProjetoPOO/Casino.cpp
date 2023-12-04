@@ -96,7 +96,14 @@ Pessoa* Casino::GetPessoa() {
 void Casino::AddPessoa(Pessoa *pessoa) {
 	pessoa->PessoaParaCasino(this);
 	LP.push_back(pessoa);
+	LPJ.push_back(pessoa);
+	LPT.remove(pessoa);
 	pessoa->adicionaSaldo(Util::RandNumInt(100, 500));
+}
+
+void Casino::RmvPessoa(Pessoa* pessoa) {
+	pessoa->PessoaParaFora();
+	LP.remove(pessoa);
 }
 
 bool Casino::AddMaquina(Maquina* m)
