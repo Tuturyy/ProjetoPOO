@@ -20,6 +20,8 @@ class Casino
 	list<Pessoa*> LP;
 
 	list<Pessoa*> LPT;
+
+	list<Pessoa*> LPJ;
 public:
 
 	//Variaveis
@@ -36,6 +38,7 @@ public:
 	void MostrarPessoasCasino();
 	Pessoa* GetPessoa();
 	void AddPessoa(Pessoa *pessoa);
+	void RmvPessoa(Pessoa* pessoa);
 
 	//Funções de Maquinas
 	bool AddMaquina(Maquina* m);
