@@ -5,6 +5,7 @@ using namespace std;
 #include "Pessoas.h"
 #include "menu.h"
 #include "Uteis.h"
+#include "relogio.h"
 
 
 int main()

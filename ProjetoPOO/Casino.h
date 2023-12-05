@@ -4,11 +4,12 @@
 #include <list>
 #include <fstream>
 #include <sstream>
+#include "Maquinas.h"
+#include "Pessoas.h"
 
 using namespace std;
 
-#include "Maquinas.h"
-#include "Pessoas.h"
+
 
 #define X_MAX_CASINO 50
 #define Y_MAX_CASINO 50
