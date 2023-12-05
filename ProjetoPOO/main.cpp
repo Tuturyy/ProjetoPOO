@@ -13,7 +13,7 @@ int main()
     //menuGeral();
     srand(time(NULL));
     Casino* solverde = new Casino("solverde", 4);
-    solverde->LerFicheiro();
+    /*solverde->LerFicheiro();
     Pessoa* pessoa = solverde->GetPessoa();
     solverde->AddPessoa(pessoa); 
     
@@ -42,7 +42,9 @@ int main()
     for (const auto& str : maq.getJogador()->historico)
     {
         cout << str;
-    }
+    }*/
+
+    solverde->Run();
 
     return 7;//CR7 GOAT
 }
