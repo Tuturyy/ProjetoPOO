@@ -186,3 +186,50 @@ list<Maquina*>* Casino::GerarMaquinas(int numMaquinas)
 	}
 	return lista;
 }
+
+list<Maquina*> Casino::Listar_Tipo(string Tipo, ostream& f)
+{
+	TIPO_MAQUINA tipoDesejado;
+	list<Maquina*> maquinasdoTipo;
+
+	if (Tipo == "Poker")
+	{
+		tipoDesejado = TIPO_MAQUINA::Poker;
+	}
+	else if (Tipo == "BlackJack")
+	{
+		tipoDesejado = TIPO_MAQUINA::BlackJack;
+	}
+	else if (Tipo == "ClassicSlots")
+	{
+		tipoDesejado = TIPO_MAQUINA::ClassicSlots;
+	}
+	else if (Tipo == "Roleta")
+	{
+		tipoDesejado = TIPO_MAQUINA::Roleta;
+	}
+	else 
+	{
+		f << "Tipo de maquina invalido!\n";
+		return list<Maquina*>();
+	}
+
+	for (list<Maquina*>::iterator it = LM.begin(); it != LM.end(); ++it)
+	{
+		if ((*it)->getTipo()==tipoDesejado)
+		{
+			maquinasdoTipo.push_back((*it));
+			(*it)->MostrarMaquina();
+		}
+	}
+	return maquinasdoTipo;
+}
+
+
+list<Pessoa*> Casino::Jogadores_Mais_Ganhos()
+{
+	LPJ.sort([](const Pessoa* a, const Pessoa* b) {
+		return a->Lucro > b->Lucro;
+		});
+	return LPJ;
+}

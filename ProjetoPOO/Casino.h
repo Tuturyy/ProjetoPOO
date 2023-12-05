@@ -50,11 +50,11 @@ public:
 	ESTADO_MAQUINA Get_Estado(int id_maq);
 	int Memoria_Total();
 	list<Maquina*>* GerarMaquinas(int numMaquinas);
-	list<Maquina*>* Listar_Tipo(string Tipo, ostream& f = std::cout);
+	list<Maquina*> Listar_Tipo(string Tipo, ostream& f = std::cout);
 	list<string>* Ranking_Dos_Fracos();
 	list<Maquina*>* Ranking_Das_Mais_Trabalhadores();
 	//list<User*>* Jogadores_Mais_Frequentes();
-	//list<User*>* Jogadores_Mais_Ganhos();
+	list<Pessoa*> Jogadores_Mais_Ganhos();
 	void Relatorio(string fich_xml);
 	void SubirProbabilidadeVizinhas(Maquina* M_ganhou, float R, list<Maquina*>& lmvizinhas);
 	void Listar(float X, ostream& f = std::cout);

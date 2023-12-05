@@ -17,6 +17,7 @@ class Pessoa {
 public:
 	std::list<std::string> historico;
 	int Saldo;
+	int Lucro;
 	int VitoriasConsecutivas;
 	Pessoa(int _ID, std::string _Nome, std::string _Localidade, int _Idade);
 	virtual ~Pessoa();

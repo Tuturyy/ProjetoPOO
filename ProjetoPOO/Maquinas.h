@@ -44,6 +44,7 @@ public:
 	int getX();
 	int getY();
 	ESTADO_MAQUINA getEstado();
+	TIPO_MAQUINA getTipo();
 	Pessoa* getJogador();
 
 	//Importantes

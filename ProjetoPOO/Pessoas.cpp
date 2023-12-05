@@ -12,8 +12,8 @@ Pessoa::Pessoa(int _ID, std::string _Nome, std::string _Localidade, int _Idade)
 	Localidade = _Localidade;
 	Idade = _Idade;
 	Saldo = 0;
-
 	SaldoInicial = 0;
+	Lucro = 0;
 	VitoriasConsecutivas = 0;
 }
 
@@ -54,5 +54,6 @@ void Pessoa::MostrarPessoa()
 	cout << "Local: " << Localidade << endl;
 	cout << "Idade: " << Idade << endl;
 	cout << "Saldo:" << Saldo << endl;
+	cout << "Lucro: " << Lucro << endl;
 	cout << "\n";
 }

@@ -30,6 +30,11 @@ ESTADO_MAQUINA Maquina::getEstado()
 	return estado;
 }
 
+TIPO_MAQUINA Maquina::getTipo()
+{
+	return tipo;
+}
+
 Pessoa* Maquina::getJogador()
 {
 	return jogador;
@@ -188,6 +193,7 @@ bool Maquina::Roulette(int bet, Casino* casino)
 		if (resultado <= (18.0 / 37))//18 de 37 chances de ganhar
 		{
 			jogador->Saldo += (bet * 2) - bet;//roleta acaba no ver/pret. 2x Aposta
+			jogador->Lucro += bet;
 			casino->DinheiroPerdido += bet;
 			cout << "O jogador " << jogador->getNome() << " ganhou " << (bet * 2) << "EUR.\n";
 			return true;
@@ -195,6 +201,7 @@ bool Maquina::Roulette(int bet, Casino* casino)
 		else
 		{
 			jogador->Saldo -= bet;
+			jogador->Lucro -= bet;
 			casino->DinheiroRecebido += bet;
 			cout << "O jogador " << jogador->getNome() << " perdeu " << bet << "EUR na roleta.\n";
 			return false;
@@ -205,6 +212,7 @@ bool Maquina::Roulette(int bet, Casino* casino)
 		if (resultado <= (1.0 / 37))
 		{
 			jogador->Saldo += (bet * 14) - bet;//roleta acaba no verde. 14x Aposta
+			jogador->Lucro += (bet * 14) - bet;
 			casino->DinheiroPerdido += (bet * 14) - bet;
 			cout << "Incrivel verde na roleta. O jogador " << jogador->getNome() << " ganhou " << (bet * 14) << "EUR.\n";
 			return true;
@@ -212,6 +220,7 @@ bool Maquina::Roulette(int bet, Casino* casino)
 		else
 		{
 			jogador->Saldo -= bet;
+			jogador->Lucro -= bet;
 			casino->DinheiroRecebido += bet;
 			cout << "O jogador " << jogador->getNome() << " perdeu " << bet << "EUR na roleta.\n";
 			return false;
@@ -226,6 +235,7 @@ bool Maquina::Slot(int bet, Casino* casino)
 	{
 		int multiplicador = Util::RandNumInt(10000, 1000000);
 		jogador->Saldo += (bet * multiplicador) - bet;
+		jogador->Lucro += (bet * multiplicador) - bet;
 		casino->DinheiroPerdido += (bet * multiplicador) - bet;
 		cout << "MEGA JACKPOT!! O JOGADOR " << jogador->getNome() << " GANHOU " << bet * multiplicador << "EUR (x" <<multiplicador<<") NA SLOT.\n";
 		return true;
@@ -234,6 +244,7 @@ bool Maquina::Slot(int bet, Casino* casino)
 	{
 		int multiplicador2 = Util::RandNumInt(1000, 5000);
 		jogador->Saldo += (bet * multiplicador2) - bet;
+		jogador->Lucro += (bet * multiplicador2) - bet;
 		casino->DinheiroPerdido += (bet * multiplicador2) - bet;
 		cout << "FENOMENAL! O jogador " << jogador->getNome() << " ganhou " << bet * multiplicador2 << "EUR (x" << multiplicador2 << ") na slot.\n";
 		return true;
@@ -241,6 +252,7 @@ bool Maquina::Slot(int bet, Casino* casino)
 	if (resultado <= 0.001)//0.1%
 	{
 		jogador->Saldo += (bet * 100) - bet;
+		jogador->Lucro += (bet * 100) - bet;
 		casino->DinheiroPerdido += (bet * 100) - bet;
 		cout << "Vitoria epica! O jogador " << jogador->getNome() << " ganhou " << bet * 100 << "EUR (x100) na slot.\n";
 		return true;
@@ -248,6 +260,7 @@ bool Maquina::Slot(int bet, Casino* casino)
 	if (resultado <= 0.05)//5%
 	{
 		jogador->Saldo += (bet * 3) - bet;
+		jogador->Lucro += (bet * 3) - bet;
 		casino->DinheiroPerdido += (bet * 3) - bet;
 		cout << "O jogador " << jogador->getNome() << " triplicou a sua aposta e ganhou " << bet * 3 << "EUR na slot.\n";
 		return true;
@@ -255,6 +268,7 @@ bool Maquina::Slot(int bet, Casino* casino)
 	if (resultado <= 0.35)//35%
 	{
 		jogador->Saldo += (bet * 2) - bet;
+		jogador->Lucro += bet;
 		casino->DinheiroPerdido += (bet * 2) - bet;
 		cout << "O jogador " << jogador->getNome() << " ganhou " << bet * 2 << "EUR na slot.\n";
 		return true;
@@ -262,6 +276,7 @@ bool Maquina::Slot(int bet, Casino* casino)
 	else//65%
 	{
 		jogador->Saldo -= bet;
+		jogador->Lucro -= bet;
 		casino->DinheiroRecebido += bet;
 		cout << "O jogador " << jogador->getNome() << " perdeu " << bet  << "EUR na slot.\n";
 		return false;
@@ -274,6 +289,7 @@ bool Maquina::BlackJack(int bet, Casino* casino)
 	if (probabilidade<=0.0475)// 4% de chance de blackjack 2.5x aposta
 	{
 		jogador->Saldo += (bet*2.5)-bet;
+		jogador->Lucro += (bet * 2.5) - bet;
 		casino->DinheiroPerdido += bet;
 		cout << "BlackJack! O jogador " << jogador->getNome() << " ganhou " << bet * 2.5 << "EUR no blackjack.\n";
 		return true;
@@ -281,6 +297,7 @@ bool Maquina::BlackJack(int bet, Casino* casino)
 	if (probabilidade <= 0.4222)// 42% chance de o jogar 2x aposta
 	{
 		jogador->Saldo += bet;
+		jogador->Lucro += bet;
 		casino->DinheiroPerdido += bet;
 		cout << "O jogador " << jogador->getNome() << " ganhou " << bet * 2 << "EUR no blackjack.\n";
 		return true;
@@ -288,6 +305,7 @@ bool Maquina::BlackJack(int bet, Casino* casino)
 	else //o jogador perde
 	{
 		jogador->Saldo -= bet;
+		jogador->Lucro -= bet;
 		casino->DinheiroRecebido += bet;
 		cout << "O jogador " << jogador->getNome() << " perdeu " << bet << "EUR no blackjack.\n";
 		string msg = "O jogador perdeu " + to_string(bet) + "EUR no blackjack.\n";
