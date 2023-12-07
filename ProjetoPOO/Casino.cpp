@@ -188,39 +188,32 @@ list<Maquina*>* Casino::GerarMaquinas(int numMaquinas)
 	return lista;
 }
 
-void Casino::Run(bool Debug)
-{
+void Casino::Run(bool Debug) {
 	int x = 0;
 	Relogio relogio;
-	relogio.StartRelogio(1, "15:00:00"); // Inicia o relógio às 15:00:00 com velocidade 1
+	relogio.StartRelogio(1, 0); // Inicia o relógio com velocidade 1 e tempo 0
+
+	// Adiciona 12 horas em segundos (12 horas * 60 minutos * 60 segundos)
+	const int duracao_casino_segundos = 43200;
+	time_t tempoTermino = relogio.VerTimeRelogio() + duracao_casino_segundos;
 
 	bool loopAtivo = true;
 
 	while (loopAtivo) {
 		time_t tempoAtual = relogio.VerTimeRelogio();
 
-		// Obter o tempo de término (03:00:00) e o tempo de início (15:00:00)
-		std::tm tempoTermino = relogio.StringParaTM("03:00:00");
-		std::tm tempoInicio = relogio.StringParaTM("15:00:00");
+		relogio.MostrarTempoSegundos(tempoAtual, tempoTermino, duracao_casino_segundos);
 
-		// Converter a estrutura tm para time_t usando mktime()
-		time_t tempoTermino_t = std::mktime(&tempoTermino);
-		time_t tempoInicio_t = std::mktime(&tempoInicio);
-
-		// Verificar se o tempo atual está dentro do intervalo [tempoInicio_t, tempoTermino_t)
-		if ((tempoAtual >= tempoInicio_t && tempoAtual < tempoTermino_t) || (tempoAtual >= 0 && tempoAtual < tempoTermino_t)) {
+		// Verificar se já se passaram as 12 horas
+		if (tempoAtual >= tempoTermino) {
 			loopAtivo = false;
 		}
 		else {
 			// Adicione sua lógica para o período do loop aqui
 			// ...
-			
-			cout << x;
-			x++;
 
 			// Aguarda um segundo antes de avançar para o próximo ciclo
 			relogio.Wait(1);
 		}
 	}
-
 }

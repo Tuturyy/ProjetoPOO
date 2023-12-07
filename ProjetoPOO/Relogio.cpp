@@ -1,43 +1,14 @@
 #include "Relogio.h"
-#include <sstream>
 
 Relogio::Relogio() : START(0), VELOCIDADE(0), Hora_Inicio(0), pausado(false), tempoPausado(0) {}
 
-void Relogio::StartRelogio(int Vel, const char* H_Inicio) {
+void Relogio::StartRelogio(int Vel, int tempo_segundos) {
     START = time(0);
     VELOCIDADE = Vel;
-
-    std::tm tmp = StringParaTM(H_Inicio);
-
-    int result = sscanf_s(H_Inicio, "%d:%d:%d", &tmp.tm_hour, &tmp.tm_min, &tmp.tm_sec);
-    if (result != 3) {
-        // Tratar erro na conversão
-    }
-    else {
-        time_t temp = std::mktime(&tmp);
-        if (temp == -1) {
-            // Erro ao converter para tempo
-            // Lida com o erro de conversão de tempo, se necessário
-        }
-        else {
-            Hora_Inicio = temp;
-            pausado = false;
-            tempoPausado = 0;
-        }
-    }
+    Hora_Inicio = START + tempo_segundos;
+    pausado = false;
+    tempoPausado = 0;
 }
-
-std::tm Relogio::StringParaTM(const char* H_Inicio) {
-    std::tm tm = {};
-    std::stringstream ss(H_Inicio);
-    ss >> tm.tm_hour;
-    ss.ignore(); // ignore o separador (no caso, ":")
-    ss >> tm.tm_min;
-    ss.ignore();
-    ss >> tm.tm_sec;
-    return tm;
-}
-
 
 void Relogio::MudarVelocidadeRelogio(int Vel) {
     if (pausado) {
@@ -66,10 +37,16 @@ time_t Relogio::VerTimeRelogio() {
 
 void Relogio::WaitSegundos(int s) {
     clock_t T0 = clock();
-    clock_t T1 = T0 + s;
+    clock_t T1 = T0 + s * CLOCKS_PER_SEC;
     while (clock() < T1);
 }
 
 void Relogio::Wait(int s) {
-    WaitSegundos(s * CLOCKS_PER_SEC);
+    WaitSegundos(s);
+}
+
+void Relogio::MostrarTempoSegundos(int TempoAtual, int TempoFinal, int TempoTotal)
+{
+    std::cout << "Tempo atual: " << TempoAtual - TempoFinal + TempoTotal << std::endl;
+    std::cout << "Tempo de término: " << TempoFinal - TempoFinal + TempoTotal << std::endl;
 }
