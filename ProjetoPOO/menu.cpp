@@ -41,69 +41,77 @@ void subMenu3() {
 
 void menuGeral() {
 	setlocale(LC_ALL, "Portuguese");
-
+	char tecla;
 	int opcao;
 
-	do
+	while (_kbhit)
 	{
-		menu();
-		cout << "Escolhe uma opcao:" << endl;
-		cin >> opcao;
-
-		switch (opcao)
+		tecla = _getch();
+		if (tecla == 'M' || tecla == 'm')
 		{
-		case 1:
 			do
 			{
-				subMenu1();
-				cout << "\nDigite uma opcao: " << endl;
+				menu();
+				cout << "Escolhe uma opcao:" << endl;
 				cin >> opcao;
-				switch (opcao)
-				{
-					case 1:
 
-					break;
-				default:
-					break;
-				}
-			} while (opcao != 0);
-			break;
-		case 2:
-			do
-			{
-				subMenu2();
-				cout << "\nDigite uma opcao: " << endl;
-				cin >> opcao;
 				switch (opcao)
 				{
 				case 1:
+					do
+					{
+						subMenu1();
+						cout << "\nDigite uma opcao: " << endl;
+						cin >> opcao;
+						switch (opcao)
+						{
+						case 1:
 
+							break;
+						default:
+							break;
+						}
+					} while (opcao != 0);
+					break;
+				case 2:
+					do
+					{
+						subMenu2();
+						cout << "\nDigite uma opcao: " << endl;
+						cin >> opcao;
+						switch (opcao)
+						{
+						case 1:
+
+							break;
+						default:
+							break;
+						}
+					} while (opcao != 0);
+					break;
+				case 3:
+					do
+					{
+						subMenu3();
+						cout << "\nDigite uma opcao: " << endl;
+						cin >> opcao;
+						switch (opcao)
+						{
+						case 1:
+
+							break;
+						default:
+							break;
+						}
+					} while (opcao != 0);
+					break;
+				case 4:
 					break;
 				default:
 					break;
 				}
-			} while (opcao != 0);
-			break;
-		case 3:
-			do
-			{
-				subMenu3();
-				cout << "\nDigite uma opcao: " << endl;
-				cin >> opcao;
-				switch (opcao)
-				{
-				case 1:
-
-					break;
-				default:
-					break;
-				}
-			} while (opcao != 0);
-			break;
-		case 4:
-			break;
-		default:
-			break;
+			} while (opcao != 4);
 		}
-	} while (opcao != 4);
+
+	}
 }
