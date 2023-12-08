@@ -9,10 +9,10 @@ using namespace std;
 
 
 int main()
-{  
+{
     //menuGeral();
     srand(time(NULL));
-    Casino* solverde = new Casino("solverde",24);
+    Casino* solverde = new Casino("solverde", 10);
     solverde->LerFicheiro();
     Pessoa* pessoa = solverde->GetPessoa();
     Pessoa* pessoa2 = solverde->GetPessoa();
@@ -42,7 +42,12 @@ int main()
     cout << "\n\n";
     solverde->MostrarListaPessoas(solverde->Jogadores_Mais_Ganhos());
     cout << "\n\n";
-    solverde->Listar_Tipo("Poker");
+    solverde->Listar(40);
+    cout << "\n";
+    //solverde->MostrarListaMaquinas(solverde->Ranking_Das_Mais_Trabalhadores());
+    maq.MostrarMaquina();
+
+
 
     return 7;//CR7 GOAT
 }

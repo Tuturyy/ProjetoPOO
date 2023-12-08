@@ -138,6 +138,13 @@ void Casino::MostrarMaquinas()
 	}
 }
 
+void Casino::MostrarListaMaquinas(list<Maquina*> lista)
+{
+	for (list<Maquina*>::iterator it = lista.begin(); it != lista.end(); it++) {
+		(*it)->MostrarMaquina();
+	}
+}
+
 void Casino::Desligar(int id_maq)
 {
 	Maquina* maq = PesquisarMaquinaID(id_maq);
@@ -225,6 +232,15 @@ list<Maquina*> Casino::Listar_Tipo(string Tipo, ostream& f)
 	return maquinasdoTipo;
 }
 
+list<Maquina*> Casino::Ranking_Das_Mais_Trabalhadores()
+{
+	list<Maquina*> Ordenada = LM;
+	Ordenada.sort([](const Maquina* a, const Maquina* b) {
+		return a->Utilizacoes > b->Utilizacoes;
+		});
+	return Ordenada;
+}
+
 
 list<Pessoa*> Casino::Jogadores_Mais_Ganhos()
 {
@@ -232,4 +248,25 @@ list<Pessoa*> Casino::Jogadores_Mais_Ganhos()
 		return a->Lucro > b->Lucro;
 		});
 	return LPJ;
+}
+
+void Casino::Listar(float X, ostream& f)
+{
+	bool maquinaEncontrada = false;
+	for (list<Maquina*>::iterator it = LM.begin(); it != LM.end(); it++)
+	{
+		if ((*it)->porcentWin >= X)
+		{
+			(*it)->MostrarMaquina();
+			f << "Porcentagem de ganhar: " << (*it)->porcentWin << "\n";
+			maquinaEncontrada = true;
+		}
+	}
+
+	if (!maquinaEncontrada)
+		f << "Nenhuma maquina com probilidade maior ou igual a " << X << "\n";
+}
+
+void Casino::Run(bool Debug)
+{
 }

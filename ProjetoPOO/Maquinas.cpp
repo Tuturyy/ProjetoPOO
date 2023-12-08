@@ -18,10 +18,16 @@ Maquina::Maquina(int _id, TIPO_MAQUINA _tipo, int _x, int _y)
 	{
 		porcentWin = WIN_PORC_BLACKJACK;
 	}
+	if (tipo == TIPO_MAQUINA::Roleta)
+	{
+		porcentWin = (18.0 / 37)*100;
+	}
 	estado = ESTADO_MAQUINA::OFF;
 	temperat = 0;
 	x = _x;
 	y = _y;
+	Lucro = 0;
+	Utilizacoes = 0;
 	jogador = nullptr;
 }
 
@@ -62,11 +68,11 @@ int Maquina::getID()
 
 void Maquina::MostrarMaquina()
 {
-	cout << "Maquina ID-["<< id <<"]"<< endl;
+	cout << "\nMaquina ID-["<< id <<"]"<< endl;
 	if (estado == ESTADO_MAQUINA::ON)
 	{
 		cout << "Estado: ON" << endl;
-		jogador->MostrarPessoa();
+		cout << "Jogador: " << jogador->getNome() << " (" << jogador->getID() << ")\n";
 	}
 	if (estado == ESTADO_MAQUINA::OFF)
 	{
@@ -89,7 +95,9 @@ void Maquina::MostrarMaquina()
 	{
 		cout << "Blackjack\n";
 	}
-	cout << "Posicao: X=" << x << " Y=" << y << endl << endl;
+	cout << "Posicao: X=" << x << " Y=" << y << endl;
+	cout << "Utilizacoes: " << Utilizacoes << endl;
+	cout << "Lucro: " << Lucro << endl;
 }
 
 void Maquina::DesligarMaquina()
@@ -203,6 +211,7 @@ bool Maquina::Roulette(int bet, Casino* casino)
 			jogador->Saldo -= bet;
 			jogador->Lucro -= bet;
 			casino->DinheiroRecebido += bet;
+			Lucro += bet;
 			cout << "O jogador " << jogador->getNome() << " perdeu " << bet << "EUR na roleta.\n";
 			return false;
 		}
@@ -222,6 +231,7 @@ bool Maquina::Roulette(int bet, Casino* casino)
 			jogador->Saldo -= bet;
 			jogador->Lucro -= bet;
 			casino->DinheiroRecebido += bet;
+			Lucro += bet;
 			cout << "O jogador " << jogador->getNome() << " perdeu " << bet << "EUR na roleta.\n";
 			return false;
 		}
@@ -306,6 +316,7 @@ bool Maquina::BlackJack(int bet, Casino* casino)
 	{
 		jogador->Saldo -= bet;
 		jogador->Lucro -= bet;
+		Lucro += bet;
 		casino->DinheiroRecebido += bet;
 		cout << "O jogador " << jogador->getNome() << " perdeu " << bet << "EUR no blackjack.\n";
 		string msg = "O jogador perdeu " + to_string(bet) + "EUR no blackjack.\n";
@@ -320,21 +331,25 @@ bool Maquina::JogadorJoga(int bet, Casino* casino)
 	{
 		if (tipo == TIPO_MAQUINA::Roleta)
 		{
+			Utilizacoes++;
 			return (Roulette(bet, casino));
 		}
 
 		if (tipo == TIPO_MAQUINA::Poker)
 		{
 			//pa fazer
+			Utilizacoes++;
 		}
 
 		if (tipo == TIPO_MAQUINA::ClassicSlots)
 		{
+			Utilizacoes++;
 			return Slot(bet, casino);
 		}
 
 		if (tipo == TIPO_MAQUINA::BlackJack)
 		{
+			Utilizacoes++;
 			return BlackJack(bet, casino);
 
 		}

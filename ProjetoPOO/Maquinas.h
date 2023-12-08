@@ -7,10 +7,10 @@
 
 using namespace std;
 
-#define WIN_PORC_POKER 10.0
-#define WIN_PORC_BLACKJACK 20.0
-//#define WIN_PORC_ROLETA 48.0
-#define WIN_PORC_SLOT 8.0
+#define WIN_PORC_POKER 40
+#define WIN_PORC_BLACKJACK 42.22
+#define WIN_PORC_ROLETA (18.0/37)
+#define WIN_PORC_SLOT 35
 
 class Casino;
 
@@ -34,6 +34,8 @@ public:
 
 	//Variaveis
 	float porcentWin;
+	int Lucro;
+	int Utilizacoes;
 
 	//Construtor e destrutor
 	Maquina(int _id, TIPO_MAQUINA _tipo, int _x, int _y);
