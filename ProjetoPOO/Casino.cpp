@@ -1,5 +1,6 @@
 #include "Casino.h"
 #include "Uteis.h"
+#include "Relogio.h"
 
 
 Casino::Casino(string nome, int numMaquinas)
@@ -192,6 +193,36 @@ list<Maquina*>* Casino::GerarMaquinas(int numMaquinas)
 		lista->push_back(maq);
 	}
 	return lista;
+}
+
+void Casino::Run(bool Debug) {
+	int x = 0;
+	Relogio relogio;
+	relogio.StartRelogio(1, 0); // Inicia o relógio com velocidade 1 e tempo 0
+
+	// Adiciona 12 horas em segundos (12 horas * 60 minutos * 60 segundos)
+	const int duracao_casino_segundos = 43200;
+	time_t tempoTermino = relogio.VerTimeRelogio() + duracao_casino_segundos;
+
+	bool loopAtivo = true;
+
+	while (loopAtivo) {
+		time_t tempoAtual = relogio.VerTimeRelogio();
+
+		relogio.MostrarTempoSegundos(tempoAtual, tempoTermino, duracao_casino_segundos);
+
+		// Verificar se já se passaram as 12 horas
+		if (tempoAtual >= tempoTermino) {
+			loopAtivo = false;
+		}
+		else {
+			// Adicione sua lógica para o período do loop aqui
+			// ...
+
+			// Aguarda um segundo antes de avançar para o próximo ciclo
+			relogio.Wait(1);
+		}
+	}
 }
 
 list<Maquina*> Casino::Listar_Tipo(string Tipo, ostream& f)
