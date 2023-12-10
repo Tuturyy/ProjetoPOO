@@ -46,6 +46,27 @@ Pessoa* Maquina::getJogador()
 	return jogador;
 }
 
+string Maquina::TipoMaquinaString()
+{
+	if (tipo == TIPO_MAQUINA::Poker)
+	{
+		return "Poker";
+	}
+	if (tipo == TIPO_MAQUINA::ClassicSlots)
+	{
+		return "ClassicSlots";
+	}
+	if (tipo == TIPO_MAQUINA::BlackJack)
+	{
+		return "BlackJack";
+	}
+	if (tipo == TIPO_MAQUINA::Roleta)
+	{
+		return "Roleta";
+	}
+	return "Erro no tipo de maquina.";
+}
+
 int Maquina::getX()
 {
 	return x;
@@ -78,23 +99,7 @@ void Maquina::MostrarMaquina()
 	{
 		cout << "Estado: OFF" << endl;
 	}
-	cout << "Tipo: ";
-	if (tipo==TIPO_MAQUINA::Roleta)
-	{
-		cout << "Roleta\n";
-	}
-	if (tipo == TIPO_MAQUINA::Poker)
-	{
-		cout << "Poker\n";
-	}
-	if (tipo == TIPO_MAQUINA::ClassicSlots)
-	{
-		cout << "ClassicSlots\n";
-	}
-	if (tipo == TIPO_MAQUINA::BlackJack)
-	{
-		cout << "Blackjack\n";
-	}
+	cout << "Tipo: " << TipoMaquinaString() << "\n";
 	cout << "Posicao: X=" << x << " Y=" << y << endl;
 	cout << "Utilizacoes: " << Utilizacoes << endl;
 	cout << "Lucro: " << Lucro << endl;

@@ -143,6 +143,9 @@
     <ClInclude Include="Relogio.h" />
     <ClInclude Include="Uteis.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="relatorio.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

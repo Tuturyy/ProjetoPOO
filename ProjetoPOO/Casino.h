@@ -28,6 +28,7 @@ public:
 	//Variaveis
 	int DinheiroRecebido;
 	int DinheiroPerdido;
+	int TempoAtualCasino;
 
 	//Construtor e destrutor
 	Casino(string nome, int numMaquinas);

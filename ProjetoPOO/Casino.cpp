@@ -9,6 +9,7 @@ Casino::Casino(string nome, int numMaquinas)
 	LM = *GerarMaquinas(numMaquinas);
 	DinheiroPerdido = 0;
 	DinheiroRecebido = 0;
+	TempoAtualCasino = 0;
 }
 
 Casino::~Casino()
@@ -166,6 +167,36 @@ ESTADO_MAQUINA Casino::Get_Estado(int id_maq)
 		cout << "Erro ao procurar maquina. Nao existe uma maquina com ID=" << id_maq << endl << "\n";
 }
 
+int Casino::Memoria_Total()
+{
+	int memoriaTotal = 0;
+	
+	memoriaTotal += sizeof(*this);
+
+	for (list<Pessoa*>::iterator it = LP.begin(); it != LP.end(); it++)
+	{
+		memoriaTotal += sizeof(*it);
+	}
+	memoriaTotal += sizeof(LP);
+	for (list<Pessoa*>::iterator it = LPT.begin(); it != LPT.end(); it++)
+	{
+		memoriaTotal += sizeof(*it);
+	}
+	memoriaTotal += sizeof(LPT);
+	for (list<Pessoa*>::iterator it = LPJ.begin(); it != LPJ.end(); it++)
+	{
+		memoriaTotal += sizeof(*it);
+	}
+	memoriaTotal += sizeof(LPJ);
+	for (list<Maquina*>::iterator it = LM.begin(); it != LM.end(); it++)
+	{
+		memoriaTotal += sizeof(*it);
+	}
+	memoriaTotal += sizeof(LM);
+
+	return memoriaTotal;
+}
+
 list<Maquina*>* Casino::GerarMaquinas(int numMaquinas)
 {
 	list<Maquina*>* lista = new list<Maquina*>();
@@ -193,36 +224,6 @@ list<Maquina*>* Casino::GerarMaquinas(int numMaquinas)
 		lista->push_back(maq);
 	}
 	return lista;
-}
-
-void Casino::Run(bool Debug) {
-	int x = 0;
-	Relogio relogio;
-	relogio.StartRelogio(1, 0); // Inicia o relógio com velocidade 1 e tempo 0
-
-	// Adiciona 12 horas em segundos (12 horas * 60 minutos * 60 segundos)
-	const int duracao_casino_segundos = 43200;
-	time_t tempoTermino = relogio.VerTimeRelogio() + duracao_casino_segundos;
-
-	bool loopAtivo = true;
-
-	while (loopAtivo) {
-		time_t tempoAtual = relogio.VerTimeRelogio();
-
-		relogio.MostrarTempoSegundos(tempoAtual, tempoTermino, duracao_casino_segundos);
-
-		// Verificar se já se passaram as 12 horas
-		if (tempoAtual >= tempoTermino) {
-			loopAtivo = false;
-		}
-		else {
-			// Adicione sua lógica para o período do loop aqui
-			// ...
-
-			// Aguarda um segundo antes de avançar para o próximo ciclo
-			relogio.Wait(1);
-		}
-	}
 }
 
 list<Maquina*> Casino::Listar_Tipo(string Tipo, ostream& f)
@@ -281,6 +282,40 @@ list<Pessoa*> Casino::Jogadores_Mais_Ganhos()
 	return LPJ;
 }
 
+void Casino::Relatorio(string fich_xml)
+{
+	std::ofstream arquivo_xml(fich_xml); // Abre o arquivo XML para escrita
+	if (!arquivo_xml.is_open()) 
+	{
+		cout << "Erro ao abrir o arquivo XML.\n";
+		return;
+	}
+
+	arquivo_xml << "<DADOS>\n";
+	arquivo_xml << "\t<DEFINICOES>\n";
+	arquivo_xml << "\t\t<NOME>" << nomeC << "</NOME>\n";
+	arquivo_xml << "\t\t<HORA_INICIO>" << "15" << "</HORA_INICIO>\n";
+	arquivo_xml << "\t\t<HORA_FIM>" << "03" << "</HORA_FIM>\n";
+	arquivo_xml << "\t</DEFINICOES>\n";
+	arquivo_xml << "\t<LISTA_MAQ>\n";
+	for (list<Maquina*>::iterator it = LM.begin(); it != LM.end(); it++)
+	{
+		arquivo_xml << "\t\t<MAQUINA>\n";
+		arquivo_xml << "\t\t\t<ID>" << (*it)->getID() << "</ID>\n";
+		arquivo_xml << "\t\t\t<TIPO>" << (*it)->TipoMaquinaString() << "</TIPO>\n";
+		arquivo_xml << "\t\t\t<PROB_G>" << (*it)->porcentWin << "</PROB_G>\n";
+		arquivo_xml << "\t\t\t<X>" << (*it)->getX() << "</X>\n";
+		arquivo_xml << "\t\t\t<Y>" << (*it)->getY() << "</Y>\n";
+
+		arquivo_xml << "\t\t</MAQUINA>\n";
+	}
+	arquivo_xml << "\t</LISTA_MAQ>\n";
+
+
+	arquivo_xml << "</DADOS>";
+	arquivo_xml.close();
+}
+
 void Casino::Listar(float X, ostream& f)
 {
 	bool maquinaEncontrada = false;
@@ -298,6 +333,34 @@ void Casino::Listar(float X, ostream& f)
 		f << "Nenhuma maquina com probilidade maior ou igual a " << X << "\n";
 }
 
-void Casino::Run(bool Debug)
-{
+void Casino::Run(bool Debug) {
+	int x = 0;
+	Relogio relogio;
+	relogio.StartRelogio(360, 0); // Inicia o relógio com velocidade 1 e tempo 0
+
+	// Adiciona 12 horas em segundos (12 horas * 60 minutos * 60 segundos)
+	const int duracao_casino_segundos = 43200;
+	time_t tempoTermino = relogio.VerTimeRelogio() + duracao_casino_segundos;
+
+	bool loopAtivo = true;
+
+	while (loopAtivo) {
+		time_t tempoAtual = relogio.VerTimeRelogio();
+		int tempo = tempoAtual;
+		TempoAtualCasino = tempo;
+
+		relogio.MostrarTempoSegundos(tempoAtual, tempoTermino, duracao_casino_segundos);
+
+		// Verificar se já se passaram as 12 horas
+		if (tempoAtual >= tempoTermino) {
+			loopAtivo = false;
+		}
+		else {
+			// Adicione sua lógica para o período do loop aqui
+			// ...
+			cout << tempo << "\n";
+			// Aguarda um segundo antes de avançar para o próximo ciclo
+			relogio.Wait(1);
+		}
+	}
 }

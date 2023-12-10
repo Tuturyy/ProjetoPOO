@@ -48,6 +48,7 @@ public:
 	ESTADO_MAQUINA getEstado();
 	TIPO_MAQUINA getTipo();
 	Pessoa* getJogador();
+	string TipoMaquinaString(); // transformar TIPO_MAQUINA em string
 
 	//Importantes
 	void MostrarMaquina();
@@ -56,7 +57,7 @@ public:
 	
 
 	//Jogos
-	int CalcularBet();
+	int CalcularBet(); //calcular a aposta dos jogadores
 	bool Roulette(int bet, Casino* casino);
 	bool Slot(int bet, Casino* casino);
 	bool BlackJack(int bet, Casino* casino);

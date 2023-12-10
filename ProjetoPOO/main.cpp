@@ -12,9 +12,9 @@ int main()
 {
     //menuGeral();
     srand(time(NULL));
-    Casino* solverde = new Casino("solverde", 10);
+    Casino* solverde = new Casino("solverde", 8);
     solverde->LerFicheiro();
-    Pessoa* pessoa = solverde->GetPessoa();
+    /*Pessoa* pessoa = solverde->GetPessoa();
     Pessoa* pessoa2 = solverde->GetPessoa();
     Pessoa* pessoa3 = solverde->GetPessoa();
     solverde->AddPessoa(pessoa);
@@ -45,7 +45,12 @@ int main()
     solverde->Listar(40);
     cout << "\n";
     //solverde->MostrarListaMaquinas(solverde->Ranking_Das_Mais_Trabalhadores());
-    maq.MostrarMaquina();
+    maq.MostrarMaquina();*/
+
+    //solverde->MostrarMaquinas();
+    solverde->Relatorio("relatorio.txt");
+    cout << solverde->Memoria_Total();
+    //solverde->Run();
 
 
 
