@@ -182,12 +182,32 @@ void Casino::AtribuirMaquinaPessoa(Pessoa* pessoa)
 	{
 		if ((*it)->getEstado() == ESTADO_MAQUINA::OFF)
 		{
-			(*it)->SetJogador(pessoa);
+			(*it)->AddJogadorMaquina(pessoa);
 			return;
 		}
 	}
 	cout << "Maquinas indisponiveis.\n";
 	return;
+}
+
+void Casino::PessoasVaoParaMaquinas()
+{
+	int numPessoasEntrar = Util::RandNumInt(0, 5);
+	if (numPessoasEntrar + LP.size() <= PESSOAS_MAX_CASINO)
+	{
+		for (int i = 0; i < numPessoasEntrar; i++)
+		{
+			Pessoa* jogador = GetPessoa();
+			AddPessoa(jogador);
+		}
+	}
+	for (list<Pessoa*>::iterator it = LP.begin(); it != LP.end(); ++it)
+	{
+		if ((*it)->getMaquina()==nullptr)
+		{
+			AtribuirMaquinaPessoa((*it));
+		}
+	}
 }
 
 int Casino::Memoria_Total()
@@ -381,7 +401,9 @@ void Casino::Run(bool Debug) {
 		else {
 			// Adicione sua lógica para o período do loop aqui
 			// ...
+			PessoasVaoParaMaquinas();
 			cout << tempo << "\n";
+			cout << LP.size();
 			// Aguarda um segundo antes de avançar para o próximo ciclo
 			relogio.Wait(1);
 		}

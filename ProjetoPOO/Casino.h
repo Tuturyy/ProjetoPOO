@@ -13,6 +13,7 @@ using namespace std;
 
 #define X_MAX_CASINO 50
 #define Y_MAX_CASINO 50
+#define PESSOAS_MAX_CASINO 50
 
 class Casino
 {
@@ -54,6 +55,7 @@ public:
 	void Desligar(int id_maq);
 	ESTADO_MAQUINA Get_Estado(int id_maq);
 	void AtribuirMaquinaPessoa(Pessoa* pessoa);
+	void PessoasVaoParaMaquinas();
 	list<Maquina*>* GerarMaquinas(int numMaquinas);
 	list<Maquina*> Listar_Tipo(string Tipo, ostream& f = std::cout);
 	list<string>* Ranking_Dos_Fracos();
