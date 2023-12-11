@@ -183,6 +183,7 @@ void Casino::AtribuirMaquinaPessoa(Pessoa* pessoa)
 		if ((*it)->getEstado() == ESTADO_MAQUINA::OFF)
 		{
 			(*it)->AddJogadorMaquina(pessoa);
+			cout << "Adicionada Pessoa: " << pessoa->getNome() << " A Maquina: " << (*it)->getID() << "\n";
 			return;
 		}
 	}
@@ -203,7 +204,7 @@ void Casino::PessoasVaoParaMaquinas()
 	}
 	for (list<Pessoa*>::iterator it = LP.begin(); it != LP.end(); ++it)
 	{
-		if ((*it)->getMaquina()==nullptr)
+		if ((*it)->getMaquina() == nullptr)
 		{
 			AtribuirMaquinaPessoa((*it));
 		}
@@ -402,8 +403,7 @@ void Casino::Run(bool Debug) {
 			// Adicione sua lógica para o período do loop aqui
 			// ...
 			PessoasVaoParaMaquinas();
-			cout << tempo << "\n";
-			cout << LP.size();
+			cout << "Numero de Pessoas: " << LP.size() << "\n";
 			// Aguarda um segundo antes de avançar para o próximo ciclo
 			relogio.Wait(1);
 		}

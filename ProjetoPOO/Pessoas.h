@@ -6,6 +6,7 @@
 #include"Uteis.h"
 
 class Casino;
+class Maquina;
 
 class Pessoa {
 	int ID;
