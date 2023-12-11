@@ -11,7 +11,7 @@ Pessoa::Pessoa(int _ID, std::string _Nome, std::string _Localidade, int _Idade)
 	Nome = _Nome;
 	Localidade = _Localidade;
 	Idade = _Idade;
-	maquina = nullptr;
+	Ptr_Maquina = nullptr;
 	Saldo = 0;
 	SaldoInicial = 0;
 	Lucro = 0;
@@ -45,12 +45,12 @@ int Pessoa::getSaldo(){
 
 Maquina* Pessoa::getMaquina()
 {
-	return maquina;
+	return Ptr_Maquina;
 }
 
 void Pessoa::SetMaquina(Maquina* novaMaquina)
 {
-	maquina = novaMaquina;
+	Ptr_Maquina = novaMaquina;
 }
 
 void Pessoa::adicionaSaldo(int novoSaldo) {

@@ -211,6 +211,11 @@ void Casino::PessoasVaoParaMaquinas()
 	}
 }
 
+void Casino::PessoasSaemDasMaquinas()
+{
+
+}
+
 int Casino::Memoria_Total()
 {
 	int memoriaTotal = 0;
@@ -401,10 +406,10 @@ void Casino::Run(bool Debug) {
 		}
 		else {
 			// Adicione sua lógica para o período do loop aqui
-			// ...
 			PessoasVaoParaMaquinas();
+
+
 			cout << "Numero de Pessoas: " << LP.size() << "\n";
-			// Aguarda um segundo antes de avançar para o próximo ciclo
 			relogio.Wait(1);
 		}
 	}

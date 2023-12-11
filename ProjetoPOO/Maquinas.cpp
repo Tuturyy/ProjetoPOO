@@ -123,6 +123,12 @@ void Maquina::AddJogadorMaquina(Pessoa* player)
 	estado = ESTADO_MAQUINA::ON;
 }
 
+void Maquina::RmvJogadorMaquina()
+{
+	jogador = nullptr;
+	estado = ESTADO_MAQUINA::OFF;
+}
+
 int Maquina::CalcularBet()
 {
 	if (jogador->Saldo > 0)
