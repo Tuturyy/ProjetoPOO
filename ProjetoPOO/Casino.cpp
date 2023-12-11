@@ -190,6 +190,11 @@ void Casino::AtribuirMaquinaPessoa(Pessoa* pessoa)
 	return;
 }
 
+void Casino::PessoasVaoParaMaquinas()
+{
+	
+}
+
 int Casino::Memoria_Total()
 {
 	int memoriaTotal = 0;
