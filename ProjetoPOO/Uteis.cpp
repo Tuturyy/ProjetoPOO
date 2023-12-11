@@ -16,3 +16,4 @@ double Util::RandNumDouble(double LimInf, double LimSup)
 	std::uniform_real_distribution<> dis(LimInf, LimSup);
 	return dis(gen);
 }
+

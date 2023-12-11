@@ -1,6 +1,11 @@
 #include "Casino.h"
 #include "Uteis.h"
 #include "Relogio.h"
+#include <algorithm>
+
+using namespace std;
+
+
 
 
 Casino::Casino(string nome, int numMaquinas)
@@ -165,6 +170,24 @@ ESTADO_MAQUINA Casino::Get_Estado(int id_maq)
 	}
 	else
 		cout << "Erro ao procurar maquina. Nao existe uma maquina com ID=" << id_maq << endl << "\n";
+}
+
+void Casino::AtribuirMaquinaPessoa(Pessoa* pessoa)
+{
+	list<Maquina*> MaquinasAleatorias = LM;
+	vector<Maquina*> MaquinasVector(MaquinasAleatorias.begin(), MaquinasAleatorias.end());
+
+	std::random_shuffle(MaquinasVector.begin(), MaquinasVector.end());
+	for (vector<Maquina*>::iterator it = MaquinasVector.begin(); it != MaquinasVector.end(); it++)
+	{
+		if ((*it)->getEstado() == ESTADO_MAQUINA::OFF)
+		{
+			(*it)->SetJogador(pessoa);
+			return;
+		}
+	}
+	cout << "Maquinas indisponiveis.\n";
+	return;
 }
 
 int Casino::Memoria_Total()

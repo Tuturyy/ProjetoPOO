@@ -7,59 +7,59 @@
 	<LISTA_MAQ>
 		<MAQUINA>
 			<ID>1</ID>
-			<TIPO>Roleta</TIPO>
-			<PROB_G>48.6486</PROB_G>
-			<X>47</X>
-			<Y>17</Y>
+			<TIPO>Poker</TIPO>
+			<PROB_G>40</PROB_G>
+			<X>17</X>
+			<Y>16</Y>
 		</MAQUINA>
 		<MAQUINA>
 			<ID>2</ID>
 			<TIPO>Roleta</TIPO>
 			<PROB_G>48.6486</PROB_G>
-			<X>9</X>
-			<Y>36</Y>
+			<X>3</X>
+			<Y>6</Y>
 		</MAQUINA>
 		<MAQUINA>
 			<ID>3</ID>
-			<TIPO>ClassicSlots</TIPO>
-			<PROB_G>35</PROB_G>
-			<X>16</X>
-			<Y>7</Y>
+			<TIPO>Poker</TIPO>
+			<PROB_G>40</PROB_G>
+			<X>28</X>
+			<Y>5</Y>
 		</MAQUINA>
 		<MAQUINA>
 			<ID>4</ID>
-			<TIPO>BlackJack</TIPO>
-			<PROB_G>42.22</PROB_G>
-			<X>26</X>
-			<Y>18</Y>
+			<TIPO>Poker</TIPO>
+			<PROB_G>40</PROB_G>
+			<X>19</X>
+			<Y>16</Y>
 		</MAQUINA>
 		<MAQUINA>
 			<ID>5</ID>
-			<TIPO>BlackJack</TIPO>
-			<PROB_G>42.22</PROB_G>
-			<X>23</X>
-			<Y>26</Y>
+			<TIPO>ClassicSlots</TIPO>
+			<PROB_G>35</PROB_G>
+			<X>12</X>
+			<Y>7</Y>
 		</MAQUINA>
 		<MAQUINA>
 			<ID>6</ID>
-			<TIPO>Roleta</TIPO>
-			<PROB_G>48.6486</PROB_G>
-			<X>5</X>
-			<Y>23</Y>
+			<TIPO>BlackJack</TIPO>
+			<PROB_G>42.22</PROB_G>
+			<X>9</X>
+			<Y>21</Y>
 		</MAQUINA>
 		<MAQUINA>
 			<ID>7</ID>
-			<TIPO>ClassicSlots</TIPO>
-			<PROB_G>35</PROB_G>
-			<X>6</X>
-			<Y>50</Y>
+			<TIPO>Poker</TIPO>
+			<PROB_G>40</PROB_G>
+			<X>37</X>
+			<Y>16</Y>
 		</MAQUINA>
 		<MAQUINA>
 			<ID>8</ID>
-			<TIPO>ClassicSlots</TIPO>
-			<PROB_G>35</PROB_G>
-			<X>37</X>
-			<Y>11</Y>
+			<TIPO>BlackJack</TIPO>
+			<PROB_G>42.22</PROB_G>
+			<X>24</X>
+			<Y>43</Y>
 		</MAQUINA>
 	</LISTA_MAQ>
 </DADOS>

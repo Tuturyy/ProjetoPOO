@@ -42,24 +42,29 @@ public:
 	Pessoa* GetPessoa();
 	void AddPessoa(Pessoa *pessoa);
 	void RmvPessoa(Pessoa* pessoa);
+	list<Pessoa*> Jogadores_Mais_Ganhos();
+	//list<User*>* Jogadores_Mais_Frequentes();
+
 
 	//Funções de Maquinas
 	bool AddMaquina(Maquina* m);
 	Maquina* PesquisarMaquinaID(int id_maq);
 	void MostrarMaquinas();
 	void MostrarListaMaquinas(list<Maquina*> lista);
-	void Listar(ostream& f = std::cout);
 	void Desligar(int id_maq);
 	ESTADO_MAQUINA Get_Estado(int id_maq);
-	int Memoria_Total();
+	void AtribuirMaquinaPessoa(Pessoa* pessoa);
 	list<Maquina*>* GerarMaquinas(int numMaquinas);
 	list<Maquina*> Listar_Tipo(string Tipo, ostream& f = std::cout);
 	list<string>* Ranking_Dos_Fracos();
 	list<Maquina*> Ranking_Das_Mais_Trabalhadores();
-	//list<User*>* Jogadores_Mais_Frequentes();
-	list<Pessoa*> Jogadores_Mais_Ganhos();
-	void Relatorio(string fich_xml);
 	void SubirProbabilidadeVizinhas(Maquina* M_ganhou, float R, list<Maquina*>& lmvizinhas);
 	void Listar(float X, ostream& f = std::cout);
+	
+
+	//Programa
+	int Memoria_Total();
+	void Listar(ostream& f = std::cout);
+	void Relatorio(string fich_xml);
 	void Run(bool Debug = true);
 };

@@ -67,6 +67,11 @@ string Maquina::TipoMaquinaString()
 	return "Erro no tipo de maquina.";
 }
 
+void Maquina::SetJogador(Pessoa* novoJogador)
+{
+	jogador = novoJogador;
+}
+
 int Maquina::getX()
 {
 	return x;
