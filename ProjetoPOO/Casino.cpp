@@ -116,7 +116,7 @@ void Casino::AddPessoa(Pessoa *pessoa) {
 
 void Casino::RmvPessoa(Pessoa* pessoa) {
 	pessoa->PessoaParaFora();
-	LP.remove(pessoa); //nao se pode usar remove
+	LP.remove(pessoa);
 }
 
 bool Casino::AddMaquina(Maquina* m)
@@ -190,11 +190,6 @@ void Casino::AtribuirMaquinaPessoa(Pessoa* pessoa)
 	}
 	cout << "Maquinas indisponiveis.\n";
 	return;
-}
-
-void Casino::PessoasSaemDasMaquinas()
-{
-
 }
 
 int Casino::Memoria_Total()

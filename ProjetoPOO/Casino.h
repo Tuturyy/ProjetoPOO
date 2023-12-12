@@ -56,7 +56,6 @@ public:
 	ESTADO_MAQUINA Get_Estado(int id_maq);
 	void AtribuirMaquinaPessoa(Pessoa* pessoa);
 	void PessoasVaoParaMaquinas();
-	void PessoasSaemDasMaquinas();
 	list<Maquina*>* GerarMaquinas(int numMaquinas);
 	list<Maquina*> Listar_Tipo(string Tipo, ostream& f = std::cout);
 	list<string>* Ranking_Dos_Fracos();
