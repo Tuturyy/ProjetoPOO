@@ -29,7 +29,7 @@ public:
 	std::string getLocalidade();
 	int getIdade();
 	int getSaldo();
-	void setSado(int novoSaldo);
+	void setSaldo(int novoSaldo);
 	Maquina* getMaquina();
 	int getHoraSaidaCasino();
 	void SetMaquina(Maquina* novaMaquina);

@@ -44,7 +44,7 @@ int Pessoa::getSaldo(){
 	return Saldo;
 }
 
-void Pessoa::setSado(int novoSaldo)
+void Pessoa::setSaldo(int novoSaldo)
 {
 	Saldo = novoSaldo;
 }
