@@ -64,6 +64,11 @@ void Pessoa::SetMaquina(Maquina* novaMaquina)
 	Ptr_Maquina = novaMaquina;
 }
 
+void Pessoa::SetHoraSaidaCasino(int novaHora)
+{
+	HoraSaidaCasino = novaHora;
+}
+
 void Pessoa::adicionaSaldo(int novoSaldo) {
 	Saldo = novoSaldo;
 	SaldoInicial = novoSaldo;

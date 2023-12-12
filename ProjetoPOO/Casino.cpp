@@ -196,26 +196,26 @@ int Casino::Memoria_Total()
 {
 	int memoriaTotal = 0;
 	
-	memoriaTotal += sizeof(*this);
+	memoriaTotal += sizeof(this);
 
 	for (list<Pessoa*>::iterator it = LP.begin(); it != LP.end(); it++)
 	{
-		memoriaTotal += sizeof(*it);
+		memoriaTotal += sizeof((*it));
 	}
 	memoriaTotal += sizeof(LP);
 	for (list<Pessoa*>::iterator it = LPT.begin(); it != LPT.end(); it++)
 	{
-		memoriaTotal += sizeof(*it);
+		memoriaTotal += sizeof((*it));
 	}
 	memoriaTotal += sizeof(LPT);
 	for (list<Pessoa*>::iterator it = LPJ.begin(); it != LPJ.end(); it++)
 	{
-		memoriaTotal += sizeof(*it);
+		memoriaTotal += sizeof((*it));
 	}
 	memoriaTotal += sizeof(LPJ);
 	for (list<Maquina*>::iterator it = LM.begin(); it != LM.end(); it++)
 	{
-		memoriaTotal += sizeof(*it);
+		memoriaTotal += sizeof((*it));
 	}
 	memoriaTotal += sizeof(LM);
 
@@ -367,6 +367,8 @@ void Casino::PessoasVaoParaMaquinas()
 		for (int i = 0; i < numPessoasEntrar; i++)
 		{
 			Pessoa* jogador = GetPessoa();
+			int DuracaoNoCasino = Util::RandNumInt(30 * 60, 2 * 60 * 60);//de 30min a 2horas
+			jogador->SetHoraSaidaCasino(TempoAtualCasino + DuracaoNoCasino);
 			AddPessoa(jogador);
 		}
 	}
@@ -397,12 +399,18 @@ void Casino::PessoasJogam()
 
 void Casino::VerificarSaidaPessoas()
 {
+	list<Pessoa*> PessoasaRemover;
 	for (list<Pessoa*>::iterator it = LP.begin(); it != LP.end(); ++it)
 	{
 		if (((*it)->getSaldo() <= 0) || (TempoAtualCasino >= (*it)->getHoraSaidaCasino()))
 		{
-			RmvPessoa((*it));
+			PessoasaRemover.push_back((*it));
 		}
+	}
+
+	for (list<Pessoa*>::iterator it = PessoasaRemover.begin(); it != PessoasaRemover.end(); it++)
+	{
+		RmvPessoa((*it));
 	}
 }
 
@@ -430,6 +438,7 @@ void Casino::Run(bool Debug) {
 		}
 		else {
 			// Adicione sua lógica para o período do loop aqui
+			VerificarSaidaPessoas();
 			PessoasVaoParaMaquinas();
 			PessoasJogam();
 			cout << "Numero de Pessoas: " << LP.size() << "\n";
