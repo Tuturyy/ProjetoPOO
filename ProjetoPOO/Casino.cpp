@@ -222,9 +222,18 @@ int Casino::Memoria_Total()
 	return memoriaTotal;
 }
 
-void Casino::ListarEstadoCasino(ostream& f = std::cout)
+void Casino::ListarEstadoCasino(ostream& f)
 {
-	
+	f << "Nome do Casino: " << nomeC << "\n";
+
+	int horaAbertura = 15;
+	int horaFecho = 3;
+
+	f << "Hora de abertura: " << horaAbertura << "h\n";
+	f << "Hora de fecho: " << horaFecho << "h\n";
+
+	f << "Lista de Maquinas do Casino:\n";
+	MostrarMaquinas();
 	
 }
 
@@ -307,10 +316,18 @@ list<Maquina*> Casino::Ranking_Das_Mais_Trabalhadores()
 
 list<Pessoa*> Casino::Jogadores_Mais_Ganhos()
 {
+	cout << "\nTOP 10 Jogadores com mais Lucro:\n\n";
 	list<Pessoa*> JogadoresMaisLucro = LPJ;
 	JogadoresMaisLucro.sort([](const Pessoa* a, const Pessoa* b) {
 		return a->Lucro > b->Lucro;
-		});
+	});
+
+	if (JogadoresMaisLucro.size() > 10) {
+		auto it = JogadoresMaisLucro.begin();
+		advance(it, 10);
+		JogadoresMaisLucro.erase(it, JogadoresMaisLucro.end());
+	}
+
 	return JogadoresMaisLucro;
 }
 
@@ -423,7 +440,7 @@ void Casino::VerificarSaidaPessoas()
 void Casino::Run(bool Debug) {
 	int x = 0;
 	Relogio relogio;
-	relogio.StartRelogio(360, 0); // Inicia o relógio com velocidade 1 e tempo 0
+	relogio.StartRelogio(5400, 0); // Inicia o relógio com velocidade 1 e tempo 0
 
 	// Adiciona 12 horas em segundos (12 horas * 60 minutos * 60 segundos)
 	const int duracao_casino_segundos = 43200;

@@ -50,8 +50,9 @@ int main()
     //solverde->MostrarMaquinas();
     //solverde->Relatorio("relatorio.txt");
     
-    solverde->ListarEstadoCasino();
+    //solverde->ListarEstadoCasino();
 
+    solverde->Run();
     solverde->MostrarListaPessoas(solverde->Jogadores_Mais_Ganhos());
     cout << "Dinheiro Recebido= " << solverde->DinheiroRecebido;
     cout << "Dinheiro Perdido= " << solverde->DinheiroPerdido;
