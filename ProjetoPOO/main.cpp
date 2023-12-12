@@ -50,7 +50,7 @@ int main()
     //solverde->MostrarMaquinas();
     //solverde->Relatorio("relatorio.txt");
     
-    solverde->Run();
+    solverde->ListarEstadoCasino();
 
 
     //cout <<"\n\nMemoria Ocupada: " << solverde->Memoria_Total();

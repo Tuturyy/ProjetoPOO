@@ -222,6 +222,12 @@ int Casino::Memoria_Total()
 	return memoriaTotal;
 }
 
+void Casino::ListarEstadoCasino(ostream& f = std::cout)
+{
+	
+	
+}
+
 list<Maquina*>* Casino::GerarMaquinas(int numMaquinas)
 {
 	list<Maquina*>* lista = new list<Maquina*>();
@@ -342,7 +348,7 @@ void Casino::Relatorio(string fich_xml)
 	arquivo_xml.close();
 }
 
-void Casino::Listar(float X, ostream& f)
+void Casino::ListarMaquinasProbabilidadeMaiorQueX(float X, ostream& f)
 {
 	bool maquinaEncontrada = false;
 	for (list<Maquina*>::iterator it = LM.begin(); it != LM.end(); it++)

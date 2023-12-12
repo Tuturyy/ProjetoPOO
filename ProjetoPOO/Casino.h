@@ -60,12 +60,12 @@ public:
 	list<string>* Ranking_Dos_Fracos();
 	list<Maquina*> Ranking_Das_Mais_Trabalhadores();
 	void SubirProbabilidadeVizinhas(Maquina* M_ganhou, float R, list<Maquina*>& lmvizinhas);
-	void Listar(float X, ostream& f = std::cout);
+	void ListarMaquinasProbabilidadeMaiorQueX(float X, ostream& f = std::cout);
 	
 
 	//Programa
 	int Memoria_Total();
-	void Listar(ostream& f = std::cout);
+	void ListarEstadoCasino(ostream& f = std::cout);
 	void Relatorio(string fich_xml);
 	void PessoasVaoParaMaquinas();
 	void PessoasJogam();
