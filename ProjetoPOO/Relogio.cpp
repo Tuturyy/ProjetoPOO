@@ -48,5 +48,5 @@ void Relogio::Wait(int s) {
 void Relogio::MostrarTempoSegundos(int TempoAtual, int TempoFinal, int TempoTotal)
 {
     std::cout << "Tempo atual: " << TempoAtual - TempoFinal + TempoTotal << std::endl;
-    std::cout << "Tempo de termino: " << TempoFinal - TempoFinal + TempoTotal << std::endl;
+    std::cout << "Tempo final: " << TempoFinal - TempoFinal + TempoTotal << std::endl;
 }

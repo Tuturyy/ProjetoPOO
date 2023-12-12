@@ -50,8 +50,6 @@ public:
 	Pessoa* getJogador();
 	string TipoMaquinaString(); // transformar TIPO_MAQUINA em string
 
-	//Alterar
-	void SetJogador(Pessoa* novoJogador);
 
 	//Importantes
 	void MostrarMaquina();

@@ -12,7 +12,7 @@ int main()
 {
     //menuGeral();
     srand(time(NULL));
-    Casino* solverde = new Casino("solverde", 8);
+    Casino* solverde = new Casino("solverde",40);
     solverde->LerFicheiro();
     /*Pessoa* pessoa = solverde->GetPessoa();
     Pessoa* pessoa2 = solverde->GetPessoa();

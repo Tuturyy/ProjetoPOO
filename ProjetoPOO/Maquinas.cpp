@@ -67,11 +67,6 @@ string Maquina::TipoMaquinaString()
 	return "Erro no tipo de maquina.";
 }
 
-void Maquina::SetJogador(Pessoa* novoJogador)
-{
-	jogador = novoJogador;
-}
-
 int Maquina::getX()
 {
 	return x;
@@ -124,6 +119,7 @@ void Maquina::AddJogadorMaquina(Pessoa* player)
 		return;
 	}
 	jogador = player;
+	player->SetMaquina(this);
 	estado = ESTADO_MAQUINA::ON;
 }
 

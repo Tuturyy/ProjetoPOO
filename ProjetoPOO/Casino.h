@@ -13,6 +13,7 @@ using namespace std;
 
 #define X_MAX_CASINO 50
 #define Y_MAX_CASINO 50
+#define PESSOAS_MAX_CASINO 50
 
 class Casino
 {

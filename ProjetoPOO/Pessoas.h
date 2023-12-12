@@ -6,6 +6,7 @@
 #include"Uteis.h"
 
 class Casino;
+class Maquina;
 
 class Pessoa {
 	int ID;
@@ -13,6 +14,7 @@ class Pessoa {
 	std::string Localidade;
 	int Idade;
 	Casino* Ptr_Casino;
+	Maquina* maquina;
 	int SaldoInicial;
 public:
 	std::list<std::string> historico;
@@ -26,6 +28,8 @@ public:
 	std::string getLocalidade();
 	int getIdade();
 	int getSaldo();
+	Maquina* getMaquina();
+	void SetMaquina(Maquina* novaMaquina);
 	void adicionaSaldo(int novoSaldo);
 	void MostrarPessoa();
 	void PessoaParaCasino(Casino* Pc) {Ptr_Casino = Pc;}
