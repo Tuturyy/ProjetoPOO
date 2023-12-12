@@ -33,6 +33,7 @@ public:
 	Maquina* getMaquina();
 	int getHoraSaidaCasino();
 	void SetMaquina(Maquina* novaMaquina);
+	void SetHoraSaidaCasino(int novaHora);
 	void adicionaSaldo(int novoSaldo);
 	void MostrarPessoa();
 	void PessoaParaCasino(Casino* Pc) {Ptr_Casino = Pc;}
