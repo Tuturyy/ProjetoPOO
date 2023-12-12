@@ -115,7 +115,7 @@ void Casino::AddPessoa(Pessoa *pessoa) {
 }
 
 void Casino::RmvPessoa(Pessoa* pessoa) {
-	pessoa->PessoaParaFora();
+	pessoa->PessoaParaForaCasino();
 	LP.remove(pessoa);
 }
 
@@ -183,12 +183,22 @@ void Casino::AtribuirMaquinaPessoa(Pessoa* pessoa)
 		if ((*it)->getEstado() == ESTADO_MAQUINA::OFF)
 		{
 			(*it)->AddJogadorMaquina(pessoa);
-			cout << "Adicionada Pessoa: " << pessoa->getNome() << " A Maquina: " << (*it)->getID() << "\n";
+			cout << "Adicionada a Pessoa " << pessoa->getNome() << " à Maquina " << (*it)->getID() << "\n";
 			return;
 		}
 	}
 	cout << "Maquinas indisponiveis.\n";
 	return;
+}
+
+void Casino::RetirarPessoaMaquina(Pessoa* pessoa)
+{
+	Maquina* maquina = pessoa->getMaquina();
+	if (maquina != nullptr)
+	{
+		maquina->RmvJogadorMaquina();
+		pessoa->PessoaParaForaMaquina();
+	}
 }
 
 void Casino::PessoasVaoParaMaquinas()
@@ -209,11 +219,6 @@ void Casino::PessoasVaoParaMaquinas()
 			AtribuirMaquinaPessoa((*it));
 		}
 	}
-}
-
-void Casino::PessoasSaemDasMaquinas()
-{
-
 }
 
 int Casino::Memoria_Total()
@@ -407,7 +412,18 @@ void Casino::Run(bool Debug) {
 		else {
 			// Adicione sua lógica para o período do loop aqui
 			PessoasVaoParaMaquinas();
+			
+			for (auto it = LP.begin(); it != LP.end(); ++it) {
+				if ((*it)->getMaquina() != nullptr) {
+					Maquina* maquina = (*it)->getMaquina();
+					int maquinaID = maquina->getID();
 
+					RetirarPessoaMaquina((*it));
+
+					std::cout << "Retirada a Pessoa " << (*it)->getNome() << " da Maquina " << maquinaID << "\n";
+
+				}
+			}
 
 			cout << "Numero de Pessoas: " << LP.size() << "\n";
 			relogio.Wait(1);
