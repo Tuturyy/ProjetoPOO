@@ -169,7 +169,7 @@ int Maquina::CalcularBet()
 			if (probabilidade<=0.90)// 90% de chances de o jogador apostar 1 a 5% do seu saldo
 			{
 				porcentagemSaldo = Util::RandNumDouble(0.01, 0.05);
-				apostaRoleta = jogador->Saldo * porcentagemSaldo;
+				apostaRoleta = jogador ->Saldo * porcentagemSaldo;
 				if (apostaRoleta < 1) {
 					apostaRoleta = 1; // valor minimo da aposta e 1
 				}

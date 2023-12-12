@@ -409,7 +409,7 @@ void Casino::VerificarSaidaPessoas()
 void Casino::Run(bool Debug) {
 	int x = 0;
 	Relogio relogio;
-	relogio.StartRelogio(10, 0); // Inicia o relógio com velocidade 1 e tempo 0
+	relogio.StartRelogio(10, 0); // Inicia o relógio com velocidade x e tempo 0
 
 	// Adiciona 12 horas em segundos (12 horas * 60 minutos * 60 segundos)
 	const int duracao_casino_segundos = 43200;
