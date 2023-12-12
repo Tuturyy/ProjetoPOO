@@ -14,7 +14,7 @@ class Pessoa {
 	std::string Localidade;
 	int Idade;
 	Casino* Ptr_Casino;
-	Maquina* maquina;
+	Maquina* Ptr_Maquina;
 	int Saldo;
 	int SaldoInicial;
 	int HoraSaidaCasino;
@@ -29,7 +29,7 @@ public:
 	std::string getLocalidade();
 	int getIdade();
 	int getSaldo();
-	void setSado(int novoSaldo);
+	void setSaldo(int novoSaldo);
 	Maquina* getMaquina();
 	int getHoraSaidaCasino();
 	void SetMaquina(Maquina* novaMaquina);
