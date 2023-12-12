@@ -15,10 +15,11 @@ class Pessoa {
 	int Idade;
 	Casino* Ptr_Casino;
 	Maquina* maquina;
+	int Saldo;
 	int SaldoInicial;
+	int HoraSaidaCasino;
 public:
 	std::list<std::string> historico;
-	int Saldo;
 	int Lucro;
 	int VitoriasConsecutivas;
 	Pessoa(int _ID, std::string _Nome, std::string _Localidade, int _Idade);
@@ -28,7 +29,9 @@ public:
 	std::string getLocalidade();
 	int getIdade();
 	int getSaldo();
+	void setSado(int novoSaldo);
 	Maquina* getMaquina();
+	int getHoraSaidaCasino();
 	void SetMaquina(Maquina* novaMaquina);
 	void adicionaSaldo(int novoSaldo);
 	void MostrarPessoa();

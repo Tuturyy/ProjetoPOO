@@ -55,7 +55,6 @@ public:
 	void Desligar(int id_maq);
 	ESTADO_MAQUINA Get_Estado(int id_maq);
 	void AtribuirMaquinaPessoa(Pessoa* pessoa);
-	void PessoasVaoParaMaquinas();
 	list<Maquina*>* GerarMaquinas(int numMaquinas);
 	list<Maquina*> Listar_Tipo(string Tipo, ostream& f = std::cout);
 	list<string>* Ranking_Dos_Fracos();
@@ -68,5 +67,8 @@ public:
 	int Memoria_Total();
 	void Listar(ostream& f = std::cout);
 	void Relatorio(string fich_xml);
+	void PessoasVaoParaMaquinas();
+	void PessoasJogam();
+	void VerificarSaidaPessoas();
 	void Run(bool Debug = true);
 };

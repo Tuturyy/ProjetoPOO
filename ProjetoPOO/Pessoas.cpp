@@ -16,6 +16,7 @@ Pessoa::Pessoa(int _ID, std::string _Nome, std::string _Localidade, int _Idade)
 	SaldoInicial = 0;
 	Lucro = 0;
 	VitoriasConsecutivas = 0;
+	HoraSaidaCasino = 0;
 }
 
 Pessoa::~Pessoa()
@@ -43,9 +44,19 @@ int Pessoa::getSaldo(){
 	return Saldo;
 }
 
+void Pessoa::setSado(int novoSaldo)
+{
+	Saldo = novoSaldo;
+}
+
 Maquina* Pessoa::getMaquina()
 {
 	return maquina;
+}
+
+int Pessoa::getHoraSaidaCasino()
+{
+	return HoraSaidaCasino;
 }
 
 void Pessoa::SetMaquina(Maquina* novaMaquina)

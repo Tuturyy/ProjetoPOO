@@ -7,10 +7,15 @@
 
 using namespace std;
 
-#define WIN_PORC_POKER 40
+#define WIN_PORC_POKER 40 //em %
 #define WIN_PORC_BLACKJACK 42.22
 #define WIN_PORC_ROLETA (18.0/37)
 #define WIN_PORC_SLOT 35
+
+#define	TEMPO_JOGADA_POKER 300 //em segundos
+#define	TEMPO_JOGADA_BLACKJACK 120
+#define	TEMPO_JOGADA_ROLETA 60
+#define	TEMPO_JOGADA_SLOT 5
 
 class Casino;
 
@@ -36,6 +41,7 @@ public:
 	float porcentWin;
 	int Lucro;
 	int Utilizacoes;
+	int TempoJogadaTerminada;
 
 	//Construtor e destrutor
 	Maquina(int _id, TIPO_MAQUINA _tipo, int _x, int _y);
@@ -49,12 +55,14 @@ public:
 	TIPO_MAQUINA getTipo();
 	Pessoa* getJogador();
 	string TipoMaquinaString(); // transformar TIPO_MAQUINA em string
+	int getTempoJogadaMaquina();
 
 
 	//Importantes
 	void MostrarMaquina();
 	void DesligarMaquina();
 	void AddJogadorMaquina(Pessoa* player);
+	void RemoverJogadorMaquina();
 	
 
 	//Jogos

@@ -116,7 +116,7 @@ void Casino::AddPessoa(Pessoa *pessoa) {
 
 void Casino::RmvPessoa(Pessoa* pessoa) {
 	pessoa->PessoaParaFora();
-	LP.remove(pessoa);
+	LP.remove(pessoa); //nao se pode usar remove
 }
 
 bool Casino::AddMaquina(Maquina* m)
@@ -183,37 +183,13 @@ void Casino::AtribuirMaquinaPessoa(Pessoa* pessoa)
 		if ((*it)->getEstado() == ESTADO_MAQUINA::OFF)
 		{
 			(*it)->AddJogadorMaquina(pessoa);
-			cout << "Adicionada Pessoa: " << pessoa->getNome() << " A Maquina: " << (*it)->getID() << "\n";
+			(*it)->TempoJogadaTerminada = TempoAtualCasino + (*it)->getTempoJogadaMaquina();
+			//cout << "Adicionada Pessoa: " << pessoa->getNome() << " A Maquina: " << (*it)->getID() << "\n";
 			return;
 		}
 	}
 	cout << "Maquinas indisponiveis.\n";
 	return;
-}
-
-void Casino::PessoasVaoParaMaquinas()
-{
-	int numPessoasEntrar = Util::RandNumInt(0, 5);
-	if (numPessoasEntrar + LP.size() <= PESSOAS_MAX_CASINO)
-	{
-		for (int i = 0; i < numPessoasEntrar; i++)
-		{
-			Pessoa* jogador = GetPessoa();
-			AddPessoa(jogador);
-		}
-	}
-	for (list<Pessoa*>::iterator it = LP.begin(); it != LP.end(); ++it)
-	{
-		if ((*it)->getMaquina() == nullptr)
-		{
-			AtribuirMaquinaPessoa((*it));
-		}
-	}
-}
-
-void Casino::PessoasVaoParaMaquinas()
-{
-	
 }
 
 int Casino::Memoria_Total()
@@ -325,10 +301,11 @@ list<Maquina*> Casino::Ranking_Das_Mais_Trabalhadores()
 
 list<Pessoa*> Casino::Jogadores_Mais_Ganhos()
 {
-	LPJ.sort([](const Pessoa* a, const Pessoa* b) {
+	list<Pessoa*> JogadoresMaisLucro = LPJ;
+	JogadoresMaisLucro.sort([](const Pessoa* a, const Pessoa* b) {
 		return a->Lucro > b->Lucro;
 		});
-	return LPJ;
+	return JogadoresMaisLucro;
 }
 
 void Casino::Relatorio(string fich_xml)
@@ -382,10 +359,57 @@ void Casino::Listar(float X, ostream& f)
 		f << "Nenhuma maquina com probilidade maior ou igual a " << X << "\n";
 }
 
+void Casino::PessoasVaoParaMaquinas()
+{
+	int numPessoasEntrar = Util::RandNumInt(0, 5);
+	if (numPessoasEntrar + LP.size() <= PESSOAS_MAX_CASINO)
+	{
+		for (int i = 0; i < numPessoasEntrar; i++)
+		{
+			Pessoa* jogador = GetPessoa();
+			AddPessoa(jogador);
+		}
+	}
+	for (list<Pessoa*>::iterator it = LP.begin(); it != LP.end(); ++it)
+	{
+		if ((*it)->getMaquina() == nullptr)
+		{
+			AtribuirMaquinaPessoa((*it));
+		}
+	}
+}
+
+
+void Casino::PessoasJogam()
+{
+	for (list<Maquina*>::iterator it = LM.begin(); it != LM.end(); ++it)
+	{
+		if ((*it)->getEstado() == ESTADO_MAQUINA::ON)
+		{
+			if (TempoAtualCasino >= (*it)->TempoJogadaTerminada) //verificar se o jogador ja teve o tempo para jogar
+			{
+				(*it)->JogadorJoga((*it)->CalcularBet(), this);
+				(*it)->RemoverJogadorMaquina();
+			}
+		}
+	}
+}
+
+void Casino::VerificarSaidaPessoas()
+{
+	for (list<Pessoa*>::iterator it = LP.begin(); it != LP.end(); ++it)
+	{
+		if (((*it)->getSaldo() <= 0) || (TempoAtualCasino >= (*it)->getHoraSaidaCasino()))
+		{
+			RmvPessoa((*it));
+		}
+	}
+}
+
 void Casino::Run(bool Debug) {
 	int x = 0;
 	Relogio relogio;
-	relogio.StartRelogio(360, 0); // Inicia o relógio com velocidade 1 e tempo 0
+	relogio.StartRelogio(10, 0); // Inicia o relógio com velocidade 1 e tempo 0
 
 	// Adiciona 12 horas em segundos (12 horas * 60 minutos * 60 segundos)
 	const int duracao_casino_segundos = 43200;
@@ -408,6 +432,7 @@ void Casino::Run(bool Debug) {
 			// Adicione sua lógica para o período do loop aqui
 			// ...
 			PessoasVaoParaMaquinas();
+			PessoasJogam();
 			cout << "Numero de Pessoas: " << LP.size() << "\n";
 			// Aguarda um segundo antes de avançar para o próximo ciclo
 			relogio.Wait(1);

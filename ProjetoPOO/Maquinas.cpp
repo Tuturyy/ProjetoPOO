@@ -67,6 +67,27 @@ string Maquina::TipoMaquinaString()
 	return "Erro no tipo de maquina.";
 }
 
+int Maquina::getTempoJogadaMaquina()
+{
+	if (tipo == TIPO_MAQUINA::Poker)
+	{
+		return TEMPO_JOGADA_POKER;
+	}
+	if (tipo == TIPO_MAQUINA::ClassicSlots)
+	{
+		return TEMPO_JOGADA_SLOT;
+	}
+	if (tipo == TIPO_MAQUINA::BlackJack)
+	{
+		return TEMPO_JOGADA_BLACKJACK;
+	}
+	if (tipo == TIPO_MAQUINA::Roleta)
+	{
+		return TEMPO_JOGADA_ROLETA;
+	}
+	return 0;
+}
+
 int Maquina::getX()
 {
 	return x;
@@ -123,9 +144,22 @@ void Maquina::AddJogadorMaquina(Pessoa* player)
 	estado = ESTADO_MAQUINA::ON;
 }
 
+void Maquina::RemoverJogadorMaquina()
+{
+	if (jogador != nullptr)
+	{
+		jogador->SetMaquina(nullptr);
+		jogador = nullptr;
+		estado = ESTADO_MAQUINA::OFF;
+		return;
+	}
+	else
+		cout << "Impossivel remover jogador da Maquina (" << id << "). Nao existe jogador.\n";
+}
+
 int Maquina::CalcularBet()
 {
-	if (jogador->Saldo > 0)
+	if (jogador->getSaldo() > 0)
 	{
 		if (tipo == TIPO_MAQUINA::Roleta)
 		{
