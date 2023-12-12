@@ -69,5 +69,8 @@ public:
 	int Memoria_Total();
 	void Listar(ostream& f = std::cout);
 	void Relatorio(string fich_xml);
+	void PessoasVaoParaMaquinas();
+	void PessoasJogam();
+	void VerificarSaidaPessoas();
 	void Run(bool Debug = true);
 };
