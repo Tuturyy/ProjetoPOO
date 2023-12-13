@@ -66,7 +66,7 @@ void menuGeral() {
 						switch (opcao)
 						{
 						case 1:
-
+							Casino.AddMaquina(Maquina * m);
 							break;
 						default:
 							break;
