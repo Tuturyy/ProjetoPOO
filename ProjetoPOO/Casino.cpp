@@ -115,7 +115,7 @@ void Casino::AddPessoa(Pessoa *pessoa) {
 }
 
 void Casino::RmvPessoa(Pessoa* pessoa) {
-	pessoa->PessoaParaFora();
+	pessoa->PessoaParaForaCasino();
 	LP.remove(pessoa);
 }
 
@@ -196,30 +196,45 @@ int Casino::Memoria_Total()
 {
 	int memoriaTotal = 0;
 	
-	memoriaTotal += sizeof(*this);
+	memoriaTotal += sizeof(this);
 
 	for (list<Pessoa*>::iterator it = LP.begin(); it != LP.end(); it++)
 	{
-		memoriaTotal += sizeof(*it);
+		memoriaTotal += sizeof((*it));
 	}
 	memoriaTotal += sizeof(LP);
 	for (list<Pessoa*>::iterator it = LPT.begin(); it != LPT.end(); it++)
 	{
-		memoriaTotal += sizeof(*it);
+		memoriaTotal += sizeof((*it));
 	}
 	memoriaTotal += sizeof(LPT);
 	for (list<Pessoa*>::iterator it = LPJ.begin(); it != LPJ.end(); it++)
 	{
-		memoriaTotal += sizeof(*it);
+		memoriaTotal += sizeof((*it));
 	}
 	memoriaTotal += sizeof(LPJ);
 	for (list<Maquina*>::iterator it = LM.begin(); it != LM.end(); it++)
 	{
-		memoriaTotal += sizeof(*it);
+		memoriaTotal += sizeof((*it));
 	}
 	memoriaTotal += sizeof(LM);
 
 	return memoriaTotal;
+}
+
+void Casino::ListarEstadoCasino(ostream& f)
+{
+	f << "Nome do Casino: " << nomeC << "\n";
+
+	int horaAbertura = 15;
+	int horaFecho = 3;
+
+	f << "Hora de abertura: " << horaAbertura << "h\n";
+	f << "Hora de fecho: " << horaFecho << "h\n";
+
+	f << "Lista de Maquinas do Casino:\n";
+	MostrarMaquinas();
+	
 }
 
 list<Maquina*>* Casino::GerarMaquinas(int numMaquinas)
@@ -301,10 +316,18 @@ list<Maquina*> Casino::Ranking_Das_Mais_Trabalhadores()
 
 list<Pessoa*> Casino::Jogadores_Mais_Ganhos()
 {
+	cout << "\nTOP 10 Jogadores com mais Lucro:\n\n";
 	list<Pessoa*> JogadoresMaisLucro = LPJ;
 	JogadoresMaisLucro.sort([](const Pessoa* a, const Pessoa* b) {
 		return a->Lucro > b->Lucro;
-		});
+	});
+
+	if (JogadoresMaisLucro.size() > 10) {
+		auto it = JogadoresMaisLucro.begin();
+		advance(it, 10);
+		JogadoresMaisLucro.erase(it, JogadoresMaisLucro.end());
+	}
+
 	return JogadoresMaisLucro;
 }
 
@@ -342,7 +365,7 @@ void Casino::Relatorio(string fich_xml)
 	arquivo_xml.close();
 }
 
-void Casino::Listar(float X, ostream& f)
+void Casino::ListarMaquinasProbabilidadeMaiorQueX(float X, ostream& f)
 {
 	bool maquinaEncontrada = false;
 	for (list<Maquina*>::iterator it = LM.begin(); it != LM.end(); it++)
@@ -367,6 +390,8 @@ void Casino::PessoasVaoParaMaquinas()
 		for (int i = 0; i < numPessoasEntrar; i++)
 		{
 			Pessoa* jogador = GetPessoa();
+			int DuracaoNoCasino = Util::RandNumInt(30 * 60, 2 * 60 * 60);//de 30min a 2horas
+			jogador->SetHoraSaidaCasino(TempoAtualCasino + DuracaoNoCasino);
 			AddPessoa(jogador);
 		}
 	}
@@ -397,19 +422,25 @@ void Casino::PessoasJogam()
 
 void Casino::VerificarSaidaPessoas()
 {
+	list<Pessoa*> PessoasaRemover;
 	for (list<Pessoa*>::iterator it = LP.begin(); it != LP.end(); ++it)
 	{
 		if (((*it)->getSaldo() <= 0) || (TempoAtualCasino >= (*it)->getHoraSaidaCasino()))
 		{
-			RmvPessoa((*it));
+			PessoasaRemover.push_back((*it));
 		}
+	}
+
+	for (list<Pessoa*>::iterator it = PessoasaRemover.begin(); it != PessoasaRemover.end(); it++)
+	{
+		RmvPessoa((*it));
 	}
 }
 
 void Casino::Run(bool Debug) {
 	int x = 0;
 	Relogio relogio;
-	relogio.StartRelogio(10, 0); // Inicia o relógio com velocidade 1 e tempo 0
+	relogio.StartRelogio(5400, 0); // Inicia o relógio com velocidade 1 e tempo 0
 
 	// Adiciona 12 horas em segundos (12 horas * 60 minutos * 60 segundos)
 	const int duracao_casino_segundos = 43200;
@@ -430,9 +461,9 @@ void Casino::Run(bool Debug) {
 		}
 		else {
 			// Adicione sua lógica para o período do loop aqui
+			VerificarSaidaPessoas();
 			PessoasVaoParaMaquinas();
 			PessoasJogam();
-			cout << "Numero de Pessoas: " << LP.size() << "\n";
 			relogio.Wait(1);
 		}
 	}

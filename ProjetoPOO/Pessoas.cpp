@@ -44,7 +44,7 @@ int Pessoa::getSaldo(){
 	return Saldo;
 }
 
-void Pessoa::setSado(int novoSaldo)
+void Pessoa::setSaldo(int novoSaldo)
 {
 	Saldo = novoSaldo;
 }
@@ -62,6 +62,11 @@ int Pessoa::getHoraSaidaCasino()
 void Pessoa::SetMaquina(Maquina* novaMaquina)
 {
 	Ptr_Maquina = novaMaquina;
+}
+
+void Pessoa::SetHoraSaidaCasino(int novaHora)
+{
+	HoraSaidaCasino = novaHora;
 }
 
 void Pessoa::adicionaSaldo(int novoSaldo) {

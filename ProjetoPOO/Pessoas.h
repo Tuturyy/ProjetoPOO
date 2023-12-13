@@ -29,12 +29,14 @@ public:
 	std::string getLocalidade();
 	int getIdade();
 	int getSaldo();
-	void setSado(int novoSaldo);
+	void setSaldo(int novoSaldo);
 	Maquina* getMaquina();
 	int getHoraSaidaCasino();
 	void SetMaquina(Maquina* novaMaquina);
+	void SetHoraSaidaCasino(int novaHora);
 	void adicionaSaldo(int novoSaldo);
 	void MostrarPessoa();
 	void PessoaParaCasino(Casino* Pc) {Ptr_Casino = Pc;}
-	void PessoaParaFora() { Ptr_Casino = nullptr;}
+	void PessoaParaForaCasino() { Ptr_Casino = nullptr;}
+	void PessoaParaForaMaquina() { Ptr_Maquina = nullptr;}
 };
