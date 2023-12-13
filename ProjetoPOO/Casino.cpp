@@ -438,41 +438,46 @@ void Casino::VerificarSaidaPessoas()
 	}
 }
 
-/*void Casino::Run(bool Debug) {
+void Casino::Run(bool Debug) {
+	int x = 0;
 	Relogio relogio;
-	relogio.StartRelogio(360, 0); // Inicia o relógio com velocidade 1 e tempo 0
+	relogio.StartRelogio(4320, "15:00:00"); // Inicia o relógio com velocidade 1 e tempo 0
 
+	// Adiciona 12 horas em segundos (12 horas * 60 minutos * 60 segundos)
 	const int duracao_casino_segundos = 43200;
 	time_t tempoTermino = relogio.VerTimeRelogio() + duracao_casino_segundos;
 
 	bool loopAtivo = true;
-	bool menuAtivo = false;
+	bool pausado = false;
 
 	while (loopAtivo) {
 		time_t tempoAtual = relogio.VerTimeRelogio();
+		int tempo = tempoAtual;
+		TempoAtualCasino = tempo;
 
-		if (!menuAtivo) {
-			// Atualização do tempo e lógica relacionada ao Casino aqui
-			relogio.MostrarTempoSegundos(tempoAtual, tempoTermino, duracao_casino_segundos);
-
-			if (tempoAtual >= tempoTermino) {
-				loopAtivo = false;
-			}
-			else {
-				VerificarSaidaPessoas();
-				PessoasVaoParaMaquinas();
-				PessoasJogam();
-				relogio.Wait(1);
-			}
+		if (!pausado) {
+			relogio.MostrarTempo(tempoAtual); // Mostra o tempo apenas se não estiver pausado
 		}
 
-		if (_kbhit()) {
-			char tecla = _getch();
-			if (tecla == 'M' || tecla == 'm') {
-				menuAtivo = true;
-				menuGeral(relogio);
-				menuAtivo = false; // Define como falso quando o menu termina
+		// Verificar se já se passaram as 12 horas
+		if (tempoAtual >= tempoTermino) {
+			loopAtivo = false;
+		}
+		else {
+			// Verifica se a tecla "p" foi pressionada
+			if (_kbhit()) {
+				char tecla = _getch();
+				if (tecla == 'M' || tecla == 'm'){
+					relogio.PararRelogio();
+					menuGeral(relogio);
+				}
 			}
+
+			/*VerificarSaidaPessoas();
+			PessoasVaoParaMaquinas();
+			PessoasJogam();*/
+			relogio.Wait(1);
+			
 		}
 	}
-}*/
+}

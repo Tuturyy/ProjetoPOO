@@ -1,4 +1,6 @@
 #include <iostream>
+
+#include <iomanip>
 using namespace std;
 
 #include "Casino.h"
@@ -52,38 +54,11 @@ int main()
     
     //solverde->ListarEstadoCasino();
 
-    /*solverde->Run();
-    solverde->MostrarListaPessoas(solverde->Jogadores_Mais_Ganhos());
+    solverde->Run();
+    /*solverde->MostrarListaPessoas(solverde->Jogadores_Mais_Ganhos());
     cout << "Dinheiro Recebido= " << solverde->DinheiroRecebido;
     cout << "Dinheiro Perdido= " << solverde->DinheiroPerdido;
     cout << "\n\nLucro= " << solverde->DinheiroRecebido - solverde->DinheiroPerdido;*/
-
-    Relogio relogio;
-
-    // Iniciando o relógio
-    StartRelogio(&relogio, 1, "12:00:00");
-
-    // Verificando o tempo após 10 segundos
-    std::cout << "Tempo Inicial: " << VerTimeRelogio(&relogio) << std::endl;
-    Wait(10);
-    std::cout << "Tempo após 10 segundos: " << VerTimeRelogio(&relogio) << std::endl;
-
-    // Alterando a velocidade do relógio para 2
-    MudarVelocidadeRelogio(&relogio, 2);
-    std::cout << "Velocidade alterada para 2. Tempo atual: " << VerTimeRelogio(&relogio) << std::endl;
-
-    // Verificando o tempo após mais 5 segundos (velocidade 2)
-    Wait(5);
-    std::cout << "Tempo após mais 5 segundos na velocidade 2: " << VerTimeRelogio(&relogio) << std::endl;
-
-    // Pausando o relógio
-    MudarVelocidadeRelogio(&relogio, 0);
-    std::cout << "Relógio pausado. Tempo atual: " << VerTimeRelogio(&relogio) << std::endl;
-
-    // Retomando o relógio com velocidade 2
-    MudarVelocidadeRelogio(&relogio, 2);
-    std::cout << "Relógio retomado com velocidade 2. Tempo atual: " << VerTimeRelogio(&relogio) << std::endl;
-
 
     //cout <<"\n\nMemoria Ocupada: " << solverde->Memoria_Total();
     return 7;//CR7 GOAT
