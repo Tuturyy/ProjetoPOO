@@ -1,52 +1,54 @@
-#include "Relogio.h"
+#include "relogio.h"
+#include <iostream>
+#include <iomanip>
 
-Relogio::Relogio() : START(0), VELOCIDADE(0), Hora_Inicio(0), pausado(false), tempoPausado(0) {}
-
-void Relogio::StartRelogio(int Vel, int tempo_segundos) {
-    START = time(0);
-    VELOCIDADE = Vel;
-    Hora_Inicio = START + tempo_segundos;
-    pausado = false;
-    tempoPausado = 0;
+void StartRelogio(Relogio* R, int Vel, const char* H_Inicio) {
+    R->START = time(0);
+    R->VELOCIDADE = Vel;
+    struct tm timeInfo;
+    localtime_s(&timeInfo, &R->START);
+    sscanf_s(H_Inicio, "%d:%d:%d", &timeInfo.tm_hour, &timeInfo.tm_min, &timeInfo.tm_sec);
+    R->Hora_Inicio = mktime(&timeInfo);
+    R->pausado = 0;
+    R->tempoPausado = 0;
 }
 
-void Relogio::MudarVelocidadeRelogio(int Vel) {
-    if (pausado) {
-        VELOCIDADE = Vel;
-        pausado = false;
+void MudarVelocidadeRelogio(Relogio* R, int Vel) {
+    if (R->pausado) {
+        R->VELOCIDADE = Vel;
+        R->pausado = 0;
         time_t tempoAtual = time(0);
-        START = tempoAtual - tempoPausado;
+        R->START = tempoAtual - R->tempoPausado;
     }
     else {
-        VELOCIDADE = 0;
-        pausado = true;
-        tempoPausado = difftime(time(0), START);
+        R->VELOCIDADE = 0;
+        R->pausado = 1;
+        R->tempoPausado = difftime(time(0), R->START);
     }
 }
 
-time_t Relogio::VerTimeRelogio() {
-    if (pausado) {
-        return Hora_Inicio;
+time_t VerTimeRelogio(Relogio* R) {
+    if (R->pausado) {
+        return R->Hora_Inicio;
     }
     else {
-        time_t Dif = difftime(time(0), START);
-        time_t Simulada = Hora_Inicio + Dif * VELOCIDADE;
-        return Simulada;
+        time_t tempoAtual = time(0);
+        time_t Dif = difftime(tempoAtual, R->START);
+        if (R->VELOCIDADE == 0) {
+            return R->Hora_Inicio + R->tempoPausado;
+        }
+        else {
+            return R->Hora_Inicio + (Dif + R->tempoPausado) * R->VELOCIDADE;
+        }
     }
 }
 
-void Relogio::WaitSegundos(int s) {
+void WaitSegundos(int s) {
     clock_t T0 = clock();
-    clock_t T1 = T0 + s * CLOCKS_PER_SEC;
+    clock_t T1 = T0 + s;
     while (clock() < T1);
 }
 
-void Relogio::Wait(int s) {
-    WaitSegundos(s);
-}
-
-void Relogio::MostrarTempoSegundos(int TempoAtual, int TempoFinal, int TempoTotal)
-{
-    std::cout << "Tempo atual: " << TempoAtual - TempoFinal + TempoTotal << std::endl;
-    std::cout << "Tempo final: " << TempoFinal - TempoFinal + TempoTotal << std::endl;
+void Wait(int s) {
+    WaitSegundos(s * CLOCKS_PER_SEC);
 }

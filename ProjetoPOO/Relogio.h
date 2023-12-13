@@ -1,21 +1,18 @@
 #pragma once
-#include <iostream>
-#include <ctime>
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
-class Relogio {
-private:
+typedef struct {
     time_t START;
     int VELOCIDADE;
     time_t Hora_Inicio;
-    bool pausado;
+    int pausado;
     time_t tempoPausado;
+} Relogio;
 
-public:
-    Relogio();
-    void StartRelogio(int Vel, int tempo_segundos);
-    void MudarVelocidadeRelogio(int Vel);
-    time_t VerTimeRelogio();
-    void WaitSegundos(int s);
-    void Wait(int s);
-    void MostrarTempoSegundos(int TempoAtual, int TempoFinal, int TempoTotal);
-};
+void StartRelogio(Relogio* R, int Vel, const char* H_Inicio);
+void MudarVelocidadeRelogio(Relogio* R, int Vel);
+time_t VerTimeRelogio(Relogio* R);
+void WaitSegundos(int s);
+void Wait(int s);

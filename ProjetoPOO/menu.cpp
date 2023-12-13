@@ -2,7 +2,6 @@
 #include "menu.h"
 #include "Casino.h"
 #include "Pessoas.h"
-#include "menu.h"
 #include <conio.h>
 
 using namespace std;
@@ -39,79 +38,77 @@ void subMenu3() {
 	cout << "\n0 - Voltar atras" << endl;
 }
 
-void menuGeral() {
-	setlocale(LC_ALL, "Portuguese");
-	char tecla;
-	int opcao;
+/*void menuGeral(Relogio& relogio) {
+    setlocale(LC_ALL, "Portuguese");
+    char tecla;
+    int opcao;
+    bool pausadoAntes = false;
+    time_t horaInicioPausa = 0;
+    time_t tempoPausado = 0;
 
-	while (_kbhit)
-	{
-		tecla = _getch();
-		if (tecla == 'M' || tecla == 'm')
-		{
-			do
-			{
-				menu();
-				cout << "Escolhe uma opcao:" << endl;
-				cin >> opcao;
+    do {
+        pausadoAntes = relogio.EstaPausado();
+        if (!pausadoAntes) {
+            relogio.MudarVelocidadeRelogio(0);
+            horaInicioPausa = relogio.VerTimeRelogio();
+        }
+        relogio.MudarVelocidadeRelogio(0);
+        menu();
+        cout << "Escolhe uma opcao:" << endl;
+        cin >> opcao;
 
-				switch (opcao)
-				{
-				case 1:
-					do
-					{
-						subMenu1();
-						cout << "\nDigite uma opcao: " << endl;
-						cin >> opcao;
-						switch (opcao)
-						{
-						case 1:
-
-							break;
-						default:
-							break;
-						}
-					} while (opcao != 0);
-					break;
-				case 2:
-					do
-					{
-						subMenu2();
-						cout << "\nDigite uma opcao: " << endl;
-						cin >> opcao;
-						switch (opcao)
-						{
-						case 1:
-
-							break;
-						default:
-							break;
-						}
-					} while (opcao != 0);
-					break;
-				case 3:
-					do
-					{
-						subMenu3();
-						cout << "\nDigite uma opcao: " << endl;
-						cin >> opcao;
-						switch (opcao)
-						{
-						case 1:
-
-							break;
-						default:
-							break;
-						}
-					} while (opcao != 0);
-					break;
-				case 4:
-					break;
-				default:
-					break;
-				}
-			} while (opcao != 4);
-		}
-
-	}
-}
+        switch (opcao) {
+        case 1:
+            do {
+                subMenu1();
+                cout << "\nDigite uma opcao: " << endl;
+                cin >> opcao;
+                switch (opcao) {
+                case 1:
+                    break;
+                default:
+                    break;
+                }
+            } while (opcao != 0);
+            break;
+        case 2:
+            do {
+                subMenu2();
+                cout << "\nDigite uma opcao: " << endl;
+                cin >> opcao;
+                switch (opcao) {
+                case 1:
+                    break;
+                default:
+                    break;
+                }
+            } while (opcao != 0);
+            break;
+        case 3:
+            do {
+                subMenu3();
+                cout << "\nDigite uma opcao: " << endl;
+                cin >> opcao;
+                switch (opcao) {
+                case 1:
+                    break;
+                default:
+                    break;
+                }
+            } while (opcao != 0);
+            break;
+        case 0:
+            if (pausadoAntes) {
+                tempoPausado = difftime(relogio.VerTimeRelogio(), horaInicioPausa);
+                relogio.MudarVelocidadeRelogio(360);
+                if (!relogio.EstaPausado()) {
+                    relogio.AjustarTempoInicio(tempoPausado);
+                }
+            }
+            break;
+        default:
+            cout << "\nOpcao invalida! Escolha outra opcao.";
+            break;
+        }
+    } while (opcao != 0);
+}*/
