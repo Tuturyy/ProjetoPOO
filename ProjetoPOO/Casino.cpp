@@ -212,7 +212,7 @@ list<Maquina*> Casino::Ranking_Das_Mais_Avariadas()
 	return Ordenada;
 }
 
-int Casino::Memoria_Total()
+/*int Casino::Memoria_Total()
 {
 	int memoriaTotal = 0;
 	
@@ -240,7 +240,7 @@ int Casino::Memoria_Total()
 	memoriaTotal += LM.size() * sizeof(Maquina*);
 
 	return memoriaTotal;
-}
+}*/
 
 
 int Casino::Memoria_Total()
@@ -373,6 +373,13 @@ list<Maquina*> Casino::Ranking_Das_Mais_Trabalhadores()
 	Ordenada.sort([](const Maquina* a, const Maquina* b) {
 		return a->Utilizacoes > b->Utilizacoes;
 		});
+
+	if (Ordenada.size() > 10) {
+		auto it = Ordenada.begin();
+		advance(it, 10);
+		Ordenada.erase(it, Ordenada.end());
+	}
+
 	return Ordenada;
 }
 
@@ -543,7 +550,7 @@ void Casino::VerificarSaidaPessoas()
 void Casino::Run(bool Debug) {
 	int x = 0;
 	Relogio relogio;
-	relogio.StartRelogio(4320, "15:00:00"); // Inicia o relógio com velocidade 1 e tempo 0
+	relogio.StartRelogio(2000, "15:00:00"); // Inicia o relógio com velocidade 1 e tempo 0
 
 	// Adiciona 12 horas em segundos (12 horas * 60 minutos * 60 segundos)
 	const int duracao_casino_segundos = 43200;
