@@ -6,6 +6,30 @@
 
 using namespace std;
 
+int getSafeInput() {
+    int input;
+    while (true) {
+        cin >> input;
+
+        if (cin.fail()) {
+            // Limpar o estado de erro
+            cin.clear();
+
+            // Descartar o buffer de entrada
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+            cout << "Entrada inválida. Digite um número válido: ";
+        }
+        else {
+            // Limpar o buffer de entrada
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            break;
+        }
+    }
+
+    return input;
+}
+
 void printLine() {
     cout << "===============================================" << endl;
 }
@@ -45,7 +69,7 @@ void subMenuMaquinas(Casino* casino) {
 
     do {
         cout << "Escolhe uma opcao:" << endl;
-        cin >> opcao;
+        opcao = getSafeInput();
 
         switch (opcao) {
         case 1:
@@ -107,7 +131,7 @@ void subMenuJogadores(Casino* casino) {
     do
     {
         cout << "Escolhe uma opcao:" << endl;
-        cin >> opcao;
+        opcao = getSafeInput();
         
 
         switch (opcao)
@@ -150,7 +174,7 @@ void subMenuCasino(Casino* casino) {
     do
     {
         cout << "Escolhe uma opcao:" << endl;
-        cin >> opcao;
+        opcao = getSafeInput();
 
         switch (opcao)
         {
@@ -178,7 +202,7 @@ void menuGeral(Relogio& relogio, Casino* casino) {
     do {
         menu();
         cout << "Escolhe uma opcao:" << endl;
-        cin >> opcao;
+        opcao = getSafeInput();
 
         switch (opcao) {
         case 1:
