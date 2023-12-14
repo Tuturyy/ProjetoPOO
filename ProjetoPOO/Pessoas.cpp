@@ -17,6 +17,8 @@ Pessoa::Pessoa(int _ID, std::string _Nome, std::string _Localidade, int _Idade)
 	Lucro = 0;
 	VitoriasConsecutivas = 0;
 	HoraSaidaCasino = 0;
+	TempoAJogar = 0;
+	historico = new list<string>();
 }
 
 Pessoa::~Pessoa()
@@ -54,9 +56,29 @@ Maquina* Pessoa::getMaquina()
 	return Ptr_Maquina;
 }
 
+int Pessoa::getHoraEntradaCasino()
+{
+	return HoraEntradaCasino;
+}
+
+void Pessoa::setHoraEntradaCasino(int novaHoraEntradaCasino)
+{
+	HoraEntradaCasino = novaHoraEntradaCasino;
+}
+
 int Pessoa::getHoraSaidaCasino()
 {
 	return HoraSaidaCasino;
+}
+
+int Pessoa::getTempoAJogar()
+{
+	return TempoAJogar;
+}
+
+void Pessoa::setTempoAJogar(int novoTempoAJogar)
+{
+	TempoAJogar = novoTempoAJogar;
 }
 
 void Pessoa::SetMaquina(Maquina* novaMaquina)
@@ -82,5 +104,6 @@ void Pessoa::MostrarPessoa()
 	cout << "Idade: " << Idade << endl;
 	cout << "Saldo:" << Saldo << endl;
 	cout << "Lucro: " << Lucro << endl;
+	cout << "Tempo a jogar no Casino: " << TempoAJogar << "s" << endl;
 	cout << "\n";
 }
