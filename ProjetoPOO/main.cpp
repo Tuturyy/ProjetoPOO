@@ -23,14 +23,14 @@ int main()
     cout << "\n\nLucro= " << solverde->DinheiroRecebido - solverde->DinheiroPerdido;
     cout << "\n\n";
 
-    list<Pessoa*> MaisGanhos = solverde->Jogadores_Mais_Ganhos();
+    /*list<Pessoa*> MaisGanhos = solverde->Jogadores_Mais_Ganhos();
     auto it = MaisGanhos.begin();
     Pessoa* ballin = (*it);
 
     for (auto it = ballin->historico->begin(); it != ballin->historico->end(); it++)
     {
         cout << (*it);
-    }
+    }*/
 
     cout << "Numero de Jogadores= " << solverde->getListaJogadores().size();
     //cout <<"\n\nMemoria Ocupada: " << solverde->Memoria_Total();

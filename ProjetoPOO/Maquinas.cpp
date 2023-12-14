@@ -189,6 +189,11 @@ void Maquina::AtualizarDadosAposAposta(int bet, bool ganhou, Casino* casino,  in
 	{
 		jogador->setSaldo(jogador->getSaldo() + (bet*multiplicadorBet)-bet);
 		jogador->Lucro += ((bet * multiplicadorBet) - bet);
+		jogador->Wins++;
+		if (jogador->MaiorGanho < (bet * multiplicadorBet))
+		{
+			jogador->MaiorGanho = (bet * multiplicadorBet);
+		}
 		Lucro -= ((bet * multiplicadorBet) - bet);
 		casino->DinheiroPerdido += ((bet * multiplicadorBet) - bet);
 		string msg = MensagemEspecial + " O jogador ganhou " + to_string(bet*multiplicadorBet) + "EUR("+ to_string(multiplicadorBet)+"x) em " + TipoMaquinaString() + ".\n";
@@ -198,6 +203,7 @@ void Maquina::AtualizarDadosAposAposta(int bet, bool ganhou, Casino* casino,  in
 	{
 		jogador->setSaldo(jogador->getSaldo() - bet);
 		jogador->Lucro -= bet;
+		jogador->Losses++;
 		Lucro += bet;
 		casino->DinheiroRecebido += bet;
 		string msg = " O jogador perdeu " + to_string(bet) + "EUR em " + TipoMaquinaString() + ".\n";
