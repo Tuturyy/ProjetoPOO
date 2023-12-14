@@ -1,5 +1,6 @@
 #include"Maquinas.h"
 #include"Casino.h"
+#include"Uteis.h"
 
 
 Maquina::Maquina(int _id, TIPO_MAQUINA _tipo, int _x, int _y)
@@ -23,7 +24,7 @@ Maquina::Maquina(int _id, TIPO_MAQUINA _tipo, int _x, int _y)
 		porcentWin = (18.0 / 37)*100;
 	}
 	estado = ESTADO_MAQUINA::OFF;
-	temperat = 0;
+	temperatura = 20;
 	x = _x;
 	y = _y;
 	Lucro = 0;
@@ -394,6 +395,39 @@ bool Maquina::JogadorJoga(int bet, Casino* casino)
 			return BlackJack(bet, casino);
 
 		}
+
+		//chance de avariar
+		int prob = Util::RandNumInt(1, 10000);
+		if (prob == 1) {
+			cout << "Maquina " << getID() << " a avariou";
+			estado = ESTADO_MAQUINA::AVARIADA;
+			Avarias++;
+		}
+		else {
+			//controlo de temperatura
+			if (temperatura <= 20)
+			{
+				temperatura += Util::RandNumInt(0, 3);
+			}
+			if (temperatura >= 70)
+			{
+				cout << "Maquina " << getID() << " a sobreaquecer, desligue rapidamente";
+
+				temperatura += Util::RandNumInt(0, 3);
+				temperatura -= Util::RandNumInt(0, 2);
+				if (temperatura > 85) {
+					cout << "Maquina " << getID() << " a avariou";
+					estado = ESTADO_MAQUINA::AVARIADA;
+					Avarias++;
+				}
+			}
+			else
+			{
+				temperatura += Util::RandNumInt(0, 3);
+				temperatura -= Util::RandNumInt(0, 2);
+			}
+		}
+
 	}
 	else
 	{

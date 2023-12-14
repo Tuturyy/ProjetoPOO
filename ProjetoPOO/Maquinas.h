@@ -31,7 +31,7 @@ class Maquina
 {
 	Pessoa* jogador;
 	int id;
-	int temperat;
+	int temperatura;
 	TIPO_MAQUINA tipo;
 	int x, y;
 	ESTADO_MAQUINA estado;
@@ -41,6 +41,7 @@ public:
 	float porcentWin;
 	int Lucro;
 	int Utilizacoes;
+	int Avarias;
 	int TempoJogadaTerminada;
 
 	//Construtor e destrutor

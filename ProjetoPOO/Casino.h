@@ -63,6 +63,7 @@ public:
 	list<Maquina*> Ranking_Das_Mais_Trabalhadores();
 	void SubirProbabilidadeVizinhas(Maquina* M_ganhou, float R, list<Maquina*>& lmvizinhas);
 	void ListarMaquinasProbabilidadeMaiorQueX(float X, ostream& f = std::cout);
+	list<Maquina*> Ranking_Das_Mais_Avariadas();
 	
 
 	//Programa

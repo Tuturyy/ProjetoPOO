@@ -203,6 +203,15 @@ void Casino::AtribuirMaquinaPessoa(Pessoa* pessoa)
 	return;
 }
 
+list<Maquina*> Casino::Ranking_Das_Mais_Avariadas()
+{
+	list<Maquina*> Ordenada = LM;
+	Ordenada.sort([](const Maquina* a, const Maquina* b) {
+		return a->Avarias > b->Avarias;
+		});
+	return Ordenada;
+}
+
 int Casino::Memoria_Total()
 {
 	int memoriaTotal = 0;
