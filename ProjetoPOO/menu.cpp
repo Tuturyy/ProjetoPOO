@@ -142,6 +142,7 @@ void subMenuCasino(Casino* casino) {
 	cout << "\n1 - Estado atual do casino" << endl;
 	cout << "\n2 - Relatorio do casino" << endl;
 	cout << "\n3 - Memoria ocupada" << endl;
+    cout << "\n4 - Estatisticas" << endl;
 	cout << "\n0 - Voltar atras" << endl;
     printLine();
 
@@ -162,6 +163,9 @@ void subMenuCasino(Casino* casino) {
             break;
         case 3:
             cout << casino->Memoria_Total();
+            break;
+        case 4:
+            casino->EstatisticasCasino();
             break;
         case 0:
             break;
