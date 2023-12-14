@@ -41,7 +41,7 @@ void subMenuMaquinas(Casino* casino) {
         case 2:
             cout << "Qual o tipo das maquinas que deseja listar? (Poker, ClassicSlots, BlackJack, Roleta)";
             cin >> tipoMaquina;
-            casino->MostrarListaMaquinas(casino->Listar_Tipo(tipoMaquina));
+            casino->MostrarListaMaquinas(casino->Listar_TipoMaquina(tipoMaquina));
             break;
         case 3:
             cout << "Qual o id da maquina que pretende desligar?\n";

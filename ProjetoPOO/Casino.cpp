@@ -240,7 +240,7 @@ int Casino::Memoria_Total()
 	memoriaTotal += LM.size() * sizeof(Maquina*);
 
 	return memoriaTotal;
-}*/
+}
 
 
 /*int Casino::Memoria_Total()
