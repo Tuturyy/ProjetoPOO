@@ -1,6 +1,7 @@
 #include "Casino.h"
 #include "Uteis.h"
 #include "Relogio.h"
+#include "menu.h"
 #include <algorithm>
 
 using namespace std;
@@ -117,6 +118,16 @@ void Casino::AddPessoa(Pessoa *pessoa) {
 void Casino::RmvPessoa(Pessoa* pessoa) {
 	pessoa->PessoaParaForaCasino();
 	LP.remove(pessoa);
+}
+
+list<Pessoa*> Casino::getListaJogadores()
+{
+	return LPJ;
+}
+
+list<Pessoa*> Casino::getListaPessoasCasino()
+{
+	return LP;
 }
 
 bool Casino::AddMaquina(Maquina* m)
@@ -523,8 +534,7 @@ void Casino::VerificarSaidaPessoas()
 void Casino::Run(bool Debug) {
 	int x = 0;
 	Relogio relogio;
-	relogio.StartRelogio(360, 0); // Inicia o relógio com velocidade 1 e tempo 0
-
+	relogio.StartRelogio(360, "15:00:00"); // Inicia o relógio com velocidade 1 e tempo 0
 
 	// Adiciona 12 horas em segundos (12 horas * 60 minutos * 60 segundos)
 	const int duracao_casino_segundos = 43200;
@@ -532,25 +542,36 @@ void Casino::Run(bool Debug) {
 	HoraEncerrar = tempoTermino;
 
 	bool loopAtivo = true;
+	bool pausado = false;
 
 	while (loopAtivo) {
 		time_t tempoAtual = relogio.VerTimeRelogio();
 		TempoAtualCasino = tempoAtual;
 
-		relogio.MostrarTempoSegundos(tempoAtual, tempoTermino, duracao_casino_segundos);
-		cout << TempoAtualCasino << "\n";
-		
+		if (!pausado) {
+			relogio.MostrarTempo(tempoAtual); // Mostra o tempo apenas se não estiver pausado
+		}
+
 		// Verificar se já se passaram as 12 horas
 		if (tempoAtual >= tempoTermino) {
 			loopAtivo = false;
 		}
 		else {
-			// Adicione sua lógica para o período do loop aqui
+			// Verifica se a tecla "p" foi pressionada
+			if (_kbhit()) {
+				char tecla = _getch();
+				if (tecla == 'M' || tecla == 'm'){
+					relogio.PararRelogio();
+					menuGeral(relogio, this);
+				}
+			}
+
 			VerificarSaidaPessoas();
 			PessoasVaoParaMaquinas();
 			PessoasJogam();
 
 			relogio.Wait(1);
+			
 		}
 	}
 }
