@@ -465,6 +465,20 @@ void Casino::Relatorio(string fich_xml)
 	arquivo_xml.close();
 }
 
+void Casino::EstatisticasCasino()
+{
+	cout << "\n\n***********************************\n";
+	cout << "         Casino " << nomeC << "\n";
+	cout << "***********************************\n\n";
+
+	cout << "O Casino teve um lucro de: " << (DinheiroRecebido - DinheiroPerdido) << "EUR\n\n";
+	cout << "Os jogadores apostaram um total de: " << DinheiroRecebido << "EUR\n";
+	cout << "O casino em apostas perdeu um total de: " << DinheiroPerdido << "EUR\n\n";
+	cout << "********************\n\n";
+
+	
+}
+
 void Casino::ListarMaquinasProbabilidadeMaiorQueX(float X, ostream& f)
 {
 	bool maquinaEncontrada = false;
