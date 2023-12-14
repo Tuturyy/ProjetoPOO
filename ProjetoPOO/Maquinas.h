@@ -42,6 +42,7 @@ public:
 	//Variaveis
 	int Lucro;
 	int Utilizacoes;
+	int Avarias;
 	int TempoJogadaTerminada;
 
 	//Construtor e destrutor

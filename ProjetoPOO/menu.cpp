@@ -78,7 +78,7 @@ void subMenuMaquinas(Casino* casino) {
             casino->MostrarListaMaquinas(casino->Ranking_Das_Mais_Trabalhadores());
             break;
         case 7:
-            // Maquinas que avariam
+            casino->MostrarListaMaquinas(casino->Ranking_Das_Mais_Avariadas());
             break;
         case 0:
             break;
