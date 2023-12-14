@@ -120,6 +120,16 @@ void Casino::RmvPessoa(Pessoa* pessoa) {
 	LP.remove(pessoa);
 }
 
+list<Pessoa*> Casino::getListaJogadores()
+{
+	return LPJ;
+}
+
+list<Pessoa*> Casino::getListaPessoasCasino()
+{
+	return LP;
+}
+
 bool Casino::AddMaquina(Maquina* m)
 {
 	LM.push_back(m);
@@ -441,7 +451,7 @@ void Casino::VerificarSaidaPessoas()
 void Casino::Run(bool Debug) {
 	int x = 0;
 	Relogio relogio;
-	relogio.StartRelogio(4320, "15:00:00"); // Inicia o relógio com velocidade 1 e tempo 0
+	relogio.StartRelogio(360, "15:00:00"); // Inicia o relógio com velocidade 1 e tempo 0
 
 	// Adiciona 12 horas em segundos (12 horas * 60 minutos * 60 segundos)
 	const int duracao_casino_segundos = 43200;
@@ -469,7 +479,7 @@ void Casino::Run(bool Debug) {
 				char tecla = _getch();
 				if (tecla == 'M' || tecla == 'm'){
 					relogio.PararRelogio();
-					menuGeral(relogio);
+					menuGeral(relogio, this);
 				}
 			}
 
