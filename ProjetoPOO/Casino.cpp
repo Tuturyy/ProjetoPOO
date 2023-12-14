@@ -512,7 +512,11 @@ void Casino::PessoasVaoParaMaquinas()
 				AddPessoa(jogador);
 			}
 		}
-		for (list<Pessoa*>::iterator it = LP.begin(); it != LP.end(); ++it)
+
+		list<Pessoa*> PessoaAleatoria = LP;
+		vector<Pessoa*> PessoasCasinoVetor(PessoaAleatoria.begin(), PessoaAleatoria.end());
+		std::random_shuffle(PessoasCasinoVetor.begin(), PessoasCasinoVetor.end());
+		for (vector<Pessoa*>::iterator it = PessoasCasinoVetor.begin(); it != PessoasCasinoVetor.end(); ++it)
 		{
 
 			if ((*it)->getMaquina() == nullptr)
