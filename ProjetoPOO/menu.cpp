@@ -6,23 +6,36 @@
 
 using namespace std;
 
+void printLine() {
+    cout << "===============================================" << endl;
+}
+
 void menu() {
-	cout << "MENU GESTAO DO CASINO" << endl;
+    cout<<"\n\n";
+    printLine();
+    cout << "           MENU GESTAO DO CASINO             " << endl;
+    printLine();
 	cout << "\n1 - Maquinas" << endl;
 	cout << "\n2 - Jogadores" << endl;
 	cout << "\n3 - Casino" << endl;
-	cout << "\n0 - Sair" << endl;
+	cout << "\n0 - Sair\n" << endl;
+    printLine();
 }
 
 void subMenuMaquinas(Casino* casino) {
+    cout << "\n";
+    printLine();
+    cout << "           SUBMENU DE MAQUINAS              " << endl;
+    printLine();
     cout << "\n1 - Listar maquinas" << endl;
     cout << "\n2 - Listar maquinas de um dado tipo" << endl;
     cout << "\n3 - Desligar maquina" << endl;
     cout << "\n4 - Ver estado de maquina" << endl;
-    cout << "\n5 - Listar as maquinas com a probabilidade de ganhar superior a..." << endl;
+    cout << "\n5 - Listar as maquinas com a probabilidade de ganhar superior a X" << endl;
     cout << "\n6 - Maquinas mais usadas" << endl;
     cout << "\n7 - Maquinas que mais avariam" << endl;
     cout << "\n0 - Voltar atras" << endl;
+    printLine();
 
     int opcao;
     int idmaquinaOff, idmaquinaShow, prob;
@@ -36,12 +49,13 @@ void subMenuMaquinas(Casino* casino) {
 
         switch (opcao) {
         case 1:
-            // Listar Maquinas
+            cout << "\nLISTA DE MAQUINAS:\n";
+            casino->MostrarMaquinas();
             break;
         case 2:
             cout << "Qual o tipo das maquinas que deseja listar? (Poker, ClassicSlots, BlackJack, Roleta)";
             cin >> tipoMaquina;
-            casino->MostrarListaMaquinas(casino->Listar_Tipo(tipoMaquina));
+            casino->MostrarListaMaquinas(casino->Listar_TipoMaquina(tipoMaquina));
             break;
         case 3:
             cout << "Qual o id da maquina que pretende desligar?\n";
@@ -56,7 +70,7 @@ void subMenuMaquinas(Casino* casino) {
             maquinaShow->getEstado();
             break;
         case 5:
-            cout << "Qual a probabilidade minima? (50 = 50%)\n";
+            cout << "Qual o valor de X? (em %)\n";
             cin >> prob;
             casino->ListarMaquinasProbabilidadeMaiorQueX(prob);
             break;
@@ -75,10 +89,15 @@ void subMenuMaquinas(Casino* casino) {
 }
 
 void subMenuJogadores(Casino* casino) {
+    cout << "\n";
+    printLine();
+    cout << "           SUBMENU DE JOGADORES              " << endl;
+    printLine();
     cout << "\n1 - Listar jogadores" << endl;
 	cout << "\n2 - Jogadores que mais ganharam" << endl;
 	cout << "\n3 - Jogadores mais frequentes" << endl;
 	cout << "\n0 - Voltar atras" << endl;
+    printLine();
 
     int opcao;
 
@@ -96,7 +115,7 @@ void subMenuJogadores(Casino* casino) {
             casino->MostrarListaPessoas(casino->Jogadores_Mais_Ganhos());
             break;
         case 3:
-            //casino->MostrarListaPessoas(casino->Jogadores_Mais_Frequentes());
+            casino->MostrarListaPessoas(casino->Jogadores_Mais_Frequentes());
             break;
         case 0:
             break;
@@ -107,10 +126,15 @@ void subMenuJogadores(Casino* casino) {
 }
 
 void subMenuCasino(Casino* casino) {
+    cout << "\n";
+    printLine();
+    cout << "           SUBMENU DE CASINO              " << endl;
+    printLine();
 	cout << "\n1 - Estado atual do casino" << endl;
 	cout << "\n2 - Relatorio do casino" << endl;
 	cout << "\n3 - Memoria ocupada" << endl;
 	cout << "\n0 - Voltar atras" << endl;
+    printLine();
 
     int opcao;
 

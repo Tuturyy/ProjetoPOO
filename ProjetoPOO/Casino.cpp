@@ -234,7 +234,7 @@ void Casino::AtribuirMaquinaPessoa(Pessoa* pessoa)
 }*/
 
 
-/*int Casino::Memoria_Total()
+int Casino::Memoria_Total()
 {
 	int memoriaTotal = 0;
 
@@ -274,7 +274,7 @@ void Casino::AtribuirMaquinaPessoa(Pessoa* pessoa)
 	}
 
 	return memoriaTotal;
-}*/
+}
 
 void Casino::ListarEstadoCasino(ostream& f)
 {
@@ -534,7 +534,7 @@ void Casino::VerificarSaidaPessoas()
 void Casino::Run(bool Debug) {
 	int x = 0;
 	Relogio relogio;
-	relogio.StartRelogio(360, "15:00:00"); // Inicia o relógio com velocidade 1 e tempo 0
+	relogio.StartRelogio(4320, "15:00:00"); // Inicia o relógio com velocidade 1 e tempo 0
 
 	// Adiciona 12 horas em segundos (12 horas * 60 minutos * 60 segundos)
 	const int duracao_casino_segundos = 43200;

@@ -45,7 +45,7 @@ public:
 	list<Pessoa*> Jogadores_Mais_Ganhos();
 	list<Pessoa*> getListaJogadores();
 	list<Pessoa*> getListaPessoasCasino();
-	//list<User*>* Jogadores_Mais_Frequentes();
+	list<Pessoa*> Jogadores_Mais_Frequentes();
 
 
 	//Funções de Maquinas
