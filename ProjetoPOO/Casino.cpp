@@ -106,6 +106,18 @@ Pessoa* Casino::GetPessoa() {
 	return *it;
 }
 
+Pessoa* Casino::PesquisarPessoaID(int id_pessoa)
+{
+	for (list<Pessoa*>::iterator it = LPJ.begin(); it != LPJ.end(); ++it)
+	{
+		if ((*it)->getID() == id_pessoa)
+		{
+			return *it;
+		}
+	}
+	return nullptr;
+}
+
 
 void Casino::AddPessoa(Pessoa *pessoa) {
 	pessoa->PessoaParaCasino(this);
@@ -408,11 +420,11 @@ list<Pessoa*> Casino::Jogadores_Mais_Frequentes()
 		return a->getTempoAJogar() > b->getTempoAJogar();
 		});
 
-	if (JogadoresMaisFrequentes.size() > 10) {
+	/*if (JogadoresMaisFrequentes.size() > 10) {
 		auto it = JogadoresMaisFrequentes.begin();
 		advance(it, 10);
 		JogadoresMaisFrequentes.erase(it, JogadoresMaisFrequentes.end());
-	}
+	}*/
 
 	return JogadoresMaisFrequentes;
 }
@@ -474,13 +486,13 @@ void Casino::PessoasVaoParaMaquinas()
 {
 	if ((TempoAtualCasino + 10 * 60) <= HoraEncerrar) //Pessoas nao entram nem jogam qnd faltar 10min para fechar o casino
 	{
-		int numPessoasEntrar = Util::RandNumInt(0, 5);
+		int numPessoasEntrar = Util::RandNumInt(1, 1);
 		if (numPessoasEntrar + LP.size() <= PESSOAS_MAX_CASINO)
 		{
 			for (int i = 0; i < numPessoasEntrar; i++)
 			{
 				Pessoa* jogador = GetPessoa();
-				int DuracaoNoCasino = Util::RandNumInt(30 * 60, 2 * 60 * 60);//de 30min a 2horas
+				int DuracaoNoCasino = Util::RandNumInt(30 * 60, 3 * 60 * 60);//de 30min a 2horas
 				jogador->setHoraEntradaCasino(TempoAtualCasino);
 				jogador->SetHoraSaidaCasino(TempoAtualCasino + DuracaoNoCasino);
 				AddPessoa(jogador);
@@ -550,7 +562,7 @@ void Casino::VerificarSaidaPessoas()
 void Casino::Run(bool Debug) {
 	int x = 0;
 	Relogio relogio;
-	relogio.StartRelogio(2000, "15:00:00"); // Inicia o relógio com velocidade 1 e tempo 0
+	relogio.StartRelogio(360, "15:00:00"); // Inicia o relógio com velocidade 1 e tempo 0
 
 	// Adiciona 12 horas em segundos (12 horas * 60 minutos * 60 segundos)
 	const int duracao_casino_segundos = 43200;

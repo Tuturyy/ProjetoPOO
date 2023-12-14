@@ -40,6 +40,7 @@ public:
 	void MostrarPessoasFora();
 	void MostrarPessoasCasino();
 	Pessoa* GetPessoa();
+	Pessoa* PesquisarPessoaID(int id_pessoa);
 	void AddPessoa(Pessoa *pessoa);
 	void RmvPessoa(Pessoa* pessoa);
 	list<Pessoa*> Jogadores_Mais_Ganhos();

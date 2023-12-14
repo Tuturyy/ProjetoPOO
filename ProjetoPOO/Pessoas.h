@@ -23,7 +23,9 @@ class Pessoa {
 public:
 	std::list<std::string>* historico;
 	int Lucro;
-	int VitoriasConsecutivas;
+	int Wins;
+	int Losses;
+	int MaiorGanho;
 	Pessoa(int _ID, std::string _Nome, std::string _Localidade, int _Idade);
 	virtual ~Pessoa();
 	int getID();
@@ -45,4 +47,5 @@ public:
 	void PessoaParaCasino(Casino* Pc) {Ptr_Casino = Pc;}
 	void PessoaParaForaCasino() { Ptr_Casino = nullptr;}
 	void PessoaParaForaMaquina() { Ptr_Maquina = nullptr;}
+	void MostrarHistoricoApostas();
 };

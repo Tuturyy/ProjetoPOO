@@ -96,15 +96,19 @@ void subMenuJogadores(Casino* casino) {
     cout << "\n1 - Listar jogadores" << endl;
 	cout << "\n2 - Jogadores que mais ganharam" << endl;
 	cout << "\n3 - Jogadores mais frequentes" << endl;
+    cout << "\n4 - Mostrar historico de apostas de um jogador" << endl;
 	cout << "\n0 - Voltar atras" << endl;
     printLine();
 
     int opcao;
+    int IDjogador = 0;
+    Pessoa* jogador = nullptr;
 
     do
     {
         cout << "Escolhe uma opcao:" << endl;
         cin >> opcao;
+        
 
         switch (opcao)
         {
@@ -117,6 +121,11 @@ void subMenuJogadores(Casino* casino) {
         case 3:
             casino->MostrarListaPessoas(casino->Jogadores_Mais_Frequentes());
             break;
+        case 4:
+            cout << "Qual o ID do jogador?";
+            cin >> IDjogador;
+            jogador = casino->PesquisarPessoaID(IDjogador);
+            jogador->MostrarHistoricoApostas();
         case 0:
             break;
         default:
