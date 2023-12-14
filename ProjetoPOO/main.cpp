@@ -1,4 +1,6 @@
 #include <iostream>
+
+#include <iomanip>
 using namespace std;
 
 #include "Casino.h"
@@ -53,10 +55,10 @@ int main()
     //solverde->ListarEstadoCasino();
 
     solverde->Run();
-    solverde->MostrarListaPessoas(solverde->Jogadores_Mais_Ganhos());
+    /*solverde->MostrarListaPessoas(solverde->Jogadores_Mais_Ganhos());
     cout << "Dinheiro Recebido= " << solverde->DinheiroRecebido;
     cout << "Dinheiro Perdido= " << solverde->DinheiroPerdido;
-    cout << "\n\nLucro= " << solverde->DinheiroRecebido - solverde->DinheiroPerdido;
+    cout << "\n\nLucro= " << solverde->DinheiroRecebido - solverde->DinheiroPerdido;*/
 
     //cout <<"\n\nMemoria Ocupada: " << solverde->Memoria_Total();
     return 7;//CR7 GOAT

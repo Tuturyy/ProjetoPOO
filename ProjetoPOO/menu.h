@@ -4,11 +4,12 @@
 #include "Pessoas.h"
 #include <conio.h>
 #include "Uteis.h"
+#include "Relogio.h"
 
 using namespace std;
 
 void menu();
-void subMenu1();
-void subMenu2();
-void subMenu3();
-void menuGeral();
+void subMenuMaquinas();
+void subMenuJogadores();
+void subMenuCasino();
+void menuGeral(Relogio& relogio);
