@@ -65,7 +65,7 @@ public:
 
 	//Importantes
 	void MostrarMaquina();
-	void DesligarMaquina();
+	void DesligarMaquina(); //Desliga e arrefece maquina.retira o jogador da maquina
 	void AddJogadorMaquina(Pessoa* player);
 	void RemoverJogadorMaquina();
 	
@@ -75,7 +75,7 @@ public:
 	bool Slot(int bet, Casino* casino);
 	bool BlackJack(int bet, Casino* casino);
 
-
+	void AtualizarDadosAposAposta(int bet, bool ganhou, Casino* casino, int multiplicadorBet, string MensagemEspecial);
 	int CalcularBet(); //calcular a aposta dos jogadores
 	bool JogadorJoga(int bet, Casino* casino);
 };
