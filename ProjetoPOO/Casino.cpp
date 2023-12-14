@@ -599,7 +599,7 @@ void Casino::Run(bool Debug) {
 			loopAtivo = false;
 		}
 		else {
-			// Verifica se a tecla "p" foi pressionada
+			// Verifica se a tecla "m" foi pressionada
 			if (_kbhit()) {
 				char tecla = _getch();
 				if (tecla == 'M' || tecla == 'm'){
