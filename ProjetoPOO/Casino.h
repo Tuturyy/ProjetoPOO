@@ -70,6 +70,8 @@ public:
 	int Memoria_Total();
 	void ListarEstadoCasino(ostream& f = std::cout);
 	void Relatorio(string fich_xml);
+	void EstatisticasCasino();
+
 	void PessoasVaoParaMaquinas();
 	void PessoasJogam();
 	void VerificarSaidaPessoas();
