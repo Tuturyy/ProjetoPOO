@@ -9,7 +9,7 @@
 using namespace std;
 
 void menu();
-void subMenuMaquinas();
-void subMenuJogadores();
-void subMenuCasino();
-void menuGeral(Relogio& relogio);
+void subMenuMaquinas(Casino* casino);
+void subMenuJogadores(Casino* casino);
+void subMenuCasino(Casino* casino);
+void menuGeral(Relogio& relogio, Casino* casino);

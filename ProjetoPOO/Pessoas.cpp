@@ -15,8 +15,12 @@ Pessoa::Pessoa(int _ID, std::string _Nome, std::string _Localidade, int _Idade)
 	Saldo = 0;
 	SaldoInicial = 0;
 	Lucro = 0;
-	VitoriasConsecutivas = 0;
+	Wins = 0;
+	Losses = 0;
+	MaiorGanho = 0;
 	HoraSaidaCasino = 0;
+	TempoAJogar = 0;
+	historico = new list<string>();
 }
 
 Pessoa::~Pessoa()
@@ -54,9 +58,29 @@ Maquina* Pessoa::getMaquina()
 	return Ptr_Maquina;
 }
 
+int Pessoa::getHoraEntradaCasino()
+{
+	return HoraEntradaCasino;
+}
+
+void Pessoa::setHoraEntradaCasino(int novaHoraEntradaCasino)
+{
+	HoraEntradaCasino = novaHoraEntradaCasino;
+}
+
 int Pessoa::getHoraSaidaCasino()
 {
 	return HoraSaidaCasino;
+}
+
+int Pessoa::getTempoAJogar()
+{
+	return TempoAJogar;
+}
+
+void Pessoa::setTempoAJogar(int novoTempoAJogar)
+{
+	TempoAJogar = novoTempoAJogar;
 }
 
 void Pessoa::SetMaquina(Maquina* novaMaquina)
@@ -82,5 +106,23 @@ void Pessoa::MostrarPessoa()
 	cout << "Idade: " << Idade << endl;
 	cout << "Saldo:" << Saldo << endl;
 	cout << "Lucro: " << Lucro << endl;
+	cout << "Tempo a jogar no Casino: " << TempoAJogar << "s" << endl;
 	cout << "\n";
+}
+
+void Pessoa::MostrarHistoricoApostas()
+{
+	if (historico->empty())
+	{
+		cout << "\nJogador (" << ID << ") ainda nao jogou.\n\n";
+		return;
+	}
+	cout << "\nHISTORICO DE APOSTAS DE JOGADOR (" << ID << "):\n\n";
+	for (auto it = historico->begin(); it != historico->end(); it++)
+	{
+		cout << (*it);
+	}
+	cout << "\nO jogador teve " << Wins << "W e " << Losses << "L.\n";
+	cout << "O seu maior ganho foi de " << MaiorGanho << "EUR!\n\n";
+
 }

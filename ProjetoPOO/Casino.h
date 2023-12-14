@@ -18,18 +18,17 @@ using namespace std;
 class Casino
 {
 	string nomeC;
+	int HoraEncerrar;
+	int TempoAtualCasino;
 	list<Maquina*> LM;
 	list<Pessoa*> LP;
-
 	list<Pessoa*> LPT;
-
 	list<Pessoa*> LPJ;
 public:
 
 	//Variaveis
 	int DinheiroRecebido;
 	int DinheiroPerdido;
-	int TempoAtualCasino;
 
 	//Construtor e destrutor
 	Casino(string nome, int numMaquinas);
@@ -41,10 +40,13 @@ public:
 	void MostrarPessoasFora();
 	void MostrarPessoasCasino();
 	Pessoa* GetPessoa();
+	Pessoa* PesquisarPessoaID(int id_pessoa);
 	void AddPessoa(Pessoa *pessoa);
 	void RmvPessoa(Pessoa* pessoa);
 	list<Pessoa*> Jogadores_Mais_Ganhos();
-	//list<User*>* Jogadores_Mais_Frequentes();
+	list<Pessoa*> getListaJogadores();
+	list<Pessoa*> getListaPessoasCasino();
+	list<Pessoa*> Jogadores_Mais_Frequentes();
 
 
 	//Funções de Maquinas
@@ -56,11 +58,12 @@ public:
 	ESTADO_MAQUINA Get_Estado(int id_maq);
 	void AtribuirMaquinaPessoa(Pessoa* pessoa);
 	list<Maquina*>* GerarMaquinas(int numMaquinas);
-	list<Maquina*> Listar_Tipo(string Tipo, ostream& f = std::cout);
+	list<Maquina*> Listar_TipoMaquina(string Tipo, ostream& f = std::cout);
 	list<string>* Ranking_Dos_Fracos();
 	list<Maquina*> Ranking_Das_Mais_Trabalhadores();
 	void SubirProbabilidadeVizinhas(Maquina* M_ganhou, float R, list<Maquina*>& lmvizinhas);
 	void ListarMaquinasProbabilidadeMaiorQueX(float X, ostream& f = std::cout);
+	list<Maquina*> Ranking_Das_Mais_Avariadas();
 	
 
 	//Programa
