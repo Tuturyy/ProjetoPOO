@@ -36,7 +36,7 @@ void subMenuMaquinas(Casino* casino) {
 
         switch (opcao) {
         case 1:
-            // Lógica para listar máquinas
+            // Listar Maquinas
             break;
         case 2:
             cout << "Qual o tipo das maquinas que deseja listar? (Poker, ClassicSlots, BlackJack, Roleta)";
@@ -64,7 +64,7 @@ void subMenuMaquinas(Casino* casino) {
             casino->MostrarListaMaquinas(casino->Ranking_Das_Mais_Trabalhadores());
             break;
         case 7:
-            // Lógica para as máquinas que mais avariam
+            // Maquinas que avariam
             break;
         case 0:
             break;
@@ -128,6 +128,7 @@ void subMenuCasino(Casino* casino) {
             //casino->Relatorio(ficheiro a definir);
             break;
         case 3:
+            cout << casino->Memoria_Total();
             break;
         case 0:
             break;

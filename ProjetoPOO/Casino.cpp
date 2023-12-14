@@ -483,9 +483,9 @@ void Casino::Run(bool Debug) {
 				}
 			}
 
-			/*VerificarSaidaPessoas();
+			VerificarSaidaPessoas();
 			PessoasVaoParaMaquinas();
-			PessoasJogam();*/
+			PessoasJogam();
 			relogio.Wait(1);
 			
 		}
