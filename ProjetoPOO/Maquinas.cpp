@@ -190,7 +190,7 @@ void Maquina::AtualizarDadosAposAposta(int bet, bool ganhou, Casino* casino,  in
 		jogador->Lucro += ((bet * multiplicadorBet) - bet);
 		Lucro -= ((bet * multiplicadorBet) - bet);
 		casino->DinheiroPerdido += ((bet * multiplicadorBet) - bet);
-		string msg = MensagemEspecial + "O jogador ganhou " + to_string(bet) + "EUR ("+ to_string(multiplicadorBet)+"x) em " + TipoMaquinaString() + ".\n";
+		string msg = MensagemEspecial + " O jogador ganhou " + to_string(bet*multiplicadorBet) + "EUR("+ to_string(multiplicadorBet)+"x) em " + TipoMaquinaString() + ".\n";
 		jogador->historico->push_back(msg);
 	}
 	else
@@ -199,7 +199,7 @@ void Maquina::AtualizarDadosAposAposta(int bet, bool ganhou, Casino* casino,  in
 		jogador->Lucro -= bet;
 		Lucro += bet;
 		casino->DinheiroRecebido += bet;
-		string msg = "O jogador perdeu " + to_string(bet) + "EUR em " + TipoMaquinaString() + ".\n";
+		string msg = " O jogador perdeu " + to_string(bet) + "EUR em " + TipoMaquinaString() + ".\n";
 		jogador->historico->push_back(msg);
 	}
 }
@@ -287,23 +287,12 @@ bool Maquina::Roulette(int bet, Casino* casino)
 	{
 		if (resultado <= (18.0 / 37))//18 de 37 chances de ganhar
 		{
-			jogador->setSaldo(jogador->getSaldo() + bet); //roleta acaba no ver/pret. 2x Aposta
-			jogador->Lucro += bet;
-			casino->DinheiroPerdido += bet;
-			cout << "O jogador " << jogador->getNome() << " ganhou " << (bet * 2) << "EUR na roleta.\n";
-			string msg = "O jogador ganhou " + to_string(bet*2) + "EUR na roleta.\n";
-			jogador->historico->push_back(msg);
+			AtualizarDadosAposAposta(bet, true, casino, 2);
 			return true;
 		}
 		else //jogador perde
 		{
-			jogador->setSaldo(jogador->getSaldo() - bet);
-			jogador->Lucro -= bet;
-			casino->DinheiroRecebido += bet;
-			Lucro += bet;
-			cout << "O jogador " << jogador->getNome() << " perdeu " << bet << "EUR na roleta.\n";
-			string msg = "O jogador perdeu " + to_string(bet) + "EUR na roleta.\n";
-			jogador->historico->push_back(msg);
+			AtualizarDadosAposAposta(bet, false, casino, 0);
 			return false;
 		}
 	}
@@ -311,23 +300,12 @@ bool Maquina::Roulette(int bet, Casino* casino)
 	{
 		if (resultado <= (1.0 / 37))
 		{
-			jogador->setSaldo(jogador->getSaldo() + (bet * 14)-bet); //roleta acaba no verde. 14x Aposta
-			jogador->Lucro += (bet * 14) - bet;
-			casino->DinheiroPerdido += (bet * 14) - bet;
-			cout << "Incrivel verde na roleta. O jogador " << jogador->getNome() << " ganhou " << (bet * 14) << "EUR.\n";
-			string msg = "Verde! O jogador ganhou " + to_string(bet*14) + "EUR na roleta.\n";
-			jogador->historico->push_back(msg);
+			AtualizarDadosAposAposta(bet, true, casino, 14, "Verde!");
 			return true;
 		}
 		else
 		{
-			jogador->setSaldo(jogador->getSaldo() - bet);
-			jogador->Lucro -= bet;
-			casino->DinheiroRecebido += bet;
-			Lucro += bet;
-			cout << "O jogador " << jogador->getNome() << " perdeu " << bet << "EUR na roleta.\n";
-			string msg = "O jogador perdeu " + to_string(bet) + "EUR na roleta.\n";
-			jogador->historico->push_back(msg);
+			AtualizarDadosAposAposta(bet, false, casino, 0);
 			return false;
 		}
 	}
@@ -373,35 +351,19 @@ bool Maquina::Slot(int bet, Casino* casino)
 bool Maquina::BlackJack(int bet, Casino* casino)
 {
 	double probabilidade = Util::RandNumDouble(0, 1);
-	if (probabilidade<=0.0475)// 4% de chance de blackjack 2.5x aposta
+	if (probabilidade<=0.0475)// 4% de chance de blackjack 3x aposta
 	{
-		jogador->setSaldo(jogador->getSaldo() + (bet*2.5)-bet);
-		jogador->Lucro += (bet * 2.5) - bet;
-		casino->DinheiroPerdido += bet;
-		cout << "BlackJack! O jogador " << jogador->getNome() << " ganhou " << bet * 2.5 << "EUR no blackjack.\n";
-		string msg = "BlackJack! O jogador ganhou " + to_string(bet * 2.5) + "EUR no blackjack.\n";
-		jogador->historico->push_back(msg);
+		AtualizarDadosAposAposta(bet, true, casino, 3, "BlackJack!");
 		return true;
 	}
 	if (probabilidade <= 0.4222)// 42% chance de o jogar 2x aposta
 	{
-		jogador->setSaldo(jogador->getSaldo() + bet);
-		jogador->Lucro += bet;
-		casino->DinheiroPerdido += bet;
-		cout << "O jogador " << jogador->getNome() << " ganhou " << bet * 2 << "EUR no blackjack.\n";
-		string msg = "O jogador ganhou " + to_string(bet*2) + "EUR no blackjack.\n";
-		jogador->historico->push_back(msg);
+		AtualizarDadosAposAposta(bet, true, casino, 2);
 		return true;
 	}
 	else //o jogador perde
 	{
-		jogador->setSaldo(jogador->getSaldo() - bet);
-		jogador->Lucro -= bet;
-		Lucro += bet;
-		casino->DinheiroRecebido += bet;
-		cout << "O jogador " << jogador->getNome() << " perdeu " << bet << "EUR no blackjack.\n";
-		string msg = "O jogador perdeu " + to_string(bet) + "EUR no blackjack.\n";
-		jogador->historico->push_back(msg);
+		AtualizarDadosAposAposta(bet, false, casino,0);
 		return false;
 	}
 }
