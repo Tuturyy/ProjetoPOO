@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DadosCasino>
+	<Nome>Solverde</Nome>
+	<NumeroMaquinas>40</NumeroMaquinas>
+	<Abertura>18:00:00</Abertura>
+	<Fecho>03:00:00</Fecho>
+</DadosCasino>
