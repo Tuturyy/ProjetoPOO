@@ -12,7 +12,6 @@ using namespace std;
 Casino::Casino(string nome, int numMaquinas, string horarioAbertura, string horarioFecho)
 {
 	nomeC = nome;
-	GerarMaquinas(numMaquinas);
 	DinheiroPerdido = 0;
 	DinheiroRecebido = 0;
 	TempoAtualCasino = 0;
@@ -747,6 +746,7 @@ bool Casino::LoadCasino(const string& fileName) {
 	if (pos != string::npos) {
 		size_t endPos = content.find("</NumeroMaquinas>", pos);
 		numeroMaquinas = stoi(content.substr(pos + 16, endPos - pos - 16));
+		GerarMaquinas(numeroMaquinas);
 	}
 
 	pos = content.find("<Abertura>");
