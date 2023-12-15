@@ -425,9 +425,10 @@ void Casino::SubirProbabilidadeVizinhas(Maquina* M_ganhou, float R, list<Maquina
 		if (distancia > 0 && distancia <= R) // distancia menor que o raio e maior que 0 para evitar a propria maquina
 		{
 			cout << "Devia mudar prob da MAQUINA id-" << (*it)->getID() << "\n";
-			//M_ganhou->DiminuirProbabilidade();
+			M_ganhou->DiminuirProbabilidade();
+			(*it)->AumentarProbabilidade();
 
-			//lmvizinhas.push_back(*it);
+			lmvizinhas.push_back(*it);
 		}
 	}
 }
