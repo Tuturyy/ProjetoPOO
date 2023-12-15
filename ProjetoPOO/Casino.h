@@ -25,6 +25,9 @@ class Casino
 	list<Pessoa*> LP;
 	list<Pessoa*> LPT;
 	list<Pessoa*> LPJ;
+	int numeroMaquinas;
+	string horarioAbertura;
+	string horarioFecho;
 public:
 
 	//Variaveis
@@ -76,5 +79,10 @@ public:
 	void PessoasVaoParaMaquinas();
 	void PessoasJogam();
 	void VerificarSaidaPessoas();
-	void Run(bool Debug = true); 
+	void Run(bool Debug = true);
+
+	bool LoadCasino(const std::string& fileName, Casino& casino);
+	int getNumeroMaquinas() const;
+	string getHorarioAbertura() const;
+	string getHorarioFecho() const;
 };

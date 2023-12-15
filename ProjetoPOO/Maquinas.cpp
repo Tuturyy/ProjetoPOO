@@ -142,6 +142,7 @@ void Maquina::MostrarMaquina()
 	}
 	cout << "Tipo: " << TipoMaquinaString() << "\n";
 	cout << "Posicao: X=" << x << " Y=" << y << endl;
+	cout << "Temperatura: " << temperatura << endl;
 	cout << "Utilizacoes: " << Utilizacoes << endl;
 	cout << "Lucro: " << Lucro << endl;
 }

@@ -585,7 +585,11 @@ void Casino::PessoasVaoParaMaquinas()
 				AddPessoa(jogador);
 			}
 		}
-		for (list<Pessoa*>::iterator it = LP.begin(); it != LP.end(); ++it)
+
+		list<Pessoa*> PessoaAleatoria = LP;
+		vector<Pessoa*> PessoasCasinoVetor(PessoaAleatoria.begin(), PessoaAleatoria.end());
+		std::random_shuffle(PessoasCasinoVetor.begin(), PessoasCasinoVetor.end());
+		for (vector<Pessoa*>::iterator it = PessoasCasinoVetor.begin(); it != PessoasCasinoVetor.end(); ++it)
 		{
 
 			if ((*it)->getMaquina() == nullptr)
@@ -672,7 +676,7 @@ void Casino::Run(bool Debug) {
 			loopAtivo = false;
 		}
 		else {
-			// Verifica se a tecla "p" foi pressionada
+			// Verifica se a tecla "m" foi pressionada
 			if (_kbhit()) {
 				char tecla = _getch();
 				if (tecla == 'M' || tecla == 'm'){
@@ -689,6 +693,54 @@ void Casino::Run(bool Debug) {
 			
 		}
 	}
-	relogio.PararRelogio();
-	menuGeral(relogio, this);
+}
+
+bool Casino::LoadCasino(const string& fileName, Casino& casino) {
+	ifstream file(fileName);
+	if (!file.is_open()) {
+		cout << "Erro ao abrir o arquivo XML." << endl;
+		return false;
+	}
+
+	stringstream buffer;
+	buffer << file.rdbuf();
+	string content = buffer.str();
+
+	size_t pos = content.find("<Nome>");
+	if (pos != string::npos) {
+		size_t endPos = content.find("</Nome>", pos);
+		casino.nomeC = content.substr(pos + 6, endPos - pos - 6);
+	}
+
+	pos = content.find("<NumeroMaquinas>");
+	if (pos != string::npos) {
+		size_t endPos = content.find("</NumeroMaquinas>", pos);
+		casino.numeroMaquinas = stoi(content.substr(pos + 16, endPos - pos - 16));
+	}
+
+	pos = content.find("<Abertura>");
+	if (pos != string::npos) {
+		size_t endPos = content.find("</Abertura>", pos);
+		casino.horarioAbertura = content.substr(pos + 10, endPos - pos - 10);
+	}
+
+	pos = content.find("<Fecho>");
+	if (pos != string::npos) {
+		size_t endPos = content.find("</Fecho>", pos);
+		casino.horarioFecho = content.substr(pos + 8, endPos - pos - 8);
+	}
+
+	return true;
+}
+
+int Casino::getNumeroMaquinas() const {
+	return numeroMaquinas;
+}
+
+string Casino::getHorarioAbertura() const {
+	return horarioAbertura;
+}
+
+string Casino::getHorarioFecho() const {
+	return horarioFecho;
 }
