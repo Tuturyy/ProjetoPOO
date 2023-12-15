@@ -17,7 +17,8 @@ using namespace std;
 int main()
 {
     srand(time(NULL));
-    Casino* solverde = new Casino("solverde",40);
+    Casino* solverde = new Casino("solverde",100,"00:00:00","24:00:00");
+    solverde->LoadCasino("load.xml");
     solverde->LerFicheiro();
 
 

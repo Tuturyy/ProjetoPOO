@@ -9,7 +9,7 @@ using namespace std;
 
 
 
-Casino::Casino(string nome, int numMaquinas)
+Casino::Casino(string nome, int numMaquinas, string horarioAbertura, string horarioFecho)
 {
 	nomeC = nome;
 	GerarMaquinas(numMaquinas);
@@ -681,7 +681,7 @@ void Casino::VerificarSaidaPessoas()
 void Casino::Run(bool Debug) {
 	int x = 0;
 	Relogio relogio;
-	relogio.StartRelogio(360, "15:00:00"); // Inicia o relógio com velocidade 1 e tempo 0
+	relogio.StartRelogio(360, horarioAbertura.c_str()); // Inicia o relógio com velocidade 1 e tempo 0
 
 	// Adiciona 12 horas em segundos (12 horas * 60 minutos * 60 segundos)
 	const int duracao_casino_segundos = 43200;
@@ -725,7 +725,7 @@ void Casino::Run(bool Debug) {
 	menuGeral(relogio, this);
 }
 
-bool Casino::LoadCasino(const string& fileName, Casino& casino) {
+bool Casino::LoadCasino(const string& fileName) {
 	ifstream file(fileName);
 	if (!file.is_open()) {
 		cout << "Erro ao abrir o arquivo XML." << endl;
@@ -739,25 +739,25 @@ bool Casino::LoadCasino(const string& fileName, Casino& casino) {
 	size_t pos = content.find("<Nome>");
 	if (pos != string::npos) {
 		size_t endPos = content.find("</Nome>", pos);
-		casino.nomeC = content.substr(pos + 6, endPos - pos - 6);
+		nomeC = content.substr(pos + 6, endPos - pos - 6);
 	}
 
 	pos = content.find("<NumeroMaquinas>");
 	if (pos != string::npos) {
 		size_t endPos = content.find("</NumeroMaquinas>", pos);
-		casino.numeroMaquinas = stoi(content.substr(pos + 16, endPos - pos - 16));
+		numeroMaquinas = stoi(content.substr(pos + 16, endPos - pos - 16));
 	}
 
 	pos = content.find("<Abertura>");
 	if (pos != string::npos) {
 		size_t endPos = content.find("</Abertura>", pos);
-		casino.horarioAbertura = content.substr(pos + 10, endPos - pos - 10);
+		horarioAbertura = content.substr(pos + 10, endPos - pos - 10);
 	}
 
 	pos = content.find("<Fecho>");
 	if (pos != string::npos) {
 		size_t endPos = content.find("</Fecho>", pos);
-		casino.horarioFecho = content.substr(pos + 8, endPos - pos - 8);
+		horarioFecho = content.substr(pos + 8, endPos - pos - 8);
 	}
 
 	return true;

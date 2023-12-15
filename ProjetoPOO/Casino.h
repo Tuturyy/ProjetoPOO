@@ -36,7 +36,7 @@ public:
 	int DinheiroPerdido;
 
 	//Construtor e destrutor
-	Casino(string nome, int numMaquinas);
+	Casino(string nome, int numMaquinas, string horarioAbertura, string horarioFecho);
 	virtual ~Casino();
 
 	//Funções de Pessoas
@@ -84,7 +84,7 @@ public:
 	void VerificarSaidaPessoas();
 	void Run(bool Debug = true);
 
-	bool LoadCasino(const std::string& fileName, Casino& casino);
+	bool LoadCasino(const std::string& fileName);
 	int getNumeroMaquinas() const;
 	string getHorarioAbertura() const;
 	string getHorarioFecho() const;
