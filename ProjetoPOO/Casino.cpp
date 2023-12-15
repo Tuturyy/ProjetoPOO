@@ -12,7 +12,6 @@ using namespace std;
 Casino::Casino(string nome, int numMaquinas, string horarioAbertura, string horarioFecho)
 {
 	nomeC = nome;
-	GerarMaquinas(numMaquinas);
 	DinheiroPerdido = 0;
 	DinheiroRecebido = 0;
 	TempoAtualCasino = 0;
@@ -221,59 +220,6 @@ void Casino::AtribuirMaquinaPessoa(Pessoa* pessoa)
 	return;
 }
 
-list<Maquina*> Casino::Ranking_Das_Mais_Avariadas()
-{
-	list<Maquina*> Ordenada = LM;
-	Ordenada.sort([](const Maquina* a, const Maquina* b) {
-		return a->Avarias > b->Avarias;
-		});
-	return Ordenada;
-}
-
-
-//int Casino::Memoria_Total()
-//{
-//	int memoriaTotal = 0;
-//
-//	// Tamanho dos membros da classe Casino
-//	memoriaTotal += sizeof(*this); // Tamanho da instância de Casino
-//
-//	// Tamanho das listas (somente dos contêineres)
-//	memoriaTotal += LP.size() * sizeof(Pessoa*); // Tamanho da lista de ponteiros
-//	memoriaTotal += LPT.size() * sizeof(Pessoa*);
-//	memoriaTotal += LPJ.size() * sizeof(Pessoa*);
-//	memoriaTotal += LM.size() * sizeof(Maquina*);
-//
-//	// Itera pelas listas e adiciona o tamanho dos objetos apontados (estimativa)
-//	for (const auto& pessoaPtr : LP) {
-//		if (pessoaPtr) {
-//			memoriaTotal += sizeof(*pessoaPtr); // Tamanho estimado de cada Pessoa
-//			// Adicione mais ao totalMemoryUsage se a Pessoa tiver dados dinâmicos
-//		}
-//	}
-//	for (const auto& pessoaPtr : LPT) {
-//		if (pessoaPtr) {
-//			memoriaTotal += sizeof(*pessoaPtr); // Tamanho estimado de cada Pessoa
-//			// Adicione mais ao totalMemoryUsage se a Pessoa tiver dados dinâmicos
-//		}
-//	}
-//	for (const auto& pessoaPtr : LPJ) {
-//		if (pessoaPtr) {
-//			memoriaTotal += sizeof(*pessoaPtr); // Tamanho estimado de cada Pessoa
-//			// Adicione mais ao totalMemoryUsage se a Pessoa tiver dados dinâmicos
-//		}
-//	}
-//	for (const auto& maquinaPtr : LM) {
-//		if (maquinaPtr) {
-//			memoriaTotal += sizeof(*maquinaPtr); // Tamanho estimado de cada Maquina
-//			// Adicione mais ao totalMemoryUsage se a Maquina tiver dados dinâmicos
-//		}
-//	}
-//
-//	return memoriaTotal;
-//}
-
-
 int Casino::Memoria_Total()
 {
 	int MemoriaTotal = sizeof(*this);
@@ -410,9 +356,9 @@ list<Maquina*> Casino::Ranking_Das_Mais_Trabalhadores()
 		return a->Utilizacoes > b->Utilizacoes;
 		});
 
-	if (Ordenada.size() > 10) {
+	if (Ordenada.size() > 5) {
 		auto it = Ordenada.begin();
-		advance(it, 10);
+		advance(it, 5);
 		Ordenada.erase(it, Ordenada.end());
 	}
 
@@ -446,15 +392,15 @@ float Casino::CalcularDistanciaEntreMaquinas(Maquina* M1, Maquina* M2)
 
 list<Pessoa*> Casino::Jogadores_Mais_Ganhos()
 {
-	cout << "\nTOP 10 Jogadores com mais Lucro:\n\n";
+	cout << "\nTOP 5 Jogadores com mais Lucro:\n\n";
 	list<Pessoa*> JogadoresMaisLucro = LPJ;
 	JogadoresMaisLucro.sort([](Pessoa* a, Pessoa* b) {
 		return a->getLucro() > b->getLucro();
 	});
 
-	if (JogadoresMaisLucro.size() > 10) {
+	if (JogadoresMaisLucro.size() > 5) {
 		auto it = JogadoresMaisLucro.begin();
-		advance(it, 10);
+		advance(it, 5);
 		JogadoresMaisLucro.erase(it, JogadoresMaisLucro.end());
 	}
 
@@ -468,11 +414,11 @@ list<Pessoa*> Casino::Jogadores_Mais_Frequentes()
 		return a->getTempoAJogar() > b->getTempoAJogar();
 		});
 
-	/*if (JogadoresMaisFrequentes.size() > 10) {
+	if (JogadoresMaisFrequentes.size() > 5) {
 		auto it = JogadoresMaisFrequentes.begin();
-		advance(it, 10);
+		advance(it, 5);
 		JogadoresMaisFrequentes.erase(it, JogadoresMaisFrequentes.end());
-	}*/
+	} 
 
 	return JogadoresMaisFrequentes;
 }
@@ -653,7 +599,7 @@ void Casino::VerificarSaidaPessoas()
 void Casino::Run(bool Debug) {
 	int x = 0;
 	Relogio relogio;
-	relogio.StartRelogio(360, horarioAbertura.c_str()); // Inicia o relógio com velocidade 1 e tempo 0
+	relogio.StartRelogio(360, horarioAbertura.c_str());
 
 	// Adiciona 12 horas em segundos (12 horas * 60 minutos * 60 segundos)
 	const int duracao_casino_segundos = 43200;
@@ -716,6 +662,7 @@ bool Casino::LoadCasino(const string& fileName) {
 	if (pos != string::npos) {
 		size_t endPos = content.find("</NumeroMaquinas>", pos);
 		numeroMaquinas = stoi(content.substr(pos + 16, endPos - pos - 16));
+		GerarMaquinas(numeroMaquinas);
 	}
 
 	pos = content.find("<Abertura>");

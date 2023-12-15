@@ -68,7 +68,6 @@ public:
 	void SubirProbabilidadeVizinhas(Maquina* M_ganhou, float R, list<Maquina*>& lmvizinhas);
 	float CalcularDistanciaEntreMaquinas(Maquina* M1, Maquina* M2);
 	void ListarMaquinasProbabilidadeMaiorQueX(float X, ostream& f = std::cout);
-	list<Maquina*> Ranking_Das_Mais_Avariadas();
 	
 
 	//Programa
