@@ -264,21 +264,19 @@ void Maquina::SobeTemperatura()
 			MaquinaAvaria(true);
 			return;
 		}
-
-		if (temperatura >= 70)
+		if (temperatura >= 70 )
 		{
-			temperatura += 1;
-			if (AvisoTemperatura == false)
+			if(AvisoTemperatura==false)
 			{
 				cout << "Aviso! Maquina [" << getID() << "] a sobreaquecer, desligue rapidamente\n";
 				AvisoTemperatura = true;
 			}
-			return;
+			temperatura += 0.1;
 		}
-
-		else
+		double probabilidade = Util::RandNumDouble(0, 1);
+		if(probabilidade <=0.1) //10% de chances de subir a temperatura da maquina
 		{
-			temperatura += 1;
+				temperatura += 1;
 		}
 	}
 }
