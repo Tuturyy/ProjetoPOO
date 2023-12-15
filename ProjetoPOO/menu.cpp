@@ -91,7 +91,7 @@ void subMenuMaquinas(Casino* casino) {
             cout << "Qual o id da maquina que pretende ver?\n";
             cin >> idmaquinaShow;
             maquinaShow = casino->PesquisarMaquinaID(idmaquinaShow);
-            maquinaShow->getEstado();
+            cout << maquinaShow->EstadoMaquinaString();
             break;
         case 5:
             cout << "Qual o valor de X? (em %)\n";

@@ -17,6 +17,7 @@ Casino::Casino(string nome, int numMaquinas)
 	DinheiroRecebido = 0;
 	TempoAtualCasino = 0;
 	HoraEncerrar = 0;
+	Jogadas = 0;
 }
 
 Casino::~Casino()
@@ -213,12 +214,9 @@ void Casino::AtribuirMaquinaPessoa(Pessoa* pessoa)
 		{
 			(*it)->AddJogadorMaquina(pessoa);
 			(*it)->TempoJogadaTerminada = TempoAtualCasino + (*it)->getTempoJogadaMaquina();
-			cout << "Adicionada Pessoa: " << pessoa->getNome() << " A Maquina: " << (*it)->getID() << "\n";
 			return;
 		}
 	}
-	cout << "Maquinas indisponiveis.\n";
-	return;
 }
 
 list<Maquina*> Casino::Ranking_Das_Mais_Avariadas()
@@ -424,10 +422,12 @@ void Casino::SubirProbabilidadeVizinhas(Maquina* M_ganhou, float R, list<Maquina
 	for (list<Maquina*>::iterator it = LM.begin(); it != LM.end(); it++)
 	{
 		float distancia = CalcularDistanciaEntreMaquinas(M_ganhou, (*it));
-		if (distancia > 0 && distancia <= R)
+		if (distancia > 0 && distancia <= R) // distancia menor que o raio e maior que 0 para evitar a propria maquina
 		{
+			cout << "Devia mudar prob da MAQUINA id-" << (*it)->getID() << "\n";
+			//M_ganhou->DiminuirProbabilidade();
 
-			lmvizinhas.push_back(*it);
+			//lmvizinhas.push_back(*it);
 		}
 	}
 }
@@ -477,6 +477,16 @@ list<Pessoa*> Casino::Jogadores_Mais_Frequentes()
 	return JogadoresMaisFrequentes;
 }
 
+int Casino::getJogadas()
+{
+	return Jogadas;
+}
+
+void Casino::setJogadas(int novoJogadas)
+{
+	Jogadas = novoJogadas;
+}
+
 
 
 void Casino::Relatorio(string fich_xml)
@@ -518,6 +528,7 @@ void Casino::EstatisticasCasino()
 	int numPessoasLucro = 0;
 	int numPessoasPrejuizo = 0;
 	int numPessoasMantem = 0;
+	int numMaquinasUtilizadas = 0;
 	for (list<Pessoa*>::iterator it = LPJ.begin(); it != LPJ.end(); it++)
 	{
 		if ((*it)->getLucro() > 0)
@@ -532,13 +543,24 @@ void Casino::EstatisticasCasino()
 			numPessoasMantem++;
 		}
 	}
+
+	for (list<Maquina*>::iterator it = LM.begin(); it != LM.end(); it++)
+	{
+		if((*it)->Utilizacoes >0)
+		{
+			numMaquinasUtilizadas++;
+		}
+	}
+
+
 	cout << "\n\n***********************************************************\n";
 	cout << "Casino " << nomeC << "\n";
 	cout << "***********************************************************\n\n";
 
 	cout << "	O Casino teve um lucro de: " << (DinheiroRecebido - DinheiroPerdido) << "EUR\n\n";
 	cout << "	Os jogadores apostaram um total de: " << DinheiroRecebido << "EUR\n";
-	cout << "	O casino em apostas perdeu um total de: " << DinheiroPerdido << "EUR\n\n";
+	cout << "	O casino em apostas perdeu um total de: " << DinheiroPerdido << "EUR\n";
+	cout << "	Foram feitas um total de " << Jogadas << " apostas em " << numMaquinasUtilizadas << " maquinas diferentes.\n\n";
 	cout << "***********************************************************\n\n";
 	cout << "	Jogaram um total de " << LPJ.size() << " pessoas.\n\n";
 	cout << "	Destas ficaram "<< numPessoasLucro << " no lucro :)\n";
@@ -548,6 +570,7 @@ void Casino::EstatisticasCasino()
 		cout << "	" << numPessoasMantem << " ficaram na mesma :|\n";
 	}
 	cout << "\n***********************************************************\n\n";
+
 
 	
 }
@@ -599,8 +622,7 @@ void Casino::PessoasVaoParaMaquinas()
 		}
 		
 	}
-	else
-		cout << "JA NINGUEM ENTRA\n";
+
 }
 
 
@@ -621,12 +643,18 @@ void Casino::PessoasJogam()
 				{
 					numJogadas = Util::RandNumInt(1, MaxJogadas);
 				}
-				cout << "VOU JOGAR " << numJogadas << " VEZES\n";
 				for (int i=0; i<numJogadas;i++)
 				{
-					(*it)->JogadorJoga((*it)->CalcularBet(), this);
+					if ((*it)->getEstado() == ESTADO_MAQUINA::ON)
+					{
+						
+						(*it)->JogadorJoga((*it)->CalcularBet(), this);
+					}
 				}
-				(*it)->RemoverJogadorMaquina();
+				if ((*it)!=nullptr)
+				{
+					(*it)->RemoverJogadorMaquina();
+				}
 			}
 		}
 	}
@@ -653,7 +681,7 @@ void Casino::VerificarSaidaPessoas()
 void Casino::Run(bool Debug) {
 	int x = 0;
 	Relogio relogio;
-	relogio.StartRelogio(4230, "15:00:00"); // Inicia o relógio com velocidade 1 e tempo 0
+	relogio.StartRelogio(360, "15:00:00"); // Inicia o relógio com velocidade 1 e tempo 0
 
 	// Adiciona 12 horas em segundos (12 horas * 60 minutos * 60 segundos)
 	const int duracao_casino_segundos = 43200;
@@ -693,6 +721,8 @@ void Casino::Run(bool Debug) {
 			
 		}
 	}
+	relogio.PararRelogio();
+	menuGeral(relogio, this);
 }
 
 bool Casino::LoadCasino(const string& fileName, Casino& casino) {

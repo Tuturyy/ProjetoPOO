@@ -21,13 +21,14 @@ class Casino
 	int HoraEncerrar;
 	int TempoAtualCasino;
 	list<Maquina*> LM;
-	list<Maquina> LMvizinhas;
+	list<Maquina*> LMvizinhas;
 	list<Pessoa*> LP;
 	list<Pessoa*> LPT;
 	list<Pessoa*> LPJ;
 	int numeroMaquinas;
 	string horarioAbertura;
 	string horarioFecho;
+	int Jogadas;
 public:
 
 	//Variaveis
@@ -51,6 +52,8 @@ public:
 	list<Pessoa*> getListaJogadores();
 	list<Pessoa*> getListaPessoasCasino();
 	list<Pessoa*> Jogadores_Mais_Frequentes();
+	int getJogadas();
+	void setJogadas(int novoJogadas);
 
 
 	//Funções de Maquinas
