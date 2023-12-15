@@ -3,6 +3,7 @@
 #include "Relogio.h"
 #include "menu.h"
 #include <algorithm>
+#include <cmath>
 
 using namespace std;
 
@@ -11,7 +12,7 @@ using namespace std;
 Casino::Casino(string nome, int numMaquinas)
 {
 	nomeC = nome;
-	LM = *GerarMaquinas(numMaquinas);
+	GerarMaquinas(numMaquinas);
 	DinheiroPerdido = 0;
 	DinheiroRecebido = 0;
 	TempoAtualCasino = 0;
@@ -20,15 +21,20 @@ Casino::Casino(string nome, int numMaquinas)
 
 Casino::~Casino()
 {
-	/*for (auto& maqPtr : LM) {
-		delete maqPtr;
+	for (auto it = LPT.begin(); it != LPT.end(); ++it) 
+	{
+		delete(*it);
 	}
-	LM.clear();
 
-	for (auto& pessoaPtr : LP) {
-		delete pessoaPtr;
+	for (auto it = LPJ.begin(); it != LPJ.end(); ++it)
+	{
+		delete(*it);
 	}
-	LP.clear();*/
+
+	for (auto it = LM.begin(); it != LM.end(); ++it)
+	{
+		delete(*it);
+	}
 }
 
 void Casino::LerFicheiro()
@@ -224,78 +230,76 @@ list<Maquina*> Casino::Ranking_Das_Mais_Avariadas()
 	return Ordenada;
 }
 
-/*int Casino::Memoria_Total()
-{
-	int memoriaTotal = 0;
-	
-	memoriaTotal += sizeof(*this);
 
-	for (list<Pessoa*>::iterator it = LP.begin(); it != LP.end(); it++)
-	{
-		memoriaTotal += sizeof(*(*it));
-	}
-	memoriaTotal += LP.size() * sizeof(Pessoa*);
-	for (list<Pessoa*>::iterator it = LPT.begin(); it != LPT.end(); it++)
-	{
-		memoriaTotal += sizeof(*(*it));
-	}
-	memoriaTotal += LPT.size() * sizeof(Pessoa*);
-	for (list<Pessoa*>::iterator it = LPJ.begin(); it != LPJ.end(); it++)
-	{
-		memoriaTotal += sizeof(*(*it));
-	}
-	memoriaTotal += LPJ.size() * sizeof(Pessoa*);
-	for (list<Maquina*>::iterator it = LM.begin(); it != LM.end(); it++)
-	{
-		memoriaTotal += sizeof(*(*it));
-	}
-	memoriaTotal += LM.size() * sizeof(Maquina*);
-
-	return memoriaTotal;
-}*/
+//int Casino::Memoria_Total()
+//{
+//	int memoriaTotal = 0;
+//
+//	// Tamanho dos membros da classe Casino
+//	memoriaTotal += sizeof(*this); // Tamanho da instância de Casino
+//
+//	// Tamanho das listas (somente dos contêineres)
+//	memoriaTotal += LP.size() * sizeof(Pessoa*); // Tamanho da lista de ponteiros
+//	memoriaTotal += LPT.size() * sizeof(Pessoa*);
+//	memoriaTotal += LPJ.size() * sizeof(Pessoa*);
+//	memoriaTotal += LM.size() * sizeof(Maquina*);
+//
+//	// Itera pelas listas e adiciona o tamanho dos objetos apontados (estimativa)
+//	for (const auto& pessoaPtr : LP) {
+//		if (pessoaPtr) {
+//			memoriaTotal += sizeof(*pessoaPtr); // Tamanho estimado de cada Pessoa
+//			// Adicione mais ao totalMemoryUsage se a Pessoa tiver dados dinâmicos
+//		}
+//	}
+//	for (const auto& pessoaPtr : LPT) {
+//		if (pessoaPtr) {
+//			memoriaTotal += sizeof(*pessoaPtr); // Tamanho estimado de cada Pessoa
+//			// Adicione mais ao totalMemoryUsage se a Pessoa tiver dados dinâmicos
+//		}
+//	}
+//	for (const auto& pessoaPtr : LPJ) {
+//		if (pessoaPtr) {
+//			memoriaTotal += sizeof(*pessoaPtr); // Tamanho estimado de cada Pessoa
+//			// Adicione mais ao totalMemoryUsage se a Pessoa tiver dados dinâmicos
+//		}
+//	}
+//	for (const auto& maquinaPtr : LM) {
+//		if (maquinaPtr) {
+//			memoriaTotal += sizeof(*maquinaPtr); // Tamanho estimado de cada Maquina
+//			// Adicione mais ao totalMemoryUsage se a Maquina tiver dados dinâmicos
+//		}
+//	}
+//
+//	return memoriaTotal;
+//}
 
 
 int Casino::Memoria_Total()
 {
-	int memoriaTotal = 0;
+	int MemoriaTotal = sizeof(*this);
 
-	// Tamanho dos membros da classe Casino
-	memoriaTotal += sizeof(*this); // Tamanho da instância de Casino
+	for (auto it = LPT.begin(); it != LPT.end(); it++)
+	{
+		MemoriaTotal += (*it)->MemoriadaClass();
+	}
+	MemoriaTotal += sizeof(LPT);
 
-	// Tamanho das listas (somente dos contêineres)
-	memoriaTotal += LP.size() * sizeof(Pessoa*); // Tamanho da lista de ponteiros
-	memoriaTotal += LPT.size() * sizeof(Pessoa*);
-	memoriaTotal += LPJ.size() * sizeof(Pessoa*);
-	memoriaTotal += LM.size() * sizeof(Maquina*);
+	for (auto it = LPJ.begin(); it != LPJ.end(); it++)
+	{
+		MemoriaTotal += (*it)->MemoriadaClass();
+	}
+	MemoriaTotal += sizeof(LPJ);
 
-	// Itera pelas listas e adiciona o tamanho dos objetos apontados (estimativa)
-	for (const auto& pessoaPtr : LP) {
-		if (pessoaPtr) {
-			memoriaTotal += sizeof(*pessoaPtr); // Tamanho estimado de cada Pessoa
-			// Adicione mais ao totalMemoryUsage se a Pessoa tiver dados dinâmicos
-		}
+	for (auto it = LM.begin(); it != LM.end(); it++)
+	{
+		MemoriaTotal += (*it)->MemoriaClass();
 	}
-	for (const auto& pessoaPtr : LPT) {
-		if (pessoaPtr) {
-			memoriaTotal += sizeof(*pessoaPtr); // Tamanho estimado de cada Pessoa
-			// Adicione mais ao totalMemoryUsage se a Pessoa tiver dados dinâmicos
-		}
-	}
-	for (const auto& pessoaPtr : LPJ) {
-		if (pessoaPtr) {
-			memoriaTotal += sizeof(*pessoaPtr); // Tamanho estimado de cada Pessoa
-			// Adicione mais ao totalMemoryUsage se a Pessoa tiver dados dinâmicos
-		}
-	}
-	for (const auto& maquinaPtr : LM) {
-		if (maquinaPtr) {
-			memoriaTotal += sizeof(*maquinaPtr); // Tamanho estimado de cada Maquina
-			// Adicione mais ao totalMemoryUsage se a Maquina tiver dados dinâmicos
-		}
-	}
+	MemoriaTotal += sizeof(LM);
 
-	return memoriaTotal;
+
+	return MemoriaTotal;
 }
+
 
 void Casino::ListarEstadoCasino(ostream& f)
 {
@@ -312,9 +316,13 @@ void Casino::ListarEstadoCasino(ostream& f)
 	
 }
 
-list<Maquina*>* Casino::GerarMaquinas(int numMaquinas)
+void Casino::GerarMaquinas(int numMaquinas)
 {
-	list<Maquina*>* lista = new list<Maquina*>();
+	if (numMaquinas > ((X_MAX_CASINO + 1) * (Y_MAX_CASINO + 1)))
+	{
+		cout << "ERRO. NUMERO DE MAQUINAS MUITO ELEVADO PARA A AREA DO CASINO\n\n";
+		return;
+	}
 	for (int i = 0; i < numMaquinas; i++)
 	{
 		TIPO_MAQUINA randomTipo = static_cast<TIPO_MAQUINA>(1 + (rand() % 4));//tipo de jogo na maquina aleatorio
@@ -325,7 +333,7 @@ list<Maquina*>* Casino::GerarMaquinas(int numMaquinas)
 				posicaoOcupada = false;
 				randomx = 0 + (rand() % (X_MAX_CASINO+1));
 				randomy = 0 + (rand() % (Y_MAX_CASINO + 1));
-				for (list<Maquina*>::iterator it = lista->begin(); it != lista->end(); ++it)
+				for (list<Maquina*>::iterator it = LM.begin(); it != LM.end(); ++it)
 				{
 					if (((*it)->getX() == randomx) && ((*it)->getY() == randomy))//se a posicao ja estiver ocupada
 					{
@@ -336,9 +344,9 @@ list<Maquina*>* Casino::GerarMaquinas(int numMaquinas)
 			} while (posicaoOcupada);
 
 			Maquina* maq = new Maquina(i + 1, randomTipo, randomx, randomy);
-		lista->push_back(maq);
+		LM.push_back(maq);
 	}
-	return lista;
+
 }
 
 list<Maquina*> Casino::Listar_TipoMaquina(string Tipo, ostream& f)
@@ -379,6 +387,22 @@ list<Maquina*> Casino::Listar_TipoMaquina(string Tipo, ostream& f)
 	return maquinasdoTipo;
 }
 
+list<Maquina*> Casino::Maquinas_Mais_Avarias()
+{
+	list<Maquina*> Ordenada = LM;
+	Ordenada.sort([](Maquina* a, Maquina* b) {
+		return a->Avarias > b->Avarias;
+		});
+
+	if (Ordenada.size() > 5) {
+		auto it = Ordenada.begin();
+		advance(it, 5);
+		Ordenada.erase(it, Ordenada.end());
+	}
+
+	return Ordenada;
+}
+
 list<Maquina*> Casino::Ranking_Das_Mais_Trabalhadores()
 {
 	list<Maquina*> Ordenada = LM;
@@ -395,13 +419,37 @@ list<Maquina*> Casino::Ranking_Das_Mais_Trabalhadores()
 	return Ordenada;
 }
 
+void Casino::SubirProbabilidadeVizinhas(Maquina* M_ganhou, float R, list<Maquina*>& lmvizinhas)
+{
+	for (list<Maquina*>::iterator it = LM.begin(); it != LM.end(); it++)
+	{
+		float distancia = CalcularDistanciaEntreMaquinas(M_ganhou, (*it));
+		if (distancia > 0 && distancia <= R)
+		{
+
+			lmvizinhas.push_back(*it);
+		}
+	}
+}
+
+float Casino::CalcularDistanciaEntreMaquinas(Maquina* M1, Maquina* M2)
+{
+	int x1 = M1->getX();
+	int y1 = M1->getY();
+	int x2 = M2->getX();
+	int y2 = M2->getY();
+
+	float distancia = sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2));
+	return distancia;
+}
+
 
 list<Pessoa*> Casino::Jogadores_Mais_Ganhos()
 {
 	cout << "\nTOP 10 Jogadores com mais Lucro:\n\n";
 	list<Pessoa*> JogadoresMaisLucro = LPJ;
-	JogadoresMaisLucro.sort([](const Pessoa* a, const Pessoa* b) {
-		return a->Lucro > b->Lucro;
+	JogadoresMaisLucro.sort([](Pessoa* a, Pessoa* b) {
+		return a->getLucro() > b->getLucro();
 	});
 
 	if (JogadoresMaisLucro.size() > 10) {
@@ -467,14 +515,39 @@ void Casino::Relatorio(string fich_xml)
 
 void Casino::EstatisticasCasino()
 {
-	cout << "\n\n***********************************\n";
-	cout << "         Casino " << nomeC << "\n";
-	cout << "***********************************\n\n";
+	int numPessoasLucro = 0;
+	int numPessoasPrejuizo = 0;
+	int numPessoasMantem = 0;
+	for (list<Pessoa*>::iterator it = LPJ.begin(); it != LPJ.end(); it++)
+	{
+		if ((*it)->getLucro() > 0)
+		{
+			numPessoasLucro++;
+		}
+		else if ((*it)->getLucro() < 0)
+		{
+			numPessoasPrejuizo++;
+		}
+		else {
+			numPessoasMantem++;
+		}
+	}
+	cout << "\n\n***********************************************************\n";
+	cout << "Casino " << nomeC << "\n";
+	cout << "***********************************************************\n\n";
 
-	cout << "O Casino teve um lucro de: " << (DinheiroRecebido - DinheiroPerdido) << "EUR\n\n";
-	cout << "Os jogadores apostaram um total de: " << DinheiroRecebido << "EUR\n";
-	cout << "O casino em apostas perdeu um total de: " << DinheiroPerdido << "EUR\n\n";
-	cout << "********************\n\n";
+	cout << "	O Casino teve um lucro de: " << (DinheiroRecebido - DinheiroPerdido) << "EUR\n\n";
+	cout << "	Os jogadores apostaram um total de: " << DinheiroRecebido << "EUR\n";
+	cout << "	O casino em apostas perdeu um total de: " << DinheiroPerdido << "EUR\n\n";
+	cout << "***********************************************************\n\n";
+	cout << "	Jogaram um total de " << LPJ.size() << " pessoas.\n\n";
+	cout << "	Destas ficaram "<< numPessoasLucro << " no lucro :)\n";
+	cout << "	E "<< numPessoasPrejuizo << " ficaram no prejuizo :(\n";
+	if (numPessoasMantem != 0)
+	{
+		cout << "	" << numPessoasMantem << " ficaram na mesma :|\n";
+	}
+	cout << "\n***********************************************************\n\n";
 
 	
 }
@@ -576,7 +649,7 @@ void Casino::VerificarSaidaPessoas()
 void Casino::Run(bool Debug) {
 	int x = 0;
 	Relogio relogio;
-	relogio.StartRelogio(360, "15:00:00"); // Inicia o relógio com velocidade 1 e tempo 0
+	relogio.StartRelogio(4230, "15:00:00"); // Inicia o relógio com velocidade 1 e tempo 0
 
 	// Adiciona 12 horas em segundos (12 horas * 60 minutos * 60 segundos)
 	const int duracao_casino_segundos = 43200;
@@ -616,4 +689,6 @@ void Casino::Run(bool Debug) {
 			
 		}
 	}
+	relogio.PararRelogio();
+	menuGeral(relogio, this);
 }

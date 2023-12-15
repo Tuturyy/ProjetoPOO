@@ -21,6 +21,7 @@ class Casino
 	int HoraEncerrar;
 	int TempoAtualCasino;
 	list<Maquina*> LM;
+	list<Maquina> LMvizinhas;
 	list<Pessoa*> LP;
 	list<Pessoa*> LPT;
 	list<Pessoa*> LPJ;
@@ -57,11 +58,12 @@ public:
 	void Desligar(int id_maq);
 	ESTADO_MAQUINA Get_Estado(int id_maq);
 	void AtribuirMaquinaPessoa(Pessoa* pessoa);
-	list<Maquina*>* GerarMaquinas(int numMaquinas);
+	void GerarMaquinas(int numMaquinas);
 	list<Maquina*> Listar_TipoMaquina(string Tipo, ostream& f = std::cout);
-	list<string>* Ranking_Dos_Fracos();
+	list<Maquina*> Maquinas_Mais_Avarias();
 	list<Maquina*> Ranking_Das_Mais_Trabalhadores();
 	void SubirProbabilidadeVizinhas(Maquina* M_ganhou, float R, list<Maquina*>& lmvizinhas);
+	float CalcularDistanciaEntreMaquinas(Maquina* M1, Maquina* M2);
 	void ListarMaquinasProbabilidadeMaiorQueX(float X, ostream& f = std::cout);
 	list<Maquina*> Ranking_Das_Mais_Avariadas();
 	
@@ -71,9 +73,8 @@ public:
 	void ListarEstadoCasino(ostream& f = std::cout);
 	void Relatorio(string fich_xml);
 	void EstatisticasCasino();
-
 	void PessoasVaoParaMaquinas();
 	void PessoasJogam();
 	void VerificarSaidaPessoas();
-	void Run(bool Debug = true);
+	void Run(bool Debug = true); 
 };
