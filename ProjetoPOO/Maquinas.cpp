@@ -183,16 +183,24 @@ void Maquina::RemoverJogadorMaquina()
 		cout << "Impossivel remover jogador da Maquina (" << id << "). Nao existe jogador.\n";
 }
 
+int Maquina::MemoriaClass()
+{
+	int TamanhoTotal = sizeof(*this);
+	//TamanhoTotal += jogador->MemoriadaClass();
+
+	return TamanhoTotal;
+}
+
 void Maquina::AtualizarDadosAposAposta(int bet, bool ganhou, Casino* casino,  int multiplicadorBet , string MensagemEspecial = "")
 {
 	if (ganhou)
 	{
 		jogador->setSaldo(jogador->getSaldo() + (bet*multiplicadorBet)-bet);
-		jogador->Lucro += ((bet * multiplicadorBet) - bet);
-		jogador->Wins++;
-		if (jogador->MaiorGanho < (bet * multiplicadorBet))
+		jogador->setLucro(jogador->getLucro() + ((bet * multiplicadorBet) - bet));
+		jogador->setWins(jogador->getWins()+1);
+		if (jogador->getMaiorGanho() < (bet * multiplicadorBet))
 		{
-			jogador->MaiorGanho = (bet * multiplicadorBet);
+			jogador->setMaiorGanho(bet * multiplicadorBet);
 		}
 		Lucro -= ((bet * multiplicadorBet) - bet);
 		casino->DinheiroPerdido += ((bet * multiplicadorBet) - bet);
@@ -202,8 +210,8 @@ void Maquina::AtualizarDadosAposAposta(int bet, bool ganhou, Casino* casino,  in
 	else
 	{
 		jogador->setSaldo(jogador->getSaldo() - bet);
-		jogador->Lucro -= bet;
-		jogador->Losses++;
+		jogador->setLucro(jogador->getLucro() - bet);
+		jogador->setLosses(jogador->getLosses() - 1);
 		Lucro += bet;
 		casino->DinheiroRecebido += bet;
 		string msg = " O jogador perdeu " + to_string(bet) + "EUR em " + TipoMaquinaString() + ".\n";

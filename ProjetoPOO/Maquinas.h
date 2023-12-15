@@ -68,6 +68,7 @@ public:
 	void DesligarMaquina(); //Desliga e arrefece maquina.retira o jogador da maquina
 	void AddJogadorMaquina(Pessoa* player);
 	void RemoverJogadorMaquina();
+	int MemoriaClass();
 	
 
 	//Jogos

@@ -12,6 +12,7 @@ Pessoa::Pessoa(int _ID, std::string _Nome, std::string _Localidade, int _Idade)
 	Localidade = _Localidade;
 	Idade = _Idade;
 	Ptr_Maquina = nullptr;
+	Ptr_Casino = nullptr;
 	Saldo = 0;
 	SaldoInicial = 0;
 	Lucro = 0;
@@ -25,7 +26,7 @@ Pessoa::Pessoa(int _ID, std::string _Nome, std::string _Localidade, int _Idade)
 
 Pessoa::~Pessoa()
 {
-
+	delete historico;
 }
 
 int Pessoa::getID() {
@@ -78,6 +79,26 @@ int Pessoa::getTempoAJogar()
 	return TempoAJogar;
 }
 
+int Pessoa::getLucro()
+{
+	return Lucro;
+}
+
+int Pessoa::getWins()
+{
+	return Wins;
+}
+
+int Pessoa::getLosses()
+{
+	return Losses;
+}
+
+int Pessoa::getMaiorGanho()
+{
+	return MaiorGanho;
+}
+
 void Pessoa::setTempoAJogar(int novoTempoAJogar)
 {
 	TempoAJogar = novoTempoAJogar;
@@ -91,6 +112,26 @@ void Pessoa::SetMaquina(Maquina* novaMaquina)
 void Pessoa::SetHoraSaidaCasino(int novaHora)
 {
 	HoraSaidaCasino = novaHora;
+}
+
+void Pessoa::setLucro(int novoLucro)
+{
+	Lucro = novoLucro;
+}
+
+void Pessoa::setWins(int novoWins)
+{
+	Wins = novoWins;
+}
+
+void Pessoa::setLosses(int novoLosses)
+{
+	Losses = novoLosses;
+}
+
+void Pessoa::setMaiorGanho(int novoMaiorGanho)
+{
+	MaiorGanho = novoMaiorGanho;
 }
 
 void Pessoa::adicionaSaldo(int novoSaldo) {
@@ -125,4 +166,12 @@ void Pessoa::MostrarHistoricoApostas()
 	cout << "\nO jogador teve " << Wins << "W e " << Losses << "L.\n";
 	cout << "O seu maior ganho foi de " << MaiorGanho << "EUR!\n\n";
 
+}
+
+int Pessoa::MemoriadaClass()
+{
+	int tamanhoTotal = sizeof(*this);
+	tamanhoTotal += sizeof(*historico);
+
+	return tamanhoTotal;
 }

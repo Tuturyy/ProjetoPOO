@@ -1,5 +1,9 @@
-#include <iostream>
+#define _CRTDBG_MAP_ALLOC
+#include <stdlib.h>
+#include <crtdbg.h>
 
+
+#include <iostream>
 #include <iomanip>
 using namespace std;
 
@@ -16,25 +20,13 @@ int main()
     Casino* solverde = new Casino("solverde",100,"00:00:00","24:00:00");
     solverde->LoadCasino("load.xml");
     solverde->LerFicheiro();
+
+
+
     solverde->Run();
-    //solverde->MostrarListaPessoas(solverde->Jogadores_Mais_Frequentes());
-    ////solverde->MostrarListaMaquinas(solverde->Ranking_Das_Mais_Trabalhadores());
-    //cout << "Dinheiro Recebido= " << solverde->DinheiroRecebido << "\n";
-    //cout << "Dinheiro Perdido= " << solverde->DinheiroPerdido<< "\n";
-    //cout << "\n\nLucro= " << solverde->DinheiroRecebido - solverde->DinheiroPerdido;
-    //cout << "\n\n";
 
-    /*list<Pessoa*> MaisGanhos = solverde->Jogadores_Mais_Ganhos();
-    auto it = MaisGanhos.begin();
-    Pessoa* ballin = (*it);
-
-    for (auto it = ballin->historico->begin(); it != ballin->historico->end(); it++)
-    {
-        cout << (*it);
-    }*/
-
-    //cout << "Numero de Jogadores= " << solverde->getListaJogadores().size();
-    //cout <<"\n\nMemoria Ocupada: " << solverde->Memoria_Total();
-
+    
+    delete(solverde);
+    _CrtDumpMemoryLeaks();
     return 7;//CR7 GOAT
 }
