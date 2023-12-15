@@ -29,6 +29,7 @@ Maquina::Maquina(int _id, TIPO_MAQUINA _tipo, int _x, int _y)
 	}
 	estado = ESTADO_MAQUINA::OFF;
 	temperatura = 20;
+	AvisoTemperatura = false;
 	x = _x;
 	y = _y;
 	Lucro = 0;
@@ -70,6 +71,24 @@ string Maquina::TipoMaquinaString()
 		return "Roleta";
 	}
 	return "Erro no tipo de maquina.";
+}
+
+string Maquina::EstadoMaquinaString()
+{
+	if (estado==ESTADO_MAQUINA::OFF)
+	{
+		return "Maquina [" + to_string(id) + "] esta OFF.\n";
+	}
+
+	if (estado == ESTADO_MAQUINA::ON)
+	{
+		return "Maquina [" + to_string(id) + "] esta ON.\n";
+	}
+
+	if (estado == ESTADO_MAQUINA::AVARIADA)
+	{
+		return "Maquina [" + to_string(id) + "] esta AVARIADA.\nDesligue a maquina para consertar.";
+	}
 }
 
 int Maquina::getTempoJogadaMaquina()
@@ -151,6 +170,7 @@ void Maquina::DesligarMaquina()
 {
 	estado = ESTADO_MAQUINA::OFF;
 	temperatura = 20;
+	AvisoTemperatura = false;
 	if (jogador != nullptr)
 	{
 		RemoverJogadorMaquina();
@@ -176,7 +196,10 @@ void Maquina::RemoverJogadorMaquina()
 	{
 		jogador->SetMaquina(nullptr);
 		jogador = nullptr;
-		estado = ESTADO_MAQUINA::OFF;
+		if (estado != ESTADO_MAQUINA::AVARIADA)
+		{
+			estado = ESTADO_MAQUINA::OFF;
+		}
 		return;
 	}
 	else
@@ -189,6 +212,75 @@ int Maquina::MemoriaClass()
 	//TamanhoTotal += jogador->MemoriadaClass();
 
 	return TamanhoTotal;
+}
+
+void Maquina::AumentarProbabilidade()
+{
+	if (getPorcentWin() >= 39) //Limite Maximo probabilidade de vencer
+	{
+		cout << "Probabilidade muito alta. Impossivel aumentar";
+		return;
+	}
+	else
+	{
+		setPorcentWin(getPorcentWin() + 1);
+		return;
+	}
+}
+
+void Maquina::DiminuirProbabilidade()
+{
+	if (getPorcentWin() <= 28) //Limite Minimo probabilidade de vencer
+	{
+		cout << "Probabilidade muito baixa. Impossivel diminuir";
+		return;
+	}
+	else
+	{
+		setPorcentWin(getPorcentWin() - 1);
+		return;
+	}
+}
+
+void Maquina::MaquinaAvaria(bool forcarAvaria=false)
+{
+	int probabilidade = Util::RandNumInt(1, 1000);
+	if (forcarAvaria || probabilidade == 1)
+	{
+		cout << "MAQUINA [" << id << "] AVARIOU.\n";
+		Avarias++;
+		estado = ESTADO_MAQUINA::AVARIADA;
+	}
+}
+
+void Maquina::SobeTemperatura()
+{
+	if(estado == ESTADO_MAQUINA::ON)
+	{
+
+		if (temperatura >= 85)
+		{
+			cout << "Maquina [" << getID() << "] sobreaqueceu!\n";
+			MaquinaAvaria(true);
+			return;
+		}
+
+		if (temperatura >= 70)
+		{
+			temperatura += 1;
+			if (AvisoTemperatura == false)
+			{
+				cout << "Aviso! Maquina [" << getID() << "] a sobreaquecer, desligue rapidamente\n";
+				AvisoTemperatura = true;
+			}
+			return;
+		}
+
+		else
+		{
+			temperatura += 1;
+		}
+	}
 }
 
 void Maquina::AtualizarDadosAposAposta(int bet, bool ganhou, Casino* casino,  int multiplicadorBet , string MensagemEspecial = "")
@@ -211,7 +303,7 @@ void Maquina::AtualizarDadosAposAposta(int bet, bool ganhou, Casino* casino,  in
 	{
 		jogador->setSaldo(jogador->getSaldo() - bet);
 		jogador->setLucro(jogador->getLucro() - bet);
-		jogador->setLosses(jogador->getLosses() - 1);
+		jogador->setLosses(jogador->getLosses() + 1);
 		Lucro += bet;
 		casino->DinheiroRecebido += bet;
 		string msg = " O jogador perdeu " + to_string(bet) + "EUR em " + TipoMaquinaString() + ".\n";
@@ -249,7 +341,26 @@ int Maquina::CalcularBet()
 
 		if (tipo == TIPO_MAQUINA::Poker)
 		{
-
+			int apostaPoker = 0;
+			double porcentagemSaldo = 0;
+			double probabilidade = Util::RandNumDouble(0, 1);
+			if (probabilidade <= 0.95)// 95% de chances de o jogador apostar 5 a 15% do seu saldo
+			{
+				porcentagemSaldo = Util::RandNumDouble(0.05, 0.15);
+				apostaPoker = jogador->getSaldo() * porcentagemSaldo;
+				if (apostaPoker < 1) {
+					apostaPoker = 1; // valor minimo da aposta e 1
+				}
+				return apostaPoker;
+			}
+			else {
+				porcentagemSaldo = Util::RandNumDouble(0.7, 1);// 5% de apostar 70 a 100% do saldo
+				apostaPoker = jogador->getSaldo() * porcentagemSaldo;
+				if (apostaPoker < 1) {
+					apostaPoker = 1; // valor minimo da aposta e 1
+				}
+				return apostaPoker;
+			}
 		}
 
 		if (tipo == TIPO_MAQUINA::ClassicSlots)//Valores min 0 , max 10
@@ -351,7 +462,7 @@ bool Maquina::Slot(int bet, Casino* casino)
 		AtualizarDadosAposAposta(bet, true, casino, 3, "Triplo.");
 		return true;
 	}
-	if (resultado <= 0.35)  //Probabilidade variada (35% predefinicao)  2xAposta
+	if (resultado <= (getPorcentWin()/100))  //Probabilidade variada (35% predefinicao)  2xAposta
 	{
 		AtualizarDadosAposAposta(bet, true, casino,2);
 		return true;
@@ -383,27 +494,55 @@ bool Maquina::BlackJack(int bet, Casino* casino)
 	}
 }
 
+bool Maquina::Poker(int bet, Casino* casino)
+{
+	double probabilidade = Util::RandNumDouble(0, 1);
+	if (probabilidade <= (1.0/221))  // 1/221 e a probilidade de sair 2 ases (~0.45%) 30xAposta
+	{
+		AtualizarDadosAposAposta(bet, true, casino, 30, "Dois Ases!");
+		return true;
+	}
+	if (probabilidade <= (getPorcentWin() / 100)) //Probabilidade variavel (30% predefinicao) 2xAposta
+	{
+		AtualizarDadosAposAposta(bet, true, casino, 2);
+		return true;
+	}
+	else
+	{
+		AtualizarDadosAposAposta(bet, false, casino, 0);
+		return false;
+	}
+}
+
 bool Maquina::JogadorJoga(int bet, Casino* casino)
 {
-	if (jogador->getSaldo() >0)
+	if(estado==ESTADO_MAQUINA::ON)
+	{
+		MaquinaAvaria();
+		SobeTemperatura();
+	}
+	 if (jogador->getSaldo() > 0 && estado == ESTADO_MAQUINA::ON)
 	{
 		if (tipo == TIPO_MAQUINA::Roleta)
 		{
 			Utilizacoes++;
+			casino->setJogadas(casino->getJogadas() + 1);
 			jogador->setTempoAJogar(jogador->getTempoAJogar() + getTempoJogadaMaquina());
 			return (Roulette(bet, casino));
 		}
 
 		if (tipo == TIPO_MAQUINA::Poker)
 		{
-			//pa fazer
-			jogador->setTempoAJogar(jogador->getTempoAJogar() + getTempoJogadaMaquina());
 			Utilizacoes++;
+			casino->setJogadas(casino->getJogadas() + 1);
+			jogador->setTempoAJogar(jogador->getTempoAJogar() + getTempoJogadaMaquina());
+			return (Poker(bet, casino));
 		}
 
 		if (tipo == TIPO_MAQUINA::ClassicSlots)
 		{
 			Utilizacoes++;
+			casino->setJogadas(casino->getJogadas() + 1);
 			jogador->setTempoAJogar(jogador->getTempoAJogar() + getTempoJogadaMaquina());
 			return Slot(bet, casino);
 		}
@@ -411,47 +550,11 @@ bool Maquina::JogadorJoga(int bet, Casino* casino)
 		if (tipo == TIPO_MAQUINA::BlackJack)
 		{
 			Utilizacoes++;
+			casino->setJogadas(casino->getJogadas() + 1);
 			jogador->setTempoAJogar(jogador->getTempoAJogar() + getTempoJogadaMaquina());
 			return BlackJack(bet, casino);
 
 		}
-
-		//chance de avariar
-		int prob = Util::RandNumInt(1, 10000);
-		if (prob == 1) {
-			cout << "Maquina " << getID() << " a avariou";
-			estado = ESTADO_MAQUINA::AVARIADA;
-			Avarias++;
-		}
-		else {
-			//controlo de temperatura
-			if (temperatura <= 20)
-			{
-				temperatura += Util::RandNumInt(0, 3);
-			}
-			if (temperatura >= 70)
-			{
-				cout << "Maquina " << getID() << " a sobreaquecer, desligue rapidamente";
-
-				temperatura += Util::RandNumInt(0, 3);
-				temperatura -= Util::RandNumInt(0, 2);
-				if (temperatura > 85) {
-					cout << "Maquina " << getID() << " a avariou";
-					estado = ESTADO_MAQUINA::AVARIADA;
-					Avarias++;
-				}
-			}
-			else
-			{
-				temperatura += Util::RandNumInt(0, 3);
-				temperatura -= Util::RandNumInt(0, 2);
-			}
-		}
-
-	}
-	else
-	{
-		cout << "Saldo Insuficiente\n";
-		return 0;
+		return false;
 	}
 }

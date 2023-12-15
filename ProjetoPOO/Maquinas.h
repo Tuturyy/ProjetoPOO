@@ -7,7 +7,7 @@
 
 using namespace std;
 
-#define WIN_PORC_POKER 40 //em %
+#define WIN_PORC_POKER 30 //em %
 #define WIN_PORC_BLACKJACK 42.22
 #define WIN_PORC_ROLETA ((18.0/37) *100)
 #define WIN_PORC_SLOT 35
@@ -31,7 +31,8 @@ class Maquina
 {
 	Pessoa* jogador;
 	int id;
-	int temperatura;
+	float temperatura;
+	bool AvisoTemperatura;
 	TIPO_MAQUINA tipo;
 	int x, y;
 	ESTADO_MAQUINA estado;
@@ -57,6 +58,7 @@ public:
 	TIPO_MAQUINA getTipo();
 	Pessoa* getJogador();
 	string TipoMaquinaString(); // transformar TIPO_MAQUINA em string
+	string EstadoMaquinaString();
 	int getTempoJogadaMaquina();
 	double getPorcentWin();
 	int getTempoCadaJogada();
@@ -69,12 +71,17 @@ public:
 	void AddJogadorMaquina(Pessoa* player);
 	void RemoverJogadorMaquina();
 	int MemoriaClass();
+	void AumentarProbabilidade();
+	void DiminuirProbabilidade();
+	void MaquinaAvaria(bool forcarAvaria);
+	void SobeTemperatura();
 	
 
 	//Jogos
 	bool Roulette(int bet, Casino* casino);
 	bool Slot(int bet, Casino* casino);
 	bool BlackJack(int bet, Casino* casino);
+	bool Poker(int bet, Casino* casino);
 
 	void AtualizarDadosAposAposta(int bet, bool ganhou, Casino* casino, int multiplicadorBet, string MensagemEspecial);
 	int CalcularBet(); //calcular a aposta dos jogadores
