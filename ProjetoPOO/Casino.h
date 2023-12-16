@@ -52,6 +52,7 @@ public:
 	list<Pessoa*> getListaJogadores();
 	list<Pessoa*> getListaPessoasCasino();
 	list<Pessoa*> Jogadores_Mais_Frequentes();
+	list<Maquina*> getListaLMvizinhas();
 	int getJogadas();
 	void setJogadas(int novoJogadas);
 
@@ -65,6 +66,7 @@ public:
 	ESTADO_MAQUINA Get_Estado(int id_maq);
 	void AtribuirMaquinaPessoa(Pessoa* pessoa);
 	void GerarMaquinas(int numMaquinas);
+	Maquina* MaisPrejuizo();
 	list<Maquina*> Listar_TipoMaquina(string Tipo, ostream& f = std::cout);
 	list<Maquina*> Maquinas_Mais_Avarias();
 	list<Maquina*> Ranking_Das_Mais_Trabalhadores();
@@ -80,6 +82,7 @@ public:
 	void EstatisticasCasino();
 	void PessoasVaoParaMaquinas();
 	void PessoasJogam();
+	void ControlarGanhosMaquinas();
 	void VerificarSaidaPessoas();
 	void Run(bool Debug = true);
 
