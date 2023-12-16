@@ -163,6 +163,7 @@ void Maquina::MostrarMaquina()
 	cout << "Posicao: X=" << x << " Y=" << y << endl;
 	cout << "Temperatura: " << temperatura << endl;
 	cout << "Utilizacoes: " << Utilizacoes << endl;
+	cout << "Porcentagem Ganhar: " << getPorcentWin() << endl;
 	cout << "Lucro: " << Lucro << endl;
 }
 
@@ -216,13 +217,19 @@ int Maquina::MemoriaClass()
 
 void Maquina::AumentarProbabilidade()
 {
-	if (getPorcentWin() >= 39) //Limite Maximo probabilidade de vencer
+	if (tipo==TIPO_MAQUINA::Roleta)
 	{
-		cout << "Probabilidade muito alta. Impossivel aumentar";
+		cout << "Impossivel alterar a probabilidade da roleta.\n";
+		return;
+	}
+	if (getPorcentWin() >= 42) //Limite Maximo probabilidade de vencer
+	{
+		cout << "Probabilidade muito alta. Impossivel aumentar\n";
 		return;
 	}
 	else
 	{
+		cout << "Aumentada a probabilidade da maquina [" << id << "]\n";
 		setPorcentWin(getPorcentWin() + 1);
 		return;
 	}
@@ -237,6 +244,7 @@ void Maquina::DiminuirProbabilidade()
 	}
 	else
 	{
+		cout << "Diminuida a probabilidade da maquina [" << id << "]\n";
 		setPorcentWin(getPorcentWin() - 1);
 		return;
 	}
@@ -288,11 +296,13 @@ void Maquina::AtualizarDadosAposAposta(int bet, bool ganhou, Casino* casino,  in
 		jogador->setSaldo(jogador->getSaldo() + (bet*multiplicadorBet)-bet);
 		jogador->setLucro(jogador->getLucro() + ((bet * multiplicadorBet) - bet));
 		jogador->setWins(jogador->getWins()+1);
+		jogador->setTempoAJogar(jogador->getTempoAJogar() + getTempoJogadaMaquina());
 		if (jogador->getMaiorGanho() < (bet * multiplicadorBet))
 		{
 			jogador->setMaiorGanho(bet * multiplicadorBet);
 		}
 		Lucro -= ((bet * multiplicadorBet) - bet);
+		Utilizacoes++;
 		casino->DinheiroPerdido += ((bet * multiplicadorBet) - bet);
 		string msg = MensagemEspecial + " O jogador ganhou " + to_string(bet*multiplicadorBet) + "EUR("+ to_string(multiplicadorBet)+"x) em " + TipoMaquinaString() + ".\n";
 		jogador->historico->push_back(msg);
@@ -302,7 +312,9 @@ void Maquina::AtualizarDadosAposAposta(int bet, bool ganhou, Casino* casino,  in
 		jogador->setSaldo(jogador->getSaldo() - bet);
 		jogador->setLucro(jogador->getLucro() - bet);
 		jogador->setLosses(jogador->getLosses() + 1);
+		jogador->setTempoAJogar(jogador->getTempoAJogar() + getTempoJogadaMaquina());
 		Lucro += bet;
+		Utilizacoes++;
 		casino->DinheiroRecebido += bet;
 		string msg = " O jogador perdeu " + to_string(bet) + "EUR em " + TipoMaquinaString() + ".\n";
 		jogador->historico->push_back(msg);
@@ -480,7 +492,7 @@ bool Maquina::BlackJack(int bet, Casino* casino)
 		AtualizarDadosAposAposta(bet, true, casino, 3, "BlackJack!");
 		return true;
 	}
-	if (probabilidade <= 0.4222)// 42% chance de o jogar 2x aposta
+	if (probabilidade <= (getPorcentWin() / 100))// probabilidade variada (42% predef.) chance de o jogar 2x aposta
 	{
 		AtualizarDadosAposAposta(bet, true, casino, 2);
 		return true;
@@ -523,33 +535,21 @@ bool Maquina::JogadorJoga(int bet, Casino* casino)
 	{
 		if (tipo == TIPO_MAQUINA::Roleta)
 		{
-			Utilizacoes++;
-			casino->setJogadas(casino->getJogadas() + 1);
-			jogador->setTempoAJogar(jogador->getTempoAJogar() + getTempoJogadaMaquina());
 			return (Roulette(bet, casino));
 		}
 
 		if (tipo == TIPO_MAQUINA::Poker)
 		{
-			Utilizacoes++;
-			casino->setJogadas(casino->getJogadas() + 1);
-			jogador->setTempoAJogar(jogador->getTempoAJogar() + getTempoJogadaMaquina());
 			return (Poker(bet, casino));
 		}
 
 		if (tipo == TIPO_MAQUINA::ClassicSlots)
 		{
-			Utilizacoes++;
-			casino->setJogadas(casino->getJogadas() + 1);
-			jogador->setTempoAJogar(jogador->getTempoAJogar() + getTempoJogadaMaquina());
 			return Slot(bet, casino);
 		}
 
 		if (tipo == TIPO_MAQUINA::BlackJack)
 		{
-			Utilizacoes++;
-			casino->setJogadas(casino->getJogadas() + 1);
-			jogador->setTempoAJogar(jogador->getTempoAJogar() + getTempoJogadaMaquina());
 			return BlackJack(bet, casino);
 
 		}

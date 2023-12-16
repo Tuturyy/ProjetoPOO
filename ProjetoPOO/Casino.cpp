@@ -346,6 +346,19 @@ void Casino::GerarMaquinas(int numMaquinas)
 
 }
 
+Maquina* Casino::MaisPrejuizo()
+{
+	Maquina* prejuizo = nullptr;
+	for (list<Maquina*>::iterator it = LM.begin(); it != LM.end(); it++)
+	{
+		if (prejuizo == nullptr || ((*it)->Lucro < prejuizo->Lucro) )
+		{
+			prejuizo = (*it);
+		}
+	}
+	return prejuizo;
+}
+
 list<Maquina*> Casino::Listar_TipoMaquina(string Tipo, ostream& f)
 {
 	TIPO_MAQUINA tipoDesejado;
@@ -423,13 +436,11 @@ void Casino::SubirProbabilidadeVizinhas(Maquina* M_ganhou, float R, list<Maquina
 		float distancia = CalcularDistanciaEntreMaquinas(M_ganhou, (*it));
 		if (distancia > 0 && distancia <= R) // distancia menor que o raio e maior que 0 para evitar a propria maquina
 		{
-			cout << "Devia mudar prob da MAQUINA id-" << (*it)->getID() << "\n";
-			M_ganhou->DiminuirProbabilidade();
 			(*it)->AumentarProbabilidade();
-
 			lmvizinhas.push_back(*it);
 		}
 	}
+	M_ganhou->DiminuirProbabilidade();
 }
 
 float Casino::CalcularDistanciaEntreMaquinas(Maquina* M1, Maquina* M2)
@@ -475,6 +486,11 @@ list<Pessoa*> Casino::Jogadores_Mais_Frequentes()
 	}*/
 
 	return JogadoresMaisFrequentes;
+}
+
+list<Maquina*> Casino::getListaLMvizinhas()
+{
+	return LMvizinhas;
 }
 
 int Casino::getJogadas()
@@ -553,15 +569,15 @@ void Casino::EstatisticasCasino()
 	}
 
 
-	cout << "\n\n***********************************************************\n";
+	cout << "\n\n**********************************************************************************\n";
 	cout << "Casino " << nomeC << "\n";
-	cout << "***********************************************************\n\n";
+	cout << "**********************************************************************************\n\n";
 
 	cout << "	O Casino teve um lucro de: " << (DinheiroRecebido - DinheiroPerdido) << "EUR\n\n";
 	cout << "	Os jogadores apostaram um total de: " << DinheiroRecebido << "EUR\n";
 	cout << "	O casino em apostas perdeu um total de: " << DinheiroPerdido << "EUR\n";
 	cout << "	Foram feitas um total de " << Jogadas << " apostas em " << numMaquinasUtilizadas << " maquinas diferentes.\n\n";
-	cout << "***********************************************************\n\n";
+	cout << "**********************************************************************************\n\n";
 	cout << "	Jogaram um total de " << LPJ.size() << " pessoas.\n\n";
 	cout << "	Destas ficaram "<< numPessoasLucro << " no lucro :)\n";
 	cout << "	E "<< numPessoasPrejuizo << " ficaram no prejuizo :(\n";
@@ -569,7 +585,7 @@ void Casino::EstatisticasCasino()
 	{
 		cout << "	" << numPessoasMantem << " ficaram na mesma :|\n";
 	}
-	cout << "\n***********************************************************\n\n";
+	cout << "\n**********************************************************************************\n\n";
 
 
 	
@@ -632,7 +648,6 @@ void Casino::PessoasJogam()
 	{
 		if ((*it)->getEstado() == ESTADO_MAQUINA::ON)
 		{
-
 			if (TempoAtualCasino >= (*it)->TempoJogadaTerminada) //verificar se o jogador ja teve o tempo para jogar
 			{
 				int numJogadas = 1;
@@ -649,6 +664,8 @@ void Casino::PessoasJogam()
 					{
 						
 						(*it)->JogadorJoga((*it)->CalcularBet(), this);
+						Jogadas++;
+						ControlarGanhosMaquinas();
 					}
 				}
 				if ((*it)!=nullptr)
@@ -657,6 +674,15 @@ void Casino::PessoasJogam()
 				}
 			}
 		}
+	}
+}
+
+void Casino::ControlarGanhosMaquinas()
+{
+	if (Jogadas % 1000 == 0 && Jogadas >0)
+	{
+		cout << "\nCONTROLO DE PROBABILIDADES NUM RAIO DE 10:\n\n";
+		SubirProbabilidadeVizinhas(MaisPrejuizo(), 10, LMvizinhas);
 	}
 }
 
@@ -713,9 +739,11 @@ void Casino::Run(bool Debug) {
 				}
 			}
 
+
 			VerificarSaidaPessoas();
 			PessoasVaoParaMaquinas();
 			PessoasJogam();
+			ControlarGanhosMaquinas();
 
 			relogio.Wait(1);
 			

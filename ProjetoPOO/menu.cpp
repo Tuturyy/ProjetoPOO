@@ -58,6 +58,7 @@ void subMenuMaquinas(Casino* casino) {
     cout << "\n5 - Listar as maquinas com a probabilidade de ganhar superior a X" << endl;
     cout << "\n6 - Maquinas mais usadas" << endl;
     cout << "\n7 - Maquinas que mais avariam" << endl;
+    cout << "\n8 - Maquinas que alteraram de probabilidade" << endl;
     cout << "\n0 - Voltar atras" << endl;
     printLine();
 
@@ -103,6 +104,9 @@ void subMenuMaquinas(Casino* casino) {
             break;
         case 7:
             casino->MostrarListaMaquinas(casino->Ranking_Das_Mais_Avariadas());
+            break;
+        case 8:
+            casino->MostrarListaMaquinas(casino->getListaLMvizinhas());
             break;
         case 0:
             break;

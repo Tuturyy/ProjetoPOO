@@ -8,7 +8,7 @@
 using namespace std;
 
 #define WIN_PORC_POKER 30 //em %
-#define WIN_PORC_BLACKJACK 42.22
+#define WIN_PORC_BLACKJACK 40
 #define WIN_PORC_ROLETA ((18.0/37) *100)
 #define WIN_PORC_SLOT 35
 
