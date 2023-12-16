@@ -1,8 +1,3 @@
-#define _CRTDBG_MAP_ALLOC
-#include <stdlib.h>
-#include <crtdbg.h>
-
-
 #include <iostream>
 #include <iomanip>
 using namespace std;
@@ -27,6 +22,5 @@ int main()
 
     
     delete(solverde);
-    _CrtDumpMemoryLeaks();
     return 7;//CR7 GOAT
 }

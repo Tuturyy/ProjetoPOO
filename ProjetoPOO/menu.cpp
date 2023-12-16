@@ -55,6 +55,7 @@ void subMenuMaquinas(Casino* casino) {
     Maquina* maquinaOff = nullptr;
     Maquina* maquinaShow = nullptr;
 
+
     do {
         cout << "\n";
         printLine();
@@ -67,30 +68,9 @@ void subMenuMaquinas(Casino* casino) {
         cout << "\n5 - Listar as maquinas com a probabilidade de ganhar superior a X" << endl;
         cout << "\n6 - Maquinas mais usadas" << endl;
         cout << "\n7 - Maquinas que mais avariam" << endl;
+        cout << "\n8 - Maquinas que alteraram de probabilidade" << endl;
         cout << "\n0 - Voltar atras" << endl;
         printLine();
-    cout << "\n";
-    printLine();
-    cout << "           SUBMENU DE MAQUINAS              " << endl;
-    printLine();
-    cout << "\n1 - Listar maquinas" << endl;
-    cout << "\n2 - Listar maquinas de um dado tipo" << endl;
-    cout << "\n3 - Desligar maquina" << endl;
-    cout << "\n4 - Ver estado de maquina" << endl;
-    cout << "\n5 - Listar as maquinas com a probabilidade de ganhar superior a X" << endl;
-    cout << "\n6 - Maquinas mais usadas" << endl;
-    cout << "\n7 - Maquinas que mais avariam" << endl;
-    cout << "\n8 - Maquinas que alteraram de probabilidade" << endl;
-    cout << "\n0 - Voltar atras" << endl;
-    printLine();
-
-    int opcao;
-    int idmaquinaOff, idmaquinaShow, prob;
-    string tipoMaquina;
-    Maquina* maquinaOff = nullptr;
-    Maquina* maquinaShow = nullptr;
-
-    do {
         cout << "Escolhe uma opcao:" << endl;
         opcao = getSafeInput();
 
@@ -211,7 +191,7 @@ void subMenuCasino(Casino* casino) {
             casino->ListarEstadoCasino();
             break;
         case 2:
-            //casino->Relatorio(ficheiro a definir);
+            casino->Relatorio("relatorio.xml");
             break;
         case 3:
             cout << casino->Memoria_Total();
