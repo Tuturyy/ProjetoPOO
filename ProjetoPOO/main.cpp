@@ -27,6 +27,5 @@ int main()
 
     
     delete(solverde);
-    _CrtDumpMemoryLeaks();
     return 7;//CR7 GOAT
 }

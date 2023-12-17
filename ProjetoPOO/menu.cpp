@@ -187,7 +187,6 @@ void subMenuCasino(Casino* casino) {
             casino->ListarEstadoCasino();
             break;
         case 2:
-            //casino->Relatorio(ficheiro a definir);
             break;
         case 3:
             cout << casino->Memoria_Total();
