@@ -384,7 +384,10 @@ void Casino::SubirProbabilidadeVizinhas(Maquina* M_ganhou, float R, list<Maquina
 		if (distancia > 0 && distancia <= R) // distancia menor que o raio e maior que 0 para evitar a propria maquina
 		{
 			(*it)->AumentarProbabilidade();
-			lmvizinhas.push_back(*it);
+			if ((*it)->getTipo() != TIPO_MAQUINA::Roleta)
+			{
+				lmvizinhas.push_back(*it);
+			}
 		}
 	}
 	M_ganhou->DiminuirProbabilidade();

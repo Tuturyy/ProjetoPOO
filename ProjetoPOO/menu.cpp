@@ -194,7 +194,7 @@ void subMenuCasino(Casino* casino) {
             casino->Relatorio("relatorio.xml");
             break;
         case 3:
-            cout << casino->Memoria_Total();
+            cout << "\nMemoria Total: " << casino->Memoria_Total() << " bytes.\n\n";
             break;
         case 4:
             casino->EstatisticasCasino();

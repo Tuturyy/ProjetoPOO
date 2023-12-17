@@ -159,8 +159,13 @@ void Maquina::MostrarMaquina()
 	{
 		cout << "Estado: OFF" << endl;
 	}
+	if (estado == ESTADO_MAQUINA::AVARIADA)
+	{
+		cout << "Estado: AVARIADA" << endl;
+	}
 	cout << "Tipo: " << TipoMaquinaString() << "\n";
 	cout << "Posicao: X=" << x << " Y=" << y << endl;
+	cout << "Avarias: " << Avarias << endl;
 	cout << "Temperatura: " << temperatura << endl;
 	cout << "Utilizacoes: " << Utilizacoes << endl;
 	cout << "Porcentagem Ganhar: " << getPorcentWin() << endl;
