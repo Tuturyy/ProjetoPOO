@@ -144,10 +144,8 @@
     <ClInclude Include="Uteis.h" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="relatorio.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <Xml Include="load.xml" />
+    <Xml Include="relatorio.xml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

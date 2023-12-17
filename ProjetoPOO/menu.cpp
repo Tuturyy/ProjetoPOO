@@ -47,20 +47,7 @@ void menu() {
 }
 
 void subMenuMaquinas(Casino* casino) {
-    cout << "\n";
-    printLine();
-    cout << "           SUBMENU DE MAQUINAS              " << endl;
-    printLine();
-    cout << "\n1 - Listar maquinas" << endl;
-    cout << "\n2 - Listar maquinas de um dado tipo" << endl;
-    cout << "\n3 - Desligar maquina" << endl;
-    cout << "\n4 - Ver estado de maquina" << endl;
-    cout << "\n5 - Listar as maquinas com a probabilidade de ganhar superior a X" << endl;
-    cout << "\n6 - Maquinas mais usadas" << endl;
-    cout << "\n7 - Maquinas que mais avariam" << endl;
-    cout << "\n8 - Maquinas que alteraram de probabilidade" << endl;
-    cout << "\n0 - Voltar atras" << endl;
-    printLine();
+    
 
     int opcao;
     int idmaquinaOff, idmaquinaShow, prob;
@@ -68,7 +55,22 @@ void subMenuMaquinas(Casino* casino) {
     Maquina* maquinaOff = nullptr;
     Maquina* maquinaShow = nullptr;
 
+
     do {
+        cout << "\n";
+        printLine();
+        cout << "           SUBMENU DE MAQUINAS              " << endl;
+        printLine();
+        cout << "\n1 - Listar maquinas" << endl;
+        cout << "\n2 - Listar maquinas de um dado tipo" << endl;
+        cout << "\n3 - Desligar maquina" << endl;
+        cout << "\n4 - Ver estado de maquina" << endl;
+        cout << "\n5 - Listar as maquinas com a probabilidade de ganhar superior a X" << endl;
+        cout << "\n6 - Maquinas mais usadas" << endl;
+        cout << "\n7 - Maquinas que mais avariam" << endl;
+        cout << "\n8 - Maquinas que alteraram de probabilidade" << endl;
+        cout << "\n0 - Voltar atras" << endl;
+        printLine();
         cout << "Escolhe uma opcao:" << endl;
         opcao = getSafeInput();
 
@@ -103,7 +105,7 @@ void subMenuMaquinas(Casino* casino) {
             casino->MostrarListaMaquinas(casino->Ranking_Das_Mais_Trabalhadores());
             break;
         case 7:
-            casino->MostrarListaMaquinas(casino->Ranking_Das_Mais_Avariadas());
+            casino->MostrarListaMaquinas(casino->Maquinas_Mais_Avarias());
             break;
         case 8:
             casino->MostrarListaMaquinas(casino->getListaLMvizinhas());
@@ -117,16 +119,7 @@ void subMenuMaquinas(Casino* casino) {
 }
 
 void subMenuJogadores(Casino* casino) {
-    cout << "\n";
-    printLine();
-    cout << "           SUBMENU DE JOGADORES              " << endl;
-    printLine();
-    cout << "\n1 - Listar jogadores" << endl;
-	cout << "\n2 - Jogadores que mais ganharam" << endl;
-	cout << "\n3 - Jogadores mais frequentes" << endl;
-    cout << "\n4 - Mostrar historico de apostas de um jogador" << endl;
-	cout << "\n0 - Voltar atras" << endl;
-    printLine();
+    
 
     int opcao;
     int IDjogador = 0;
@@ -134,6 +127,16 @@ void subMenuJogadores(Casino* casino) {
 
     do
     {
+        cout << "\n";
+        printLine();
+        cout << "           SUBMENU DE JOGADORES              " << endl;
+        printLine();
+        cout << "\n1 - Listar jogadores" << endl;
+        cout << "\n2 - Jogadores que mais ganharam" << endl;
+        cout << "\n3 - Jogadores mais frequentes" << endl;
+        cout << "\n4 - Mostrar historico de apostas de um jogador" << endl;
+        cout << "\n0 - Voltar atras" << endl;
+        printLine();
         cout << "Escolhe uma opcao:" << endl;
         opcao = getSafeInput();
         
@@ -163,21 +166,22 @@ void subMenuJogadores(Casino* casino) {
 }
 
 void subMenuCasino(Casino* casino) {
-    cout << "\n";
-    printLine();
-    cout << "           SUBMENU DE CASINO              " << endl;
-    printLine();
-	cout << "\n1 - Estado atual do casino" << endl;
-	cout << "\n2 - Relatorio do casino" << endl;
-	cout << "\n3 - Memoria ocupada" << endl;
-    cout << "\n4 - Estatisticas" << endl;
-	cout << "\n0 - Voltar atras" << endl;
-    printLine();
+    
 
     int opcao;
 
     do
     {
+        cout << "\n";
+        printLine();
+        cout << "           SUBMENU DE CASINO              " << endl;
+        printLine();
+        cout << "\n1 - Estado atual do casino" << endl;
+        cout << "\n2 - Relatorio do casino" << endl;
+        cout << "\n3 - Memoria ocupada" << endl;
+        cout << "\n4 - Estatisticas" << endl;
+        cout << "\n0 - Voltar atras" << endl;
+        printLine();
         cout << "Escolhe uma opcao:" << endl;
         opcao = getSafeInput();
 
@@ -187,6 +191,7 @@ void subMenuCasino(Casino* casino) {
             casino->ListarEstadoCasino();
             break;
         case 2:
+            casino->Relatorio("relatorio.xml");
             break;
         case 3:
             cout << casino->Memoria_Total();
